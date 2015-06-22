@@ -1,6 +1,12 @@
 \setcounter{errorcontextlines}{100}
 \listfiles
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
+\RequirePackage{hyphsubst}% Trennregeln austauschen
+\HyphSubstIfExists{ngerman-x-latest}{%
+  \HyphSubstLet{ngerman}{ngerman-x-latest}}{}
+\HyphSubstIfExists{german-x-latest}{%
+  \HyphSubstLet{german}{german-x-latest}}{}
+
 \ProvidesClass{dtk2}%
   [2015/05/02 v0.1a dtk document class (RN)]
 
@@ -73,7 +79,27 @@
 \else
   \input{dtk2-new-engines.clo}% LuaTeX oder XeTeX
 \fi
-{}
+
+\ifxetex\else
+\RequirePackage[%
+,factor=1500
+,protrusion=true
+,expansion=true
+,verbose=true
+,final=true
+,letterspace=100
+,babel=true
+]{microtype}
+% TODO: Spezielle Angaben zu den Schriften
+\fi
+
+\RequirePackage[main=ngerman]{babel}
+
+\RequirePackage[autostyle=true,babel=once,german=guillemets,maxlevel=3]{csquotes}%
+\MakeAutoQuote{»}{«}
+\defineshorthand{"`}{\openautoquote}%
+\defineshorthand{"'}{\closeautoquote}%
+\AtEndOfClass{\shorthandon{"}}
 
 %%% Laden eines Einzeldokuments
 
@@ -89,7 +115,8 @@
 \newcommand*\DTK@embedded@enddocumenthook{}
 \newcommand*\AtEmbeddedEndDocument{%
   \g@addto@macro\DTK@embedded@enddocumenthook}
-\AtEmbeddedEndDocument{\endinput}
+
+%%%\ifDTK@Author@\edef\DTK@jobname{komoedie}\else\edef\DTK@jobname{\jobname}\fi
 
 \newcommand*\DTK@jobname{}
 \newcommand*\DTK@local@jobname{}
@@ -135,7 +162,7 @@
        \typeout{\string\AtEndDocument\space ignored!}}
     \renewenvironment*{document}%
     {\DTK@embedded@begindocumenthook}%
-    {\DTK@embedded@enddocumenthook}%
+    {\DTK@embedded@enddocumenthook\endinput}%
     \input{\DTK@local@inputname}%
   \endgroup
 }
