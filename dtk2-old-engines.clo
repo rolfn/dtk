@@ -5,7 +5,7 @@
 
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
-%\RequirePackage[full]{textcomp}% ???
+\RequirePackage{textcomp}
 
 %\RequirePackage[scaled=0.83]{beramono}
 \RequirePackage[scaled=0.83]{DejaVuSansMono}

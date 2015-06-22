@@ -10,6 +10,8 @@
 \ProvidesClass{dtk2}%
   [2015/05/02 v0.1a dtk document class (RN)]
 
+\newif\ifDTK@Author@ \DTK@Author@true
+
 \DeclareOption{10pt}{\OptionNotUsed}
 \DeclareOption{11pt}{\OptionNotUsed}
 \DeclareOption{12pt}{\OptionNotUsed}
@@ -48,7 +50,13 @@
 \widowpenalty = 10000 %
 \marginparwidth = 1cm %
 
-\@fptop= \z@
+\@fptop= \z@{}
+
+\let\DTK@tempdima=\@ovxx
+\let\DTK@tempdimb=\@ovyy
+
+\RequirePackage{xcolor}
+\RequirePackage{etex}
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 
@@ -122,49 +130,91 @@
 \newcommand*\DTK@local@jobname{}
 \newcommand*\DTK@local@inputname{}
 \newcommand*\DTK@eat@version[1][]{\ignorespaces}
-\newcommand*\DTK@usepackage{}
+
+\newcommand*\DTK@usepackage[2][]{%
+  \@ifnextchar[%]
+    {\DTK@@usepackage{#1}{#2}}%
+    {\DTK@@usepackage{#1}{#2}[]}%
+}%
+\newcommand*\DTK@@usepackage{}
+\def\DTK@@usepackage#1#2[#3]{%
+  \edef\@tempb{\zap@space#2 \@empty}%
+  \@for\@tempa:=\@tempb\do{\def\@tempb{inputenc}%
+    \ifx\@tempa\@tempb
+      \edef\@tempa{#1}%
+      %%%\ifx\@tempa\@empty\else\inputencoding{#1}\fi
+    \else
+    % \ifx\@tempa\@empty\else\usepackage{\@tempa}%
+    %   \RecordPackage{#1}\@tempa{#3}\DTK@local@inputname
+    % \fi
+    \fi
+  }
+}%
+
+\newcommand*\DTK@AtBeginDocument[1]{%
+  \ClassWarning{dtk2}{\string\AtBeginDocument\space ignored!}
+}
+\newcommand*\DTK@AtEndDocument[1]{%
+  \ClassWarning{dtk2}{\string\AtEndDocument\space ignored!}
+}
+
+\newcommand*\DTK@documentclass[2][]{%
+  \DTK@embedded@documentclasshook
+  \DTK@eat@version
+}
 
 \newcommand*\DTKinput[1]{%
   \begingroup
-     \filename@parse{#1}%
-     \edef\DTK@local@jobname{\filename@base}%
-     \@ifundefined{filename@ext}%
-     {\IfFileExists{\DTK@local@jobname.tex}%
-       {\edef\DTK@local@inputname{\DTK@local@jobname.tex}}{}%
-     }{\edef\DTK@local@inputname{#1}}%
-    \renewcommand*\documentclass[2][]{%
-      \DTK@embedded@documentclasshook
-      \DTK@eat@version}%
-    \renewcommand*\usepackage[2][]{%
-      \@ifnextchar[%]
-        {\DTK@usepackage{##1}{##2}}%
-        {\DTK@usepackage{##1}{##2}[]}%
-    }%
-    \def\DTK@usepackage##1##2[##3]{%
-      \edef\@tempb{\zap@space##2 \@empty}%
-      \@for\@tempa:=\@tempb\do{\def\@tempb{inputenc}%
-        \ifx\@tempa\@tempb
-          \edef\@tempa{##1}%
-          \ifx\@tempa\@empty\else\inputencoding{##1}\fi
-        \else
-%          \ifx\@tempa\@empty\else\usepackage{\@tempa}%
-%             \RecordPackage{##1}\@tempa{##3}\DTK@local@inputname
-%          \fi
-        \fi}}%
+    \filename@parse{#1}%
+    \edef\DTK@local@jobname{\filename@base}%
+    \@ifundefined{filename@ext}%
+      {\IfFileExists{\DTK@local@jobname.tex}%
+        {\edef\DTK@local@inputname{\DTK@local@jobname.tex}}{}}%
+      {\edef\DTK@local@inputname{#1}}%
+    \let\AtBeginDocument=\DTK@AtBeginDocument
+    \let\AtEndDocument=\DTK@AtEndDocument
     \let\pagestyle\@gobble
     \let\thispagestyle\@gobble
     \let\nocite\@gobble
     \let\listfiles\relax
     \let\nofiles\relax
-    \renewcommand*\AtBeginDocument[1]{%
-       \typeout{\string\AtBeginDocument\space ignored!}}
-    \renewcommand*\AtEndDocument[1]{%
-       \typeout{\string\AtEndDocument\space ignored!}}
+    \let\documentclass=\DTK@documentclass
+    \let\usepackage=\DTK@usepackage
     \renewenvironment*{document}%
-    {\DTK@embedded@begindocumenthook}%
-    {\DTK@embedded@enddocumenthook\endinput}%
+      {\DTK@embedded@begindocumenthook}%
+      {\DTK@embedded@enddocumenthook\endinput}%
     \input{\DTK@local@inputname}%
   \endgroup
 }
+
+\newcommand*\DTK@keywords{}
+\newcommand*\keywords[1]{\gdef\DTK@keywords{#1}}
+\newcommand\address[3]{%
+}
+
+% Kompakte Listen
+\RequirePackage[neverdecrease]{paralist}
+\newcommand*\DTK@begin@list[1]{%
+  \DTK@tempdima=\parindent
+  \DTK@tempdimb=\parskip
+  \@nameuse{#1}%
+  \parindent=\DTK@tempdima
+  \parskip=\DTK@tempdimb
+}
+\def\enumerate{%
+  \DTK@begin@list{compactenum}%
+}
+\def\itemize{%
+  \DTK@begin@list{compactitem}%
+}
+\def\description{%
+  \DTK@begin@list{compactdesc}%
+}
+\let\enditemize\endcompactitem
+\let\endenumerate\endcompactenum
+\let\enddescription\endcompactdesc
+\pltopsep=\medskipamount
+\plitemsep=1pt %
+\plparsep=1pt %
 
 \endinput
