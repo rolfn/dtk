@@ -1,0 +1,15 @@
+\ProvidesFile{dtk2-old-engines.clo}%
+  [2015/05/02 v0.1a dtk class options for pdfTeX/TeX+dvips (RN)]
+
+\typeout{OLD-ENGINES}
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+%\RequirePackage[full]{textcomp}% ???
+
+%\RequirePackage[scaled=0.83]{beramono}
+\RequirePackage[scaled=0.83]{DejaVuSansMono}
+%\RequirePackage[ttdefault=true]{AnonymousPro}
+%\RequirePackage{sourcecodepro}
+
+\endinput

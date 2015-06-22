@@ -1,0 +1,12 @@
+\ProvidesFile{dtk2-new-engines.clo}%
+  [2015/05/02 v0.1a dtk class options for XeTeX and LuaTeX (RN)]
+
+\typeout{NEW-ENGINES}
+
+\RequirePackage{fontspec}
+\RequirePackage{unicode-math}
+
+\setmathfont[Scale=0.9,math-style=TeX,bold-style=TeX]{XITS Math}
+\setmonofont[Scale=0.81,FakeStretch=0.9]{DejaVu Sans Mono}
+
+\endinput
