@@ -42,6 +42,8 @@
 \widowpenalty = 10000 %
 \marginparwidth = 1cm %
 
+\@fptop= \z@
+
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 
 \newcommand*\DTK@engine{}
@@ -71,5 +73,71 @@
 \else
   \input{dtk2-new-engines.clo}% LuaTeX oder XeTeX
 \fi
+{}
+
+%%% Laden eines Einzeldokuments
+
+\newcommand*\DTK@embedded@documentclasshook{}
+\newcommand*\AtEmbeddedDocumentclass{%
+  \g@addto@macro\DTK@embedded@documentclasshook}
+\AtEmbeddedDocumentclass{%
+  \edef\jobname{\DTK@local@jobname}%
+}
+\newcommand*\DTK@embedded@begindocumenthook{}
+\newcommand*\AtEmbeddedBeginDocument{%
+  \g@addto@macro\DTK@embedded@begindocumenthook}
+\newcommand*\DTK@embedded@enddocumenthook{}
+\newcommand*\AtEmbeddedEndDocument{%
+  \g@addto@macro\DTK@embedded@enddocumenthook}
+\AtEmbeddedEndDocument{\endinput}
+
+\newcommand*\DTK@jobname{}
+\newcommand*\DTK@local@jobname{}
+\newcommand*\DTK@local@inputname{}
+\newcommand*\DTK@eat@version[1][]{\ignorespaces}
+\newcommand*\DTK@usepackage{}
+
+\newcommand*\DTKinput[1]{%
+  \begingroup
+     \filename@parse{#1}%
+     \edef\DTK@local@jobname{\filename@base}%
+     \@ifundefined{filename@ext}%
+     {\IfFileExists{\DTK@local@jobname.tex}%
+       {\edef\DTK@local@inputname{\DTK@local@jobname.tex}}{}%
+     }{\edef\DTK@local@inputname{#1}}%
+    \renewcommand*\documentclass[2][]{%
+      \DTK@embedded@documentclasshook
+      \DTK@eat@version}%
+    \renewcommand*\usepackage[2][]{%
+      \@ifnextchar[%]
+        {\DTK@usepackage{##1}{##2}}%
+        {\DTK@usepackage{##1}{##2}[]}%
+    }%
+    \def\DTK@usepackage##1##2[##3]{%
+      \edef\@tempb{\zap@space##2 \@empty}%
+      \@for\@tempa:=\@tempb\do{\def\@tempb{inputenc}%
+        \ifx\@tempa\@tempb
+          \edef\@tempa{##1}%
+          \ifx\@tempa\@empty\else\inputencoding{##1}\fi
+        \else
+%          \ifx\@tempa\@empty\else\usepackage{\@tempa}%
+%             \RecordPackage{##1}\@tempa{##3}\DTK@local@inputname
+%          \fi
+        \fi}}%
+    \let\pagestyle\@gobble
+    \let\thispagestyle\@gobble
+    \let\nocite\@gobble
+    \let\listfiles\relax
+    \let\nofiles\relax
+    \renewcommand*\AtBeginDocument[1]{%
+       \typeout{\string\AtBeginDocument\space ignored!}}
+    \renewcommand*\AtEndDocument[1]{%
+       \typeout{\string\AtEndDocument\space ignored!}}
+    \renewenvironment*{document}%
+    {\DTK@embedded@begindocumenthook}%
+    {\DTK@embedded@enddocumenthook}%
+    \input{\DTK@local@inputname}%
+  \endgroup
+}
 
 \endinput
