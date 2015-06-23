@@ -72,7 +72,7 @@
 \widowpenalty = 10000 %
 \marginparwidth = 1cm %
 
-\@fptop= \z@{}
+\@fptop=\z@
 
 \let\DTK@tempdima=\@ovxx
 \let\DTK@tempdimb=\@ovyy
@@ -109,11 +109,13 @@
 
 \AtBeginDocument{%
   \ifDTK@Author@\else
-    \InputIfFileExists{userpackages.tex}{%
-      \typeout{*************************************^^J%
-               * File `userpackages.tex' used.^^J%
-               *************************************}%
-    }{}%
+    \ifDTKrecordPackages\else
+      \InputIfFileExists{userpackages.tex}{%
+        \typeout{*************************************^^J%
+                 * File `userpackages.tex' used.^^J%
+                 *************************************}%
+      }{}%
+    \fi
   \fi
 }
 
@@ -157,13 +159,12 @@
 
 \@ifundefined{ifDTKrecordPackages}{%
   \newif\ifDTKrecordPackages \DTKrecordPackagesfalse}{}
-\newcommand*\RecordPackage[4]{}
 \ifDTKrecordPackages
   \@ifdefinable\User@Packages{%
     \newwrite\User@Packages
     \immediate\openout\User@Packages userpackages.tex\relax
     \immediate\write\User@Packages{\@percentchar\space *** \DTK@today\space ***}%
-    \renewcommand*\RecordPackage[4]{%
+    \newcommand*\RecordPackage[4]{%
       \immediate\write\User@Packages{%
         \string\usepackage\ifx\relax#1\relax\else[#1]\fi{#2}%
           \ifx\relax#3\relax\else[#3]\fi\@percentchar\space From file: #4}%
@@ -179,10 +180,13 @@
 }%
 \newcommand*\DTK@@usepackage{}
 \def\DTK@@usepackage#1#2[#3]{%
-  \edef\@tempb{\zap@space#2 \@empty}%
-  \@for\@tempa:=\@tempb\do{%
-    \RecordPackage{#1}\@tempa{#3}\DTK@local@inputname
-  }
+  \ifDTKrecordPackages
+    \edef\@tempb{\zap@space#2 \@empty}%
+    \@for\@tempa:=\@tempb\do{%
+      \RecordPackage{#1}\@tempa{#3}\DTK@local@inputname
+    }
+    \endinput
+  \fi
 }%
 
 \newcommand*\DTK@AtBeginDocument[1]{%
