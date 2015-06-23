@@ -1,0 +1,12 @@
+# Rolf Niepraschk, 2015/06/23, Rolf.Niepraschk@gmx.de
+#
+# Hilfsdefinitionen zum make-Prozess für "Die TeXnische Komödie"
+#
+# -- unveränderlich --
+
+LATEX = lualatex
+OPTIONS= "--shell-escape"
+
+MAKEINDEXSTYLE = dtk-idx.ist
+MAKEGLOSSARYSTYLE = dtk-adr.ist
+
