@@ -1,4 +1,4 @@
-\setcounter{errorcontextlines}{100}
+
 \listfiles
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \RequirePackage{hyphsubst}% Trennregeln austauschen
@@ -9,6 +9,26 @@
 
 \ProvidesClass{dtk2}%
   [2015/05/02 v0.1a dtk document class (RN)]
+
+\RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
+\newcommand*\DTK@engine{}
+\ifxetex
+  \def\DTK@engine{3}% XeTeX
+\else
+  \ifluatex
+    \def\DTK@engine{4}% LuaTeX
+  \else
+    \ifpdf
+      \def\DTK@engine{2}% pdfTeX
+    \else
+      \ifvtex
+        \def\DTK@engine{1}% VTeX
+      \else
+        \def\DTK@engine{0}% TeX+dvips
+      \fi
+    \fi
+  \fi
+\fi
 
 \newif\ifDTK@Author@ \DTK@Author@true
 
@@ -26,6 +46,8 @@
 \LoadClass[
 ,fontsize=10pt
 ]{scrbook}
+
+\ifDTK@Author@\setcounter{errorcontextlines}{100}\fi
 
 \paperwidth  = 148mm %
 \paperheight = 210mm %
@@ -58,30 +80,6 @@
 \RequirePackage{xcolor}
 \RequirePackage{etex}
 
-\RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
-
-\newcommand*\DTK@engine{}
-
-\ifxetex
-  \def\DTK@engine{3}% XeTeX
-\else
-  \ifluatex
-    \def\DTK@engine{4}% LuaTeX
-  \else
-    \ifpdf
-      \def\DTK@engine{2}% pdfTeX
-    \else
-      \ifvtex
-        \def\DTK@engine{1}% VTeX
-      \else
-        \def\DTK@engine{0}% TeX+dvips
-      \fi
-    \fi
-  \fi
-\fi
-
-\RequirePackage[lining=true]{libertine}
-
 \ifnum\DTK@engine < 3 %
   \input{dtk2-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
 \else
@@ -109,6 +107,16 @@
 \defineshorthand{"'}{\closeautoquote}%
 \AtEndOfClass{\shorthandon{"}}
 
+\AtBeginDocument{%
+  \ifDTK@Author@\else
+    \InputIfFileExists{userpackages.tex}{%
+      \typeout{*************************************^^J%
+               * File `userpackages.tex' used.^^J%
+               *************************************}%
+    }{}%
+  \fi
+}
+
 %%% Laden eines Einzeldokuments
 
 \newcommand*\DTK@embedded@documentclasshook{}
@@ -131,6 +139,23 @@
 \newcommand*\DTK@local@inputname{}
 \newcommand*\DTK@eat@version[1][]{\ignorespaces}
 
+\@ifundefined{ifDTKrecordPackages}{%
+  \newif\ifDTKrecordPackages \DTKrecordPackagesfalse}{}
+\ifDTKrecordPackages
+  \@ifdefinable\User@Packages{%
+    \newwrite\User@Packages
+    \immediate\openout\User@Packages userpackages.tex\relax
+    \newcommand*\RecordPackage[4]{%
+      \immediate\write\User@Packages{%
+        \string\usepackage\ifx\relax#1\relax\else[#1]\fi{#2}%
+          \ifx\relax#3\relax\else[#3]\fi\@percentchar\space From file: #4}%
+    }%
+    \AtEndDocument{\immediate\closeout\User@Packages\relax}%
+  }
+\else
+  \newcommand*\RecordPackage[4]{}
+\fi
+
 \newcommand*\DTK@usepackage[2][]{%
   \@ifnextchar[%]
     {\DTK@@usepackage{#1}{#2}}%
@@ -139,15 +164,8 @@
 \newcommand*\DTK@@usepackage{}
 \def\DTK@@usepackage#1#2[#3]{%
   \edef\@tempb{\zap@space#2 \@empty}%
-  \@for\@tempa:=\@tempb\do{\def\@tempb{inputenc}%
-    \ifx\@tempa\@tempb
-      \edef\@tempa{#1}%
-      %%%\ifx\@tempa\@empty\else\inputencoding{#1}\fi
-    \else
-    % \ifx\@tempa\@empty\else\usepackage{\@tempa}%
-    %   \RecordPackage{#1}\@tempa{#3}\DTK@local@inputname
-    % \fi
-    \fi
+  \@for\@tempa:=\@tempb\do{%
+    \RecordPackage{#1}\@tempa{#3}\DTK@local@inputname
   }
 }%
 
