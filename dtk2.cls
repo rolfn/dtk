@@ -42,7 +42,7 @@
 %\DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrbook}}%
 \DeclareOption*{\OptionNotUsed}
 \ProcessOptions\relax
-\PassOptionsToPackage{paper=a4,pagesize,twoside=false,headinclude}{typearea}
+\PassOptionsToPackage{pagesize,twoside=true}{typearea}
 \LoadClass[
 ,fontsize=10pt
 ]{scrbook}
@@ -139,21 +139,37 @@
 \newcommand*\DTK@local@inputname{}
 \newcommand*\DTK@eat@version[1][]{\ignorespaces}
 
+\begingroup
+  \ifluatex
+    \catcode`\%=12\relax
+    \xdef\DTK@today{\directlua{tex.print(os.date("%Y-%m-%d %H:%M:%S"))}}
+  \else
+    \count@\time
+    \divide\count@ 60 %
+    \count2=-\count@
+    \multiply\count2 60 %
+    \advance\count2 \time
+    \xdef\DTK@today{%
+      \the\year-\two@digits{\the\month}-\two@digits{\the\day} %
+        \space\two@digits{\the\count@}:\two@digits{\the\count2}}
+  \fi
+\endgroup
+
 \@ifundefined{ifDTKrecordPackages}{%
   \newif\ifDTKrecordPackages \DTKrecordPackagesfalse}{}
+\newcommand*\RecordPackage[4]{}
 \ifDTKrecordPackages
   \@ifdefinable\User@Packages{%
     \newwrite\User@Packages
     \immediate\openout\User@Packages userpackages.tex\relax
-    \newcommand*\RecordPackage[4]{%
+    \immediate\write\User@Packages{\@percentchar\space *** \DTK@today\space ***}%
+    \renewcommand*\RecordPackage[4]{%
       \immediate\write\User@Packages{%
         \string\usepackage\ifx\relax#1\relax\else[#1]\fi{#2}%
           \ifx\relax#3\relax\else[#3]\fi\@percentchar\space From file: #4}%
     }%
     \AtEndDocument{\immediate\closeout\User@Packages\relax}%
   }
-\else
-  \newcommand*\RecordPackage[4]{}
 \fi
 
 \newcommand*\DTK@usepackage[2][]{%
