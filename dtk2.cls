@@ -201,6 +201,7 @@
   \DTK@eat@version
 }
 
+% TODO:\addbibresource (+ \bibliography) auch nach "userpackages.tex"!?
 \newcommand*\DTKinput[1]{%
   \begingroup
     \filename@parse{#1}%
@@ -254,5 +255,27 @@
 \pltopsep=\medskipamount
 \plitemsep=1pt %
 \plparsep=1pt %
+
+\RequirePackage[%
+,style=numeric
+,language=auto
+,hyperref=auto
+,abbreviate=true
+,sorting=nyt
+,bibencoding=utf8
+,block=ragged
+,backend=biber
+,useprefix=true
+,backrefstyle=two
+,sortlocale=de_DE
+%  ,sortlocale=de_DE_phonebook
+,dateabbrev=false
+,datezeros=false
+,maxnames=3
+,minnames=3
+,defernumbers=true
+]{biblatex}
+
+
 
 \endinput
