@@ -1,0 +1,93 @@
+%% ---------------------------------------------------------------
+%% biblatex-dtk --- A set of biblatex implementations of
+%%   dtk bibliography styles for DANTE journal 
+%%   "Die TeXnische Komödie"
+%% Maintained by Herbert Voß
+%% (C) herbert@dante.de
+%% Released under the LaTeX Project Public License v1.3c or later
+%% See http://www.latex-project.org/lppl.txt
+%% ---------------------------------------------------------------
+%% 
+
+\ProvidesFile{dtk.bbx}[\abx@bbxid]
+
+%%[2015/05/23 v0.01 biblatex bibliography style]
+
+% Load the standard style to avoid copy-pasting unnecessary material
+\RequireBibliographyStyle{numeric}
+%\RequireBibliographyStyle{authoryear}
+
+%\ExecuteBibliographyOptions{dashed=false}
+
+\DeclareFieldFormat[ctan]{url}{\mkbibacro{CTAN}\addcolon\space\url{#1}}
+
+\newbibmacro*{ctanurl}{\printfield{url}}
+
+\newbibmacro*{ctanurl+urldate}{%
+  \usebibmacro{ctanurl}%
+  \iffieldundef{urlyear}
+    {}
+    {\setunit*{\addspace}%
+     \usebibmacro{urldate}}}
+
+\DeclareListFormat{language}{}{}
+
+\DeclareBibliographyDriver{ctan}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{title}%
+%  \newunit
+%  \printlist{language}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \printfield{version}%
+  \newunit
+  \printfield{note}%
+  \newunit\newblock
+  \printlist{organization}%
+  \newunit\newblock
+  \usebibmacro{date}%
+  \newunit\newblock
+  \iftoggle{bbx:eprint}
+    {\usebibmacro{eprint}}
+    {}%
+  \newunit\newblock
+  \usebibmacro{ctanurl+urldate}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+  \newunit\newblock
+  \iftoggle{bbx:related}
+    {\usebibmacro{related:init}%
+     \usebibmacro{related}}
+    {}%
+  \usebibmacro{finentry}}
+%
+%\setlength\labelnumberwidth{1.5em}
+%\setlength\biblabelsep{1em}
+\defbibenvironment{dtk@bib}
+  {\list
+     {\printtext[labelnumberwidth]{%
+	\printfield{prefixnumber}%
+	\printfield{labelnumber}}}
+     {\setlength{\labelwidth}{\labelnumberwidth}%
+      \setlength{\leftmargin}{\labelwidth}%
+      \setlength{\labelsep}{\biblabelsep}%
+      \addtolength{\leftmargin}{\labelsep}%
+      \setlength{\itemsep}{\bibitemsep}%
+      \setlength{\parsep}{\bibparsep}}%
+      \renewcommand*{\makelabel}[1]{\hss##1}%
+      \RaggedRight}
+  {\endlist}
+  {\item}
+
+
+%%
+%% 
+\endinput
