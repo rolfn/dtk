@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/05/02 v0.1a dtk document class (RN)]
+  [2015/07/10 v0.1b dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -201,7 +201,7 @@
   \DTK@eat@version
 }
 
-% TODO:\addbibresource (+ \bibliography) auch nach "userpackages.tex"!?
+% TODO:\addbibresource (+ \bibliography) auch nach "komoedie.bib"!?
 \newcommand*\DTKinput[1]{%
   \begingroup
     \filename@parse{#1}%
@@ -276,6 +276,14 @@
 ,defernumbers=true
 ]{biblatex}
 
+\AtEmbeddedBeginDocument{%
+  \refsection
+}
 
+\AtEmbeddedEndDocument{%
+  \endrefsection
+}
+
+\let\bibliography=\addbibresource % ???
 
 \endinput
