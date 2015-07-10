@@ -202,6 +202,8 @@
 }
 
 % TODO:\addbibresource (+ \bibliography) auch nach "komoedie.bib"!?
+% \printbibliography umdefinieren.
+
 \newcommand*\DTKinput[1]{%
   \begingroup
     \filename@parse{#1}%
