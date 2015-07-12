@@ -109,7 +109,7 @@
 
 \AtBeginDocument{%
   \ifDTK@Author@\else
-    \ifDTKrecordPackages\else
+    \ifDTKrecord\else
       \InputIfFileExists{userpackages.tex}{%
         \typeout{*************************************^^J%
                  * File `userpackages.tex' used.^^J%
@@ -157,9 +157,9 @@
   \fi
 \endgroup
 
-\@ifundefined{ifDTKrecordPackages}{%
-  \newif\ifDTKrecordPackages \DTKrecordPackagesfalse}{}
-\ifDTKrecordPackages
+\@ifundefined{ifDTKrecord}{%
+  \newif\ifDTKrecord \DTKrecordfalse}{}
+\ifDTKrecord
   \@ifdefinable\User@Packages{%
     \newwrite\User@Packages
     \immediate\openout\User@Packages userpackages.tex\relax
@@ -180,7 +180,7 @@
 }%
 \newcommand*\DTK@@usepackage{}
 \def\DTK@@usepackage#1#2[#3]{%
-  \ifDTKrecordPackages
+  \ifDTKrecord
     \edef\@tempb{\zap@space#2 \@empty}%
     \@for\@tempa:=\@tempb\do{%
       \RecordPackage{#1}\@tempa{#3}\DTK@local@inputname
@@ -286,6 +286,7 @@
   \endrefsection
 }
 
-\let\bibliography=\addbibresource % ???
+%%\let\bibliography=\addbibresource % ???
+
 
 \endinput
