@@ -106,9 +106,9 @@
 \MakeAutoQuote{»}{«}
 \defineshorthand{"`}{\openautoquote}%
 \defineshorthand{"'}{\closeautoquote}%
-\AtEndOfClass{\shorthandon{"}}
 
-\AtBeginDocument{%
+\AtEndOfClass{%
+  \shorthandon{"}
   \ifDTK@Author@\else
     \ifDTKrecord\else
       \InputIfFileExists{userpackages.tex}{%
@@ -158,22 +158,6 @@
   \fi
 \endgroup
 
-\@ifundefined{ifDTKrecord}{%
-  \newif\ifDTKrecord \DTKrecordfalse}{}
-\ifDTKrecord
-  \@ifdefinable\User@Packages{%
-    \newwrite\User@Packages
-    \immediate\openout\User@Packages userpackages.tex\relax
-    \immediate\write\User@Packages{\@percentchar\space *** \DTK@today\space ***}%
-    \newcommand*\RecordPackage[4]{%
-      \immediate\write\User@Packages{%
-        \string\usepackage\ifx\relax#1\relax\else[#1]\fi{#2}%
-          \ifx\relax#3\relax\else[#3]\fi\@percentchar\space From file: #4}%
-    }%
-    \AtEndDocument{\immediate\closeout\User@Packages\relax}%
-  }
-\fi
-
 \newcommand*\DTK@usepackage[2][]{%
   \@ifnextchar[%]
     {\DTK@@usepackage{#1}{#2}}%
@@ -193,8 +177,6 @@
   \DTK@eat@version
 }
 
-%%\let\bibliography=\addbibresource % ???
-%%%\let\ORIG@addbibresource=\addbibresource{}
 \RequirePackage[%
 ,style=numeric
 ,language=auto
@@ -204,45 +186,57 @@
 ,bibencoding=utf8
 ,block=ragged
 ,backend=biber
-,useprefix=true
-,backrefstyle=two
+%,useprefix=true
+%,backrefstyle=two
 ,sortlocale=de_DE
 %  ,sortlocale=de_DE_phonebook
 ,dateabbrev=false
 ,datezeros=false
 ,maxnames=3
 ,minnames=3
-,defernumbers=true
+%,defernumbers=true
 ]{biblatex}
 
 \newcommand*\ORIG@printbibliography{}
 \let\ORIG@printbibliography=\printbibliography
 
+\@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 \ifDTKrecord
-\newcommand*\DTK@addbibresource[2][]{%
-  \immediate\write\User@Packages{%
-    \string\addbibresource[datatype=bibtex,label=\the\c@refsection]{#2}%
-      \@percentchar\space From file: \DTK@local@jobname}%
-}%
-\def\DTK@@usepackage#1#2[#3]{%
-  \ifDTKrecord
-    \edef\@tempb{\zap@space#2 \@empty}%
-    \@for\@tempa:=\@tempb\do{%
-      \RecordPackage{#1}\@tempa{#3}\DTK@local@inputname
-    }
-  \fi
-}%
-\renewcommand*\printbibliography[2][]{}%
-\renewcommand*\bibliography[1]{}
+  \@ifdefinable\User@Packages{%
+    \newwrite\User@Packages
+    \immediate\openout\User@Packages userpackages.tex\relax
+    \immediate\write\User@Packages{\@percentchar\space *** \DTK@today\space ***}%
+    \AtEndDocument{\immediate\closeout\User@Packages\relax}%
+  }
+  \newcommand*\DTK@addbibresource[2][]{%
+    \immediate\write\User@Packages{%
+      \string\addbibresource[datatype=bibtex,label=\the\c@refsection]{#2}%
+        \@percentchar\space From file: \DTK@local@inputname
+    }%
+  }%
+  \let\bibliography=\DTK@addbibresource
+  \renewcommand*\printbibliography[1][]{}%
+  \def\DTK@@usepackage#1#2[#3]{%
+    \ifDTKrecord
+      \edef\@tempb{\zap@space#2 \@empty}%
+      \@for\@tempa:=\@tempb\do{%
+        \immediate\write\User@Packages{%
+          \string\usepackage\ifx\relax#1\relax\else[#1]\fi{\@tempa}%
+            \ifx\relax#3\relax\else[#3]\fi
+              \@percentchar\space From file: \DTK@local@inputname
+        }%
+      }%
+    \fi
+  }%
 \else
-\newcommand*\DTK@addbibresource[2][]{}%
-\def\DTK@@usepackage#1#2[#3]{}%
-\renewcommand*\printbibliography[1][]{%
-  \DTK@bib@true
-}%
-\renewcommand*\bibliography[1]{%
-  \DTK@bib@true
-}
+  \newcommand*\DTK@addbibresource[2][]{}%
+  \def\DTK@@usepackage#1#2[#3]{}%
+  \renewcommand*\printbibliography[1][]{%
+    \DTK@bib@true
+  }%
+  \renewcommand*\bibliography[1]{%
+    \DTK@bib@true
+  }%
 \fi
 
 % TODO:\addbibresource (+ \bibliography) auch nach "komoedie.bib"!?
@@ -260,19 +254,18 @@
     \let\AtEndDocument=\DTK@AtEndDocument
     \let\pagestyle\@gobble
     \let\thispagestyle\@gobble
-    \let\nocite\@gobble
     \let\listfiles\relax
     \let\nofiles\relax
     \let\documentclass=\DTK@documentclass
-    \let\usepackage=\DTK@usepackage{}
+    \let\usepackage=\DTK@usepackage
     \let\addbibresource=\DTK@addbibresource
+    \DTK@bib@false
     \renewenvironment*{document}%
       {\DTK@embedded@begindocumenthook}%
-      {\ifDTK@bib@\ORIG@printbibliography[section=\the\c@refsection]\fi
+      {\ifDTK@bib@\ORIG@printbibliography\fi
        \DTK@embedded@enddocumenthook\endinput}%
-    \DTK@bib@false
-    \refsection
-    \input{\DTK@local@inputname}%
+    \refsection[\the\c@refsection]%
+      \input{\DTK@local@inputname}%
     \endrefsection
   \endgroup
 }
