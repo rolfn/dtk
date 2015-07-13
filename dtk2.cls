@@ -226,7 +226,14 @@
     }%
   }%
 \else
-  \ifDTK@Author@\else
+  \ifDTK@Author@{}
+    \AfterEndPreamble{%
+      \renewcommand*\bibliography[1]{%
+        \immediate\write\@mainaux{\string\ORIG@addbibresource{#1}}%
+        \printbibliography
+      }%
+    }
+  \else
     \newcommand*\DTK@addbibresource[2][]{}%
     \def\DTK@@usepackage#1#2[#3]{}%
     \renewcommand*\printbibliography[1][]{\DTK@bib@true}%

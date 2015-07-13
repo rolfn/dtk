@@ -11,13 +11,6 @@
 \begin{document}
 \title{Ein zweiter Artikel zum "`Test"'}
 
-\makeatletter % TODO: Hook finden
-  \renewcommand*\bibliography[1]{%
-    \immediate\write\@mainaux{\string\ORIG@addbibresource{#1}}%
-    \printbibliography
-  }%
-\makeatother
-
 \maketitle
 
 Siehe~\cite{lamport:handbuch}
