@@ -1,8 +1,8 @@
 \documentclass{dtk2}
 \usepackage{blindtext,qrcode}
-\show\author
+%\show\author
 \author{Hugo Mustermann}
-\show\addbibresource
+%\show\addbibresource
 \address{Hugo}{Mustermann}%
         {Dorfstr.~1\\
          12345~Kleinkleckersdorf\\
@@ -15,10 +15,14 @@
 \title{Ein erster Artikel zum "`Test"'}
 
 \maketitle
+\nocite{*}
+Siehe~\cite{knuth:ct:a}
+Siehe~\cite{companion}
 
-\blinddocument
+Etwas Text \clearpage
+Etwas Text \clearpage
+Etwas Text \clearpage
 
-%\nocite{*}
 \printbibliography
 
 \end{document}

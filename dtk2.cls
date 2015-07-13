@@ -31,6 +31,7 @@
 \fi
 
 \newif\ifDTK@Author@ \DTK@Author@true
+\newif\ifDTK@bib@ \DTK@bib@false
 
 \DeclareOption{10pt}{\OptionNotUsed}
 \DeclareOption{11pt}{\OptionNotUsed}
@@ -179,15 +180,6 @@
     {\DTK@@usepackage{#1}{#2}[]}%
 }%
 \newcommand*\DTK@@usepackage{}
-\def\DTK@@usepackage#1#2[#3]{%
-  \ifDTKrecord
-    \edef\@tempb{\zap@space#2 \@empty}%
-    \@for\@tempa:=\@tempb\do{%
-      \RecordPackage{#1}\@tempa{#3}\DTK@local@inputname
-    }
-    \endinput
-  \fi
-}%
 
 \newcommand*\DTK@AtBeginDocument[1]{%
   \ClassWarning{dtk2}{\string\AtBeginDocument\space ignored!}
@@ -200,6 +192,58 @@
   \DTK@embedded@documentclasshook
   \DTK@eat@version
 }
+
+%%\let\bibliography=\addbibresource % ???
+%%%\let\ORIG@addbibresource=\addbibresource{}
+\RequirePackage[%
+,style=numeric
+,language=auto
+,hyperref=auto
+,abbreviate=true
+,sorting=nyt
+,bibencoding=utf8
+,block=ragged
+,backend=biber
+,useprefix=true
+,backrefstyle=two
+,sortlocale=de_DE
+%  ,sortlocale=de_DE_phonebook
+,dateabbrev=false
+,datezeros=false
+,maxnames=3
+,minnames=3
+,defernumbers=true
+]{biblatex}
+
+\newcommand*\ORIG@printbibliography{}
+\let\ORIG@printbibliography=\printbibliography
+
+\ifDTKrecord
+\newcommand*\DTK@addbibresource[2][]{%
+  \immediate\write\User@Packages{%
+    \string\addbibresource[datatype=bibtex,label=\the\c@refsection]{#2}%
+      \@percentchar\space From file: \DTK@local@jobname}%
+}%
+\def\DTK@@usepackage#1#2[#3]{%
+  \ifDTKrecord
+    \edef\@tempb{\zap@space#2 \@empty}%
+    \@for\@tempa:=\@tempb\do{%
+      \RecordPackage{#1}\@tempa{#3}\DTK@local@inputname
+    }
+  \fi
+}%
+\renewcommand*\printbibliography[2][]{}%
+\renewcommand*\bibliography[1]{}
+\else
+\newcommand*\DTK@addbibresource[2][]{}%
+\def\DTK@@usepackage#1#2[#3]{}%
+\renewcommand*\printbibliography[1][]{%
+  \DTK@bib@true
+}%
+\renewcommand*\bibliography[1]{%
+  \DTK@bib@true
+}
+\fi
 
 % TODO:\addbibresource (+ \bibliography) auch nach "komoedie.bib"!?
 % \printbibliography umdefinieren.
@@ -220,11 +264,16 @@
     \let\listfiles\relax
     \let\nofiles\relax
     \let\documentclass=\DTK@documentclass
-    \let\usepackage=\DTK@usepackage
+    \let\usepackage=\DTK@usepackage{}
+    \let\addbibresource=\DTK@addbibresource
     \renewenvironment*{document}%
       {\DTK@embedded@begindocumenthook}%
-      {\DTK@embedded@enddocumenthook\endinput}%
+      {\ifDTK@bib@\ORIG@printbibliography[section=\the\c@refsection]\fi
+       \DTK@embedded@enddocumenthook\endinput}%
+    \DTK@bib@false
+    \refsection
     \input{\DTK@local@inputname}%
+    \endrefsection
   \endgroup
 }
 
@@ -258,35 +307,12 @@
 \plitemsep=1pt %
 \plparsep=1pt %
 
-\RequirePackage[%
-,style=numeric
-,language=auto
-,hyperref=auto
-,abbreviate=true
-,sorting=nyt
-,bibencoding=utf8
-,block=ragged
-,backend=biber
-,useprefix=true
-,backrefstyle=two
-,sortlocale=de_DE
-%  ,sortlocale=de_DE_phonebook
-,dateabbrev=false
-,datezeros=false
-,maxnames=3
-,minnames=3
-,defernumbers=true
-]{biblatex}
-
 \AtEmbeddedBeginDocument{%
-  \refsection
+  %%%\refsection
 }
 
 \AtEmbeddedEndDocument{%
-  \endrefsection
+  %%%\endrefsection
 }
-
-%%\let\bibliography=\addbibresource % ???
-
 
 \endinput

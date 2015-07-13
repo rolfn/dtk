@@ -5,22 +5,6 @@
 
 \begin{document}
 
-%%%\let\ORIG@addbibresource=\addbibresource
-\makeatletter
-\renewcommand*\addbibresource[2][]{%
-    \typeout{***ooo #1}
-    \typeout{***ooo #2}
-  \ifDTKrecord
-    \typeout{***ooo #1}
-    \typeout{***ooo #2}
-    \show \addbibresource
-    \immediate\write\User@Packages{%
-      \string\addbibresource[datatype=bibtex,label=\the\c@refsection]{#2}%
-        \@percentchar\space From file: \DTK@local@jobname}%
-  \fi
-}%
-\makeatother
-
 \DTKinput{artikel1}
 
 \DTKinput{artikel2}
