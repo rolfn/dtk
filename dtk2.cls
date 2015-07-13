@@ -48,7 +48,7 @@
 ,fontsize=10pt
 ]{scrbook}
 
-\ifDTK@Author@\setcounter{errorcontextlines}{100}\fi
+\ifDTK@Author@\else\setcounter{errorcontextlines}{100}\fi
 
 \paperwidth  = 148mm %
 \paperheight = 210mm %
@@ -135,8 +135,6 @@
 \newcommand*\AtEmbeddedEndDocument{%
   \g@addto@macro\DTK@embedded@enddocumenthook}
 
-%%%\ifDTK@Author@\edef\DTK@jobname{komoedie}\else\edef\DTK@jobname{\jobname}\fi
-
 \newcommand*\DTK@jobname{}
 \newcommand*\DTK@local@jobname{}
 \newcommand*\DTK@local@inputname{}
@@ -199,6 +197,7 @@
 
 \newcommand*\ORIG@printbibliography{}
 \let\ORIG@printbibliography=\printbibliography
+\let\ORIG@addbibresource=\addbibresource
 
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 \ifDTKrecord
@@ -217,24 +216,23 @@
   \let\DTK@bibliography=\DTK@addbibresource
   \renewcommand*\printbibliography[1][]{}%
   \def\DTK@@usepackage#1#2[#3]{%
-      \edef\@tempb{\zap@space#2 \@empty}%
-      \@for\@tempa:=\@tempb\do{%
-        \immediate\write\User@Packages{%
-          \string\usepackage\ifx\relax#1\relax\else[#1]\fi{\@tempa}%
-            \ifx\relax#3\relax\else[#3]\fi
-              \@percentchar\space From file: \DTK@local@inputname
-        }%
+    \edef\@tempb{\zap@space#2 \@empty}%
+    \@for\@tempa:=\@tempb\do{%
+      \immediate\write\User@Packages{%
+        \string\usepackage\ifx\relax#1\relax\else[#1]\fi{\@tempa}%
+          \ifx\relax#3\relax\else[#3]\fi
+            \@percentchar\space From file: \DTK@local@inputname
       }%
+    }%
   }%
 \else
-  \newcommand*\DTK@addbibresource[2][]{}%
-  \def\DTK@@usepackage#1#2[#3]{}%
-  \renewcommand*\printbibliography[1][]{\DTK@bib@true}%
-  \newcommand*\DTK@bibliography[1]{\DTK@bib@true}%
+  \ifDTK@Author@\else
+    \newcommand*\DTK@addbibresource[2][]{}%
+    \def\DTK@@usepackage#1#2[#3]{}%
+    \renewcommand*\printbibliography[1][]{\DTK@bib@true}%
+    \newcommand*\DTK@bibliography[1]{\DTK@bib@true}%
+  \fi
 \fi
-
-% TODO:\addbibresource (+ \bibliography) auch nach "komoedie.bib"!?
-% \printbibliography umdefinieren.
 
 \newcommand*\DTKinput[1]{%
   \begingroup

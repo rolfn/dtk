@@ -1,5 +1,5 @@
 \documentclass{dtk2}
-\usepackage[ngerman]{blindtext}
+\usepackage[bible]{blindtext}
 \usepackage{pict2e}
 \author{Ellen Bogen}
 \address{Ellen}{Bogen}%
@@ -10,6 +10,13 @@
 
 \begin{document}
 \title{Ein zweiter Artikel zum "`Test"'}
+
+\makeatletter % TODO: Hook finden
+  \renewcommand*\bibliography[1]{%
+    \immediate\write\@mainaux{\string\ORIG@addbibresource{#1}}%
+    \printbibliography
+  }%
+\makeatother
 
 \maketitle
 
