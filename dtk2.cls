@@ -197,7 +197,7 @@
 
 \newcommand*\ORIG@printbibliography{}
 \let\ORIG@printbibliography=\printbibliography
-\let\ORIG@addbibresource=\addbibresource
+\let\ORIG@bibliography=\bibliography
 
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 \ifDTKrecord
@@ -226,10 +226,10 @@
     }%
   }%
 \else
-  \ifDTK@Author@{}
+  \ifDTK@Author@
     \AfterEndPreamble{%
       \renewcommand*\bibliography[1]{%
-        \immediate\write\@mainaux{\string\ORIG@addbibresource{#1}}%
+        \immediate\write\@mainaux{\string\ORIG@bibliography{#1}}%
         \printbibliography
       }%
     }
