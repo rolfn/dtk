@@ -214,10 +214,9 @@
         \@percentchar\space From file: \DTK@local@inputname
     }%
   }%
-  \let\bibliography=\DTK@addbibresource
+  \let\DTK@bibliography=\DTK@addbibresource
   \renewcommand*\printbibliography[1][]{}%
   \def\DTK@@usepackage#1#2[#3]{%
-    \ifDTKrecord
       \edef\@tempb{\zap@space#2 \@empty}%
       \@for\@tempa:=\@tempb\do{%
         \immediate\write\User@Packages{%
@@ -226,17 +225,12 @@
               \@percentchar\space From file: \DTK@local@inputname
         }%
       }%
-    \fi
   }%
 \else
   \newcommand*\DTK@addbibresource[2][]{}%
   \def\DTK@@usepackage#1#2[#3]{}%
-  \renewcommand*\printbibliography[1][]{%
-    \DTK@bib@true
-  }%
-  \renewcommand*\bibliography[1]{%
-    \DTK@bib@true
-  }%
+  \renewcommand*\printbibliography[1][]{\DTK@bib@true}%
+  \newcommand*\DTK@bibliography[1]{\DTK@bib@true}%
 \fi
 
 % TODO:\addbibresource (+ \bibliography) auch nach "komoedie.bib"!?
@@ -259,6 +253,7 @@
     \let\documentclass=\DTK@documentclass
     \let\usepackage=\DTK@usepackage
     \let\addbibresource=\DTK@addbibresource
+    \let\bibliography=\DTK@bibliography
     \DTK@bib@false
     \renewenvironment*{document}%
       {\DTK@embedded@begindocumenthook}%
