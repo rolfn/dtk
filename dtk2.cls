@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/07/10 v0.1b dtk document class (RN)]
+  [2015/07/14 v0.1b dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -39,11 +39,13 @@
 \DeclareOption{twoside}{\OptionNotUsed}
 \DeclareOption{oneside}{\OptionNotUsed}
 \DeclareOption{full}{\DTK@Author@false}
-\DeclareOption{draft}{\PassOptionsToClass{scrbook}}
+\DeclareOption{draft}{\PassOptionsToClass{\CurrentOption}{scrbook}}
 %\DeclareOption*{\PassOptionsToClass{\CurrentOption}{scrbook}}%
 \DeclareOption*{\OptionNotUsed}
 \ProcessOptions\relax
+
 \PassOptionsToPackage{pagesize,twoside=true}{typearea}
+
 \LoadClass[
 ,fontsize=10pt
 ]{scrbook}
@@ -75,11 +77,12 @@
 
 \@fptop=\z@
 
-\let\DTK@tempdima=\@ovxx
-\let\DTK@tempdimb=\@ovyy
-
 \RequirePackage{xcolor}
-\RequirePackage{etex}
+%\RequirePackage{etex} % ???
+
+\newdimen\DTK@tempdima
+\newdimen\DTK@tempdimb
+\newdimen\DTK@tempdimc
 
 \ifnum\DTK@engine < 3 %
   \input{dtk2-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
@@ -120,26 +123,6 @@
   \fi
 }
 
-%%% Laden eines Einzeldokuments
-
-\newcommand*\DTK@embedded@documentclasshook{}
-\newcommand*\AtEmbeddedDocumentclass{%
-  \g@addto@macro\DTK@embedded@documentclasshook}
-\AtEmbeddedDocumentclass{%
-  \edef\jobname{\DTK@local@jobname}%
-}
-\newcommand*\DTK@embedded@begindocumenthook{}
-\newcommand*\AtEmbeddedBeginDocument{%
-  \g@addto@macro\DTK@embedded@begindocumenthook}
-\newcommand*\DTK@embedded@enddocumenthook{}
-\newcommand*\AtEmbeddedEndDocument{%
-  \g@addto@macro\DTK@embedded@enddocumenthook}
-
-\newcommand*\DTK@jobname{}
-\newcommand*\DTK@local@jobname{}
-\newcommand*\DTK@local@inputname{}
-\newcommand*\DTK@eat@version[1][]{\ignorespaces}
-
 \begingroup
   \ifluatex
     \catcode`\%=12\relax
@@ -156,27 +139,8 @@
   \fi
 \endgroup
 
-\newcommand*\DTK@usepackage[2][]{%
-  \@ifnextchar[%]
-    {\DTK@@usepackage{#1}{#2}}%
-    {\DTK@@usepackage{#1}{#2}[]}%
-}%
-\newcommand*\DTK@@usepackage{}
-
-\newcommand*\DTK@AtBeginDocument[1]{%
-  \ClassWarning{dtk2}{\string\AtBeginDocument\space ignored!}
-}
-\newcommand*\DTK@AtEndDocument[1]{%
-  \ClassWarning{dtk2}{\string\AtEndDocument\space ignored!}
-}
-
-\newcommand*\DTK@documentclass[2][]{%
-  \DTK@embedded@documentclasshook
-  \DTK@eat@version
-}
-
 \RequirePackage[%
-,style=numeric
+,style=dtk
 ,language=auto
 ,hyperref=auto
 ,abbreviate=true
@@ -198,6 +162,29 @@
 \newcommand*\ORIG@printbibliography{}
 \let\ORIG@printbibliography=\printbibliography
 \let\ORIG@bibliography=\bibliography
+
+\newcommand*\DTK@embedded@documentclasshook{}
+\newcommand*\AtEmbeddedDocumentclass{%
+  \g@addto@macro\DTK@embedded@documentclasshook}
+\newcommand*\DTK@embedded@begindocumenthook{}
+\newcommand*\AtEmbeddedBeginDocument{%
+  \g@addto@macro\DTK@embedded@begindocumenthook}
+\newcommand*\DTK@embedded@enddocumenthook{}
+\newcommand*\AtEmbeddedEndDocument{%
+  \g@addto@macro\DTK@embedded@enddocumenthook}
+\newcommand*\DTK@jobname{}
+\newcommand*\DTK@local@inputname{}
+\newcommand*\DTK@eat@version[1][]{\ignorespaces}
+\newcommand*\DTK@usepackage[2][]{%
+  \@ifnextchar[%]
+    {\DTK@@usepackage{#1}{#2}}%
+    {\DTK@@usepackage{#1}{#2}[]}%
+}%
+\newcommand*\DTK@@usepackage{}
+\newcommand*\DTK@documentclass[2][]{%
+  \DTK@embedded@documentclasshook
+  \DTK@eat@version
+}
 
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 \ifDTKrecord
@@ -226,7 +213,9 @@
     }%
   }%
 \else
-  \ifDTK@Author@
+  \ifDTK@Author@{}
+    % Falls \bibliography{...} in traditioneller Weise nach \begin{document};
+    % (2xLaTeX-Läufe + biber + 1xLaTeX-Lauf)
     \AfterEndPreamble{%
       \renewcommand*\bibliography[1]{%
         \immediate\write\@mainaux{\string\ORIG@bibliography{#1}}%
@@ -240,21 +229,22 @@
     \newcommand*\DTK@bibliography[1]{\DTK@bib@true}%
   \fi
 \fi
-
+{}
+%%% Laden eines Einzeldokuments
 \newcommand*\DTKinput[1]{%
   \begingroup
     \filename@parse{#1}%
-    \edef\DTK@local@jobname{\filename@base}%
+    \edef\jobname{\filename@base}%
     \@ifundefined{filename@ext}%
-      {\IfFileExists{\DTK@local@jobname.tex}%
-        {\edef\DTK@local@inputname{\DTK@local@jobname.tex}}{}}%
+      {\IfFileExists{\jobname.tex}%
+        {\edef\DTK@local@inputname{\jobname.tex}}{}}%
       {\edef\DTK@local@inputname{#1}}%
-    \let\AtBeginDocument=\DTK@AtBeginDocument
-    \let\AtEndDocument=\DTK@AtEndDocument
-    \let\pagestyle\@gobble
-    \let\thispagestyle\@gobble
-    \let\listfiles\relax
-    \let\nofiles\relax
+    \let\AtBeginDocument=\@gobble
+    \let\AtEndDocument=\@gobble
+    \let\pagestyle=\@gobble
+    \let\thispagestyle=\@gobble
+    \let\listfiles=\relax
+    \let\nofiles=\relax
     \let\documentclass=\DTK@documentclass
     \let\usepackage=\DTK@usepackage
     \let\addbibresource=\DTK@addbibresource
@@ -271,9 +261,8 @@
 }
 
 \newcommand*\DTK@keywords{}
-\newcommand*\keywords[1]{\gdef\DTK@keywords{#1}}
-\newcommand\address[3]{%
-}
+\newcommand*\keywords[1]{\gdef\DTK@keywords{#1}}% ???
+\newcommand\address[3]{}
 
 % Kompakte Listen
 \RequirePackage[neverdecrease]{paralist}

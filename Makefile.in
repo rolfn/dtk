@@ -1,12 +1,15 @@
-# Rolf Niepraschk, 2015/06/23, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2015/07/14, Rolf.Niepraschk@gmx.de
 #
 # Hilfsdefinitionen zum make-Prozess für "Die TeXnische Komödie"
 #
 # -- unveränderlich --
 
 LATEX = lualatex
-OPTIONS= "--shell-escape"
+LATEX_OPTS = "--shell-escape"
 
 MAKEINDEXSTYLE = dtk-idx.ist
 MAKEGLOSSARYSTYLE = dtk-adr.ist
 
+all :
+komoedie.pdf : komoedie.tex $(ARTICELS)
+	$(LATEX) $(LATEX_OPTS)
