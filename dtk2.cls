@@ -165,8 +165,6 @@
 
 \newcommand*\ORIG@printbibliography{}
 \let\ORIG@printbibliography=\printbibliography
-\newcommand*\ORIG@bibliography{}
-\let\ORIG@bibliography=\bibliography
 
 \newcommand*\DTK@embedded@documentclasshook{}
 \newcommand*\AtEmbeddedDocumentclass{%
@@ -193,7 +191,7 @@
 
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 \ifDTKrecord
-  % Testlauf zum Aufsammeln von Paket- und bib-Dateiname
+  % Testlauf zum Aufsammeln von Paket- und bib-Dateinamen
   \@ifdefinable\User@Packages{%
     \newwrite\User@Packages
     \immediate\openout\User@Packages userpackages.tex\relax
@@ -227,11 +225,11 @@
   }%
 \else
   \ifDTK@Author@
-    % Falls \bibliography{...} in traditioneller Weise nach \begin{document};
+    % Falls \bibliography{...} in traditioneller Weise nach \begin{document}.
     % (2xLaTeX-Lauf + biber + 1xLaTeX-Lauf)
     \AfterEndPreamble{%
       \renewcommand*\bibliography[1]{%
-        \immediate\write\@mainaux{\string\ORIG@bibliography{#1}}%
+        \immediate\write\@mainaux{\string\bibliography{#1}}%
         \printbibliography
       }%
     }
@@ -287,15 +285,9 @@
   \parindent=\DTK@tempdima
   \parskip=\DTK@tempdimb
 }
-\def\enumerate{%
-  \DTK@begin@list{compactenum}%
-}
-\def\itemize{%
-  \DTK@begin@list{compactitem}%
-}
-\def\description{%
-  \DTK@begin@list{compactdesc}%
-}
+\def\enumerate{\DTK@begin@list{compactenum}}
+\def\itemize{\DTK@begin@list{compactitem}}
+\def\description{\DTK@begin@list{compactdesc}}
 \let\enditemize\endcompactitem
 \let\endenumerate\endcompactenum
 \let\enddescription\endcompactdesc
@@ -303,13 +295,6 @@
 \plitemsep=1pt %
 \plparsep=1pt %
 
-\AtEmbeddedBeginDocument{%
-  %%%\refsection
-}
-
-\AtEmbeddedEndDocument{%
-  %%%\endrefsection
-}
 
 \raggedbottom
 
