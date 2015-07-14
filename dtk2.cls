@@ -58,6 +58,8 @@
 \textwidth  = 333pt %
 \oddsidemargin  = -35.89157pt %
 \evensidemargin = -17.70235pt %
+\marginparwidth = 1cm %
+\marginparsep = 7pt %
 \topmargin  = -55.66684pt %
 \headheight = 17pt %
 \headsep    = 17pt %
@@ -65,17 +67,16 @@
 \parskip   = 0.3\baselineskip
 \advance\parskip by 0pt plus 2pt %
 \parindent = 0pt %
+\columnsep = 5pt %
+
+\emergencystretch = 1.5em %
+\clubpenalty  = 10000 %
+\widowpenalty = 10000 %
+
+\@fptop=\z@
 \renewcommand\topfraction{.9}
 \renewcommand\bottomfraction{.9}
 \renewcommand\textfraction{.1}
-\columnsep = 5pt %
-\emergencystretch = 1.5em %
-\raggedbottom
-\clubpenalty  = 10000 %
-\widowpenalty = 10000 %
-\marginparwidth = 1cm %
-
-\@fptop=\z@
 
 \RequirePackage{xcolor}
 %\RequirePackage{etex} % ???
@@ -83,6 +84,9 @@
 \newdimen\DTK@tempdima
 \newdimen\DTK@tempdimb
 \newdimen\DTK@tempdimc
+
+\newcommand*\DTK@tempa{}
+\newcommand*\DTK@tempb{}
 
 \ifnum\DTK@engine < 3 %
   \input{dtk2-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
@@ -160,6 +164,7 @@
 
 \newcommand*\ORIG@printbibliography{}
 \let\ORIG@printbibliography=\printbibliography
+\newcommand*\ORIG@bibliography{}
 \let\ORIG@bibliography=\bibliography
 
 \newcommand*\DTK@embedded@documentclasshook{}
@@ -200,7 +205,14 @@
         \@percentchar\space From file: \DTK@local@inputname
     }%
   }%
-  \let\DTK@bibliography=\DTK@addbibresource
+  \newcommand*\DTK@bibliography[1]{%
+    \filename@parse{#1}%
+    \@ifundefined{filename@ext}%
+      {\IfFileExists{\filename@base.bib}%
+        {\edef\DTK@tempa{\filename@base.bib}}{}}%
+      {\edef\DTK@tempa{#1}}%
+    \DTK@addbibresource{\DTK@tempa}%
+  }%
   \renewcommand*\printbibliography[1][]{}%
   \def\DTK@@usepackage#1#2[#3]{%
     \edef\@tempb{\zap@space#2 \@empty}%
@@ -224,8 +236,8 @@
     }
   \else
     % Gesamtlauf
-    \newcommand*\DTK@addbibresource[2][]{}%
     \def\DTK@@usepackage#1#2[#3]{}%
+    \newcommand*\DTK@addbibresource[2][]{}%
     \renewcommand*\printbibliography[1][]{\DTK@bib@true}%
     \newcommand*\DTK@bibliography[1]{\DTK@bib@true}%
   \fi
@@ -297,5 +309,7 @@
 \AtEmbeddedEndDocument{%
   %%%\endrefsection
 }
+
+\raggedbottom
 
 \endinput
