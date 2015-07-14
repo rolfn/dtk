@@ -1,7 +1,7 @@
 \ProvidesFile{dtk2-new-engines.clo}%
   [2015/05/02 v0.1a dtk class options for XeTeX and LuaTeX (RN)]
 
-\typeout{NEW-ENGINES}
+\typeout{NEW-ENGINE}
 
 \RequirePackage{fontspec}
 \RequirePackage{unicode-math}

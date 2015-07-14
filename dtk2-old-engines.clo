@@ -1,7 +1,7 @@
 \ProvidesFile{dtk2-old-engines.clo}%
   [2015/05/02 v0.1a dtk class options for pdfTeX/TeX+dvips (RN)]
 
-\typeout{OLD-ENGINES}
+\typeout{OLD-ENGINE}
 
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}

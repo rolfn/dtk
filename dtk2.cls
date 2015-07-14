@@ -12,11 +12,12 @@
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
-\ifxetex
-  \def\DTK@engine{3}% XeTeX
+
+\ifluatex
+  \def\DTK@engine{4}% LuaTeX
 \else
-  \ifluatex
-    \def\DTK@engine{4}% LuaTeX
+  \ifxetex
+    \def\DTK@engine{3}% XeTeX
   \else
     \ifpdf
       \def\DTK@engine{2}% pdfTeX
