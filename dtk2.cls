@@ -133,9 +133,8 @@
     \count2=-\count@
     \multiply\count2 60 %
     \advance\count2 \time
-    \xdef\DTK@today{%
-      \the\year-\two@digits{\the\month}-\two@digits{\the\day} %
-        \space\two@digits{\the\count@}:\two@digits{\the\count2}}
+    \xdef\DTK@today{\the\year-\two@digits{\the\month}-\two@digits{\the\day} %
+      \space\two@digits{\the\count@}:\two@digits{\the\count2}}
   \fi
 \endgroup
 
@@ -188,6 +187,7 @@
 
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 \ifDTKrecord
+  % Testlauf zum Aufsammeln von Paket- und bib-Dateiname
   \@ifdefinable\User@Packages{%
     \newwrite\User@Packages
     \immediate\openout\User@Packages userpackages.tex\relax
@@ -213,9 +213,9 @@
     }%
   }%
 \else
-  \ifDTK@Author@{}
+  \ifDTK@Author@
     % Falls \bibliography{...} in traditioneller Weise nach \begin{document};
-    % (2xLaTeX-Läufe + biber + 1xLaTeX-Lauf)
+    % (2xLaTeX-Lauf + biber + 1xLaTeX-Lauf)
     \AfterEndPreamble{%
       \renewcommand*\bibliography[1]{%
         \immediate\write\@mainaux{\string\ORIG@bibliography{#1}}%
@@ -223,6 +223,7 @@
       }%
     }
   \else
+    % Gesamtlauf
     \newcommand*\DTK@addbibresource[2][]{}%
     \def\DTK@@usepackage#1#2[#3]{}%
     \renewcommand*\printbibliography[1][]{\DTK@bib@true}%

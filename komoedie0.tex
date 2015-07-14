@@ -1,9 +1,10 @@
-
+% Erzeugt Datei `userpackages.tex' mit usepackage- und addbibresource-Anweisungen
+% aus den Einzeldokumenten.
 
 \newif\ifDTKrecord \DTKrecordtrue
 \PassOptionsToClass{draft}{dtk2}
 \nofiles
-\def\shipout#1{}
+\renewcommand*\shipout[1]{}
 \input{komoedie.tex}
 
 \endinput
