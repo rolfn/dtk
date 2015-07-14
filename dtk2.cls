@@ -229,7 +229,7 @@
     \newcommand*\DTK@bibliography[1]{\DTK@bib@true}%
   \fi
 \fi
-{}
+
 %%% Laden eines Einzeldokuments
 \newcommand*\DTKinput[1]{%
   \begingroup

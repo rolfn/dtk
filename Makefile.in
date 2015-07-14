@@ -10,6 +10,12 @@ LATEX_OPTS = "--shell-escape"
 MAKEINDEXSTYLE = dtk-idx.ist
 MAKEGLOSSARYSTYLE = dtk-adr.ist
 
-all :
 komoedie.pdf : komoedie.tex $(ARTICELS)
 	$(LATEX) $(LATEX_OPTS)
+	biber $*
+ 	$(LATEX) $(LATEX_OPTS)
+
+record : komoedie0.tex
+	pdflatex $<
+
+
