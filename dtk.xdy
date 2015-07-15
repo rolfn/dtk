@@ -1,0 +1,37 @@
+
+;; 2010/03/27 v0.1d, Rolf Niepraschk
+
+(require "lang/general/utf8-lang.xdy")
+(require "lang/general/utf8.xdy")
+;;(require "lang/german/din5007-utf8-lang.xdy")
+;;(require "lang/german/din5007-utf8.xdy")
+(require "numeric-sort.xdy")
+(require "latex.xdy")
+
+;;(require "latex-loc-fmts.xdy")
+(define-attributes ("default" "textbf" "textit" "hyperpage" "highlightPage" "foo" "gobble"))
+(markup-locref :open "\textbf{" :close "}" :attr "textbf")
+(markup-locref :open "\textit{" :close "}" :attr "textit")
+(markup-locref :open "\hyperpage{" :close "}" :attr "hyperpage")
+;;(markup-locref :open "\highlightPage{" :close "}" :attr "highlightPage")
+(markup-locref :open "\highlightPage{\hyperpage{" :close "}}" :attr "highlightPage")
+(markup-locref :open "\foo{" :close "}" :attr "foo")
+(markup-locref :open "\csname @gobble\endcsname{" :close "}" :attr "gobble")
+
+(require "makeindex.xdy")
+(require "latin-lettergroups.xdy")
+(require "page-ranges.xdy")
+(require "word-order.xdy")
+
+;;(require "ff-ranges.xdy")
+(define-location-class "arabic-page-numbers"
+  ("arabic-numbers") :min-range-length 2)
+;;(markup-range :sep "\kern .1em\relax \textit{f}"  :length 1 :ignore-end)
+;;(markup-range :sep "\kern .1em\relax \textit{ff}" :length 2 :ignore-end)
+(markup-range :sep "--")
+
+;;page-ranges.xdy
+
+(markup-locclass-list :open "\indexdelim")
+
+

@@ -10,12 +10,18 @@ LATEX_OPTS = "--shell-escape"
 MAKEINDEXSTYLE = dtk-idx.ist
 MAKEGLOSSARYSTYLE = dtk-adr.ist
 
+IDXSTY = dtk.xdy
+###MKIDX = xindy -v -C utf8 -I latex -M $(IDXSTY)
+MKIDX = xindy -v -C utf8 -M $(IDXSTY) -L general -I latex
+
 komoedie.pdf : komoedie.tex $(ARTICELS)
 	$(LATEX) $(LATEX_OPTS)
 	biber $*
- 	$(LATEX) $(LATEX_OPTS)
+	$(MKIDX) $*-addresses.idx -o $*-addresses.ind
+	$(LATEX) $(LATEX_OPTS)
 
 record : komoedie0.tex
 	pdflatex $<
 
-
+%.ind : %.idx
+	$(MKIDX) -o $@ $<

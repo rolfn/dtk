@@ -73,13 +73,14 @@
 \emergencystretch = 1.5em %
 \clubpenalty  = 10000 %
 \widowpenalty = 10000 %
+\raggedbottom
 
 \@fptop=\z@
 \renewcommand\topfraction{.9}
 \renewcommand\bottomfraction{.9}
 \renewcommand\textfraction{.1}
 
-\RequirePackage{xcolor}
+\RequirePackage{xcolor,listings,multicol}
 %\RequirePackage{etex} % ???
 
 \newdimen\DTK@tempdima
@@ -262,6 +263,11 @@
     \let\addbibresource=\DTK@addbibresource
     \let\bibliography=\DTK@bibliography
     \DTK@bib@false
+    \c@footnote=\z@
+    \c@lstlisting=\z@
+    \c@figure=\z@
+    \c@table=\z@
+    \c@equation=\z@
     \renewenvironment*{document}%
       {\DTK@embedded@begindocumenthook}%
       {\ifDTK@bib@\ORIG@printbibliography\fi
@@ -274,7 +280,6 @@
 
 \newcommand*\DTK@keywords{}
 \newcommand*\keywords[1]{\gdef\DTK@keywords{#1}}% ???
-\newcommand\address[3]{}
 
 % Kompakte Listen
 \RequirePackage[neverdecrease]{paralist}
@@ -295,7 +300,98 @@
 \plitemsep=1pt %
 \plparsep=1pt %
 
+\c@secnumdepth=\z@
+\c@tocdepth=\z@
 
-\raggedbottom
+\renewcommand\title[2][]{%
+  \gdef\@title{#2}%
+  \ifx\relax#1\relax\gdef\@@title{#2}\else\gdef\@@title{#1}\fi%
+}
+
+\renewcommand\maketitle[1][]{%
+  %%%\ifDTK@Author@ \thispagestyle{part}\fi
+  \begingroup % ???
+    \dimen0=\vsize
+    \advance\dimen0 by -\pagetotal
+    %\ifdim\dimen0<\NewpageThreshold
+    \ifdim\dimen0<100pt %
+      \newpage
+      %\global\FirstArticletrue
+    \fi
+  \endgroup
+  %\Advance@Label@Prefix % ???
+  \markboth{}{}%
+  \begingroup
+    \begin{minipage}{\textwidth}
+      \raggedright
+      %\TitleFont
+      \@title
+      \ifx\@author\@empty\else
+        \bigskip\par
+        %\AuthorFont
+        \@author
+      \fi
+    \end{minipage}%
+    \@thanks
+    \let\thanks\@gobble
+    \addcontentsline{toc}{chapter}{\@@title}%
+    \markboth{\@@title}{\@@title}% ???
+  \endgroup
+  \let\@title=\@empty
+  \let\@author=\@empty
+  \let\@thanks=\@empty
+  \medskip\par}
+
+\newcommand*\addressname{Autoren/Organisatoren}
+
+\RequirePackage[split,protected]{splitidx} \makeindex
+%\newindex[\addressname]{addresses}
+%\newindex[\listofplacesname]{places}
+\newindex{addresses}
+\edef\index@addresses@name{\addressname}
+
+\newcommand*\listofaddresses{%
+  \markboth{\addressname}{\addressname}%
+  %\thispagestyle{empty}%
+  \begingroup
+    %\language\langwohyphens
+    %\show\printsubindex
+    \printsubindex[addresses]%
+  \endgroup
+}
+%\newcommand\address[3]{}
+\newcommand\address[3]{%\glossary{\STRIP@*#1 #2!#3}%
+  \begingroup
+  \let\url=\relax
+  \typeout{++++++++++++++ #1 #2 #3}%
+  %\sindex[addresses]{#1 #2 #3}%
+  \sindex[addresses]{#2, #1}%
+  \endgroup
+}
+\newcommand*{\indexdelim}{\ \hspace{0pt plus 1fil}\penalty100\null\dotfill~}
+\renewcommand*\idx@heading{%
+  \addchap{\indexname}%
+  \markright{\indexname}%
+  \ifx\index@preamble\relax
+  \else\index@preamble\let\index@preamble=\relax\fi
+}%
+\renewenvironment{theindex}{%
+  %\setchapterpreamble{\index@preamble}
+  %\idx@heading
+  %\index@preamble
+  \columnseprule \z@
+  %\columnsep 35\p@
+  \columnsep 24\p@% 2em bei 12pt
+  \begin{multicols}{2}[\idx@heading\vspace{-1\baselineskip}]%
+  \parindent\z@
+  \setlength{\parskip}{\z@ \@plus .3\p@}%
+  \setlength{\parfillskip}{\z@ \@plus 1fil}%
+  \let\item\@idxitem
+  \small\raggedright
+}{%
+  \end{multicols}%
+}
+
+\let\lettergroup=\indexsection
 
 \endinput
