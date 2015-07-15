@@ -363,9 +363,9 @@
 \newcommand\address[3]{%\glossary{\STRIP@*#1 #2!#3}%
   \begingroup
   \let\url=\relax
-  \typeout{++++++++++++++ #1 #2 #3}%
   %\sindex[addresses]{#1 #2 #3}%
-  \sindex[addresses]{#2, #1}%
+  %\catcode`\@=\active
+  \sindex[addresses]{#2, #1@@#3}%
   \endgroup
 }
 \newcommand*{\indexdelim}{\ \hspace{0pt plus 1fil}\penalty100\null\dotfill~}
@@ -387,6 +387,7 @@
   \setlength{\parskip}{\z@ \@plus .3\p@}%
   \setlength{\parfillskip}{\z@ \@plus 1fil}%
   \let\item\@idxitem
+  \renewcommand\subitem[1]{##1}%
   \small\raggedright
 }{%
   \end{multicols}%

@@ -19,7 +19,7 @@
 (markup-locref :open "\csname @gobble\endcsname{" :close "}" :attr "gobble")
 
 (require "makeindex.xdy")
-(require "latin-lettergroups.xdy")
+;;(require "latin-lettergroups.xdy")
 (require "page-ranges.xdy")
 (require "word-order.xdy")
 
@@ -31,6 +31,9 @@
 (markup-range :sep "--")
 
 ;;page-ranges.xdy
+
+(markup-indexentry :open "~n  \item "           :depth 0)
+(markup-indexentry :open "~n    \subitem "      :depth 1)
 
 (markup-locclass-list :open "\indexdelim")
 
