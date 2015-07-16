@@ -364,14 +364,14 @@
       \begingroup
         %\language\langwohyphens
         %\show\printsubindex
-        \renewenvironment{theindex}{\theAddressesIndex}{\endtheAddressesIndex}%
+        \renewenvironment{theindex}{\theaddresses}{\endtheaddresses}%
         \printsubindex[addresses]%
       \endgroup
     }
     \newcommand\address[3]{% TODO: Auch "!" und "|" maskieren?
       \begingroup
-        \def\url##1{\corr@email##1\relax}
-        \def\corr@email##1@##2\relax{%
+        \def\url##1{\escape@atsign##1\relax}%
+        \def\escape@atsign##1@##2\relax{%
           \noexpand\url\string{##1\string"@##2\string}%
         }
         \makeatletter
@@ -390,13 +390,12 @@
     \def\DTK@scan@item#1\subitem#2\relax#3\@nil{%
       \def\DTK@tempa{#1}\def\DTK@tempb{#2}\def\DTK@tempc{#3}%
     }
-    \newenvironment{theAddressesIndex}{%
+    \newenvironment{theaddresses}{%
       \setchapterpreamble{\index@preamble}
       %\idx@heading
       %\index@preamble
       \columnseprule=\z@
-      %\columnsep 35\p@
-      \columnsep=24\p@% 2em bei 12pt
+      \columnsep=10\p@
       \begin{multicols}{2}[\idx@heading\vspace{-1\baselineskip}]%
         \makeatletter
         \parindent\z@
