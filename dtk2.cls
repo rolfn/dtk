@@ -355,62 +355,60 @@
   \newcommand\address[3]{}
   \newcommand*\listofaddresses{}
 \else
-  \RequirePackage[split,protected]{splitidx} \makeindex
-  \newindex[\addressname]{addresses}
-  \newcommand*\listofaddresses{%
-    \markboth{\addressname}{\addressname}%
-    %\thispagestyle{empty}%
-    \begingroup
-      %\language\langwohyphens
-      %\show\printsubindex
-      \renewenvironment{theindex}{\theAddressesIndex}{\endtheAddressesIndex}%
-      \printsubindex[addresses]%
-    \endgroup
-  }
-  \newcommand\address[3]{% TODO: Auch "!" und "|" maskieren?
-    \begingroup
-      \def\url##1{\corr@email##1\relax}
-      \def\corr@email##1@##2\relax{%
-        \noexpand\url\string{##1\string"@##2\string}%
-      }
-      \makeatletter
-      \scantokens{\protected@edef\x{\noexpand\sindex[addresses]{#2#1@#1 #2!#3}}}%
-      \x
-    \endgroup
-  }
+  \ifDTK@Author@\else
+    \RequirePackage[split,protected]{splitidx} \makeindex
+    \newindex[\addressname]{addresses}
+    \newcommand*\listofaddresses{%
+      \markboth{\addressname}{\addressname}%
+      %\thispagestyle{empty}%
+      \begingroup
+        %\language\langwohyphens
+        %\show\printsubindex
+        \renewenvironment{theindex}{\theAddressesIndex}{\endtheAddressesIndex}%
+        \printsubindex[addresses]%
+      \endgroup
+    }
+    \newcommand\address[3]{% TODO: Auch "!" und "|" maskieren?
+      \begingroup
+        \def\url##1{\corr@email##1\relax}
+        \def\corr@email##1@##2\relax{%
+          \noexpand\url\string{##1\string"@##2\string}%
+        }
+        \makeatletter
+        \scantokens{\protected@edef\x{\noexpand\sindex[addresses]{#2#1@#1 #2!#3}}}%
+        \x
+      \endgroup
+    }
+    \renewcommand*\idx@heading{%
+      %\addchap{\indexname}%
+      %\SectionFont   \large\sf
+      \addsec{\indexname}%
+      \markright{\indexname}%
+      \ifx\index@preamble\relax
+      \else\index@preamble\let\index@preamble=\relax\fi
+    }%
+    \def\DTK@scan@item#1\subitem#2\relax#3\@nil{%
+      \def\DTK@tempa{#1}\def\DTK@tempb{#2}\def\DTK@tempc{#3}%
+    }
+    \newenvironment{theAddressesIndex}{%
+      \setchapterpreamble{\index@preamble}
+      %\idx@heading
+      %\index@preamble
+      \columnseprule=\z@
+      %\columnsep 35\p@
+      \columnsep=24\p@% 2em bei 12pt
+      \begin{multicols}{2}[\idx@heading\vspace{-1\baselineskip}]%
+        \makeatletter
+        \parindent\z@
+        \setlength{\parskip}{\z@ \@plus .3\p@}%
+        \setlength{\parfillskip}{\z@ \@plus 1fil}%
+        \def\item##1\@nil{\DTK@scan@item##1\@nil
+          \par\textbf{\DTK@tempa}\hfill[\DTK@tempc]\par\DTK@tempb}%
+    }{%
+      \end{multicols}%
+    }
+    \let\lettergroup=\indexsection
+  \fi
 \fi
-
-\renewcommand*\idx@heading{%
-  %\addchap{\indexname}%
-  %\SectionFont   \large\sf
-  \addsec{\indexname}%
-  \markright{\indexname}%
-  \ifx\index@preamble\relax
-  \else\index@preamble\let\index@preamble=\relax\fi
-}%
-
-\def\DTK@scan@item#1\subitem#2\relax#3\@nil{%
-  \def\DTK@tempa{#1}\def\DTK@tempb{#2}\def\DTK@tempc{#3}%
-}
-
-\newenvironment{theAddressesIndex}{%
-  \setchapterpreamble{\index@preamble}
-  %\idx@heading
-  %\index@preamble
-  \columnseprule=\z@
-  %\columnsep 35\p@
-  \columnsep=24\p@% 2em bei 12pt
-  \begin{multicols}{2}[\idx@heading\vspace{-1\baselineskip}]%
-    \makeatletter
-    \parindent\z@
-    \setlength{\parskip}{\z@ \@plus .3\p@}%
-    \setlength{\parfillskip}{\z@ \@plus 1fil}%
-    \def\item##1\@nil{\let\url=\relax\typeout{ooo ##1}\DTK@scan@item##1\@nil
-      \par\textbf{\DTK@tempa}\hfill[\DTK@tempc]\par\DTK@tempb}%
-}{%
-  \end{multicols}%
-}
-
-\let\lettergroup=\indexsection
 
 \endinput
