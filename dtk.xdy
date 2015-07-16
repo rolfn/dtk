@@ -35,6 +35,6 @@
 (markup-indexentry :open "~n  \item "    :depth 0)
 (markup-indexentry :open "    \subitem " :depth 1)
 
-(markup-locclass-list :open "\relax" :close "\nil")
+(markup-locclass-list :open "\relax" :close "\@nil")
 
 
