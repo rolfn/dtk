@@ -89,6 +89,7 @@
 
 \newcommand*\DTK@tempa{}
 \newcommand*\DTK@tempb{}
+\newcommand*\DTK@tempc{}
 
 \ifnum\DTK@engine < 3 %
   \input{dtk2-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
@@ -357,44 +358,50 @@
   \begingroup
     %\language\langwohyphens
     %\show\printsubindex
-    \makeatletter\printsubindex[addresses]%
+    \makeatletter
+    \renewenvironment{theindex}{\theAddressesIndex}{\endtheAddressesIndex}%
+    \printsubindex[addresses]%
   \endgroup
 }
 \newcommand\address[3]{%
   \begingroup
-    \makeatother
     \def\url##1{\corr@email##1\relax}
     \def\corr@email##1@##2\relax{%
-      \string\url\string{##1\string"@\string"##2\string}%
+      \noexpand\url\string{##1\string"@##2\string}% TODO: Auch "!" und "|" maskieren.
     }
     \makeatletter
-    \scantokens{\protected@edef\x{\noexpand\sindex[addresses]{#2, #1!#3}}}%
+    %\scantokens{\protected@edef\x{\noexpand\sindex[addresses]{#1 #2!#3}}}%
+    %\scantokens{\protected@edef\x{\noexpand\sindex[addresses]{#2#1@#1 #2 #3|textbf}}}%
+    \scantokens{\protected@edef\x{\noexpand\sindex[addresses]{#2#1@#1 #2!#3}}}%
     \x
   \endgroup
 }
-\newcommand*{\indexdelim}{\ \hspace{0pt plus 1fil}\penalty100\null\dotfill~}
 \renewcommand*\idx@heading{%
-  \addchap{\indexname}%
+  %\addchap{\indexname}%
+  %\SectionFont   \large\sf
+  \addsec{\indexname}%
   \markright{\indexname}%
   \ifx\index@preamble\relax
   \else\index@preamble\let\index@preamble=\relax\fi
 }%
 
-\renewenvironment{theindex}{%
+\def\DTK@scan@item#1\subitem#2\relax#3{%
+  \def\DTK@tempa{#1}\def\DTK@tempb{#2}\def\DTK@tempc{#3}%
+}
+
+\newenvironment{theAddressesIndex}{%
   \setchapterpreamble{\index@preamble}
   %\idx@heading
   %\index@preamble
-  \columnseprule \z@
+  \columnseprule=\z@
   %\columnsep 35\p@
-  \columnsep 24\p@% 2em bei 12pt
+  \columnsep=24\p@% 2em bei 12pt
   \begin{multicols}{2}[\idx@heading\vspace{-1\baselineskip}]%
-  \parindent\z@
-  \setlength{\parskip}{\z@ \@plus .3\p@}%
-  \setlength{\parfillskip}{\z@ \@plus 1fil}%
-  \let\item\@idxitem
-  \renewcommand\subitem[1]{##1}%
-  \newcommand\DTK@address@part[1]{\par\frame{\parbox{\linewidth}{##1}}}%
-  \small\raggedright
+    \parindent\z@
+    \setlength{\parskip}{\z@ \@plus .3\p@}%
+    \setlength{\parfillskip}{\z@ \@plus 1fil}%
+    \def\item##1\nil{\DTK@scan@item##1\par
+      \textbf{\DTK@tempa}\hfill[\DTK@tempc]\par\DTK@tempb}%
 }{%
   \end{multicols}%
 }
