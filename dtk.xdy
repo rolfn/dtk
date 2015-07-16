@@ -1,5 +1,5 @@
 
-;; 2010/03/27 v0.1d, Rolf Niepraschk
+;; 2015/07/16 v0.1d, Rolf Niepraschk
 
 (require "lang/general/utf8-lang.xdy")
 (require "lang/general/utf8.xdy")
@@ -33,7 +33,9 @@
 ;;page-ranges.xdy
 
 (markup-indexentry :open "~n  \item "           :depth 0)
-(markup-indexentry :open "~n    \subitem "      :depth 1)
+;;(markup-indexentry :open "~n    \subitem "      :depth 1)
+(markup-indexentry :open "~n \DTK@address@part{" :close "}"     :depth 1)
+(markup-indexentry :open "~n    \subitem "      :depth 2)
 
 (markup-locclass-list :open "\indexdelim")
 

@@ -80,7 +80,7 @@
 \renewcommand\bottomfraction{.9}
 \renewcommand\textfraction{.1}
 
-\RequirePackage{xcolor,listings,multicol}
+\RequirePackage{xcolor,listings,multicol,ragged2e}
 %\RequirePackage{etex} % ???
 
 \newdimen\DTK@tempdima
@@ -322,10 +322,11 @@
   %\Advance@Label@Prefix % ???
   \markboth{}{}%
   \begingroup
+    \vspace{32pt plus 8pt minus 16pt}
     \begin{minipage}{\textwidth}
       \raggedright
       %\TitleFont
-      \@title
+      {\Large\sffamily\RaggedRight \@title}
       \ifx\@author\@empty\else
         \bigskip\par
         %\AuthorFont
@@ -345,10 +346,10 @@
 \newcommand*\addressname{Autoren/Organisatoren}
 
 \RequirePackage[split,protected]{splitidx} \makeindex
-%\newindex[\addressname]{addresses}
+\newindex[\addressname]{addresses}
 %\newindex[\listofplacesname]{places}
-\newindex{addresses}
-\edef\index@addresses@name{\addressname}
+%\newindex{addresses}
+%\edef\index@addresses@name{\addressname}
 
 \newcommand*\listofaddresses{%
   \markboth{\addressname}{\addressname}%
@@ -356,16 +357,19 @@
   \begingroup
     %\language\langwohyphens
     %\show\printsubindex
-    \printsubindex[addresses]%
+    \makeatletter\printsubindex[addresses]%
   \endgroup
 }
-%\newcommand\address[3]{}
-\newcommand\address[3]{%\glossary{\STRIP@*#1 #2!#3}%
+\newcommand\address[3]{%
   \begingroup
-  \let\url=\relax
-  %\sindex[addresses]{#1 #2 #3}%
-  %\catcode`\@=\active
-  \sindex[addresses]{#2, #1@@#3}%
+    \makeatother
+    \def\url##1{\corr@email##1\relax}
+    \def\corr@email##1@##2\relax{%
+      \string\url\string{##1\string"@\string"##2\string}%
+    }
+    \makeatletter
+    \scantokens{\protected@edef\x{\noexpand\sindex[addresses]{#2, #1!#3}}}%
+    \x
   \endgroup
 }
 \newcommand*{\indexdelim}{\ \hspace{0pt plus 1fil}\penalty100\null\dotfill~}
@@ -375,8 +379,9 @@
   \ifx\index@preamble\relax
   \else\index@preamble\let\index@preamble=\relax\fi
 }%
+
 \renewenvironment{theindex}{%
-  %\setchapterpreamble{\index@preamble}
+  \setchapterpreamble{\index@preamble}
   %\idx@heading
   %\index@preamble
   \columnseprule \z@
@@ -388,6 +393,7 @@
   \setlength{\parfillskip}{\z@ \@plus 1fil}%
   \let\item\@idxitem
   \renewcommand\subitem[1]{##1}%
+  \newcommand\DTK@address@part[1]{\par\frame{\parbox{\linewidth}{##1}}}%
   \small\raggedright
 }{%
   \end{multicols}%
