@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/07/14 v0.1b dtk document class (RN)]
+  [2015/07/16 v0.1b dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -74,6 +74,9 @@
 \clubpenalty  = 10000 %
 \widowpenalty = 10000 %
 \raggedbottom
+
+\c@secnumdepth=\z@
+\c@tocdepth=\z@
 
 \@fptop=\z@
 \renewcommand\topfraction{.9}
@@ -301,9 +304,6 @@
 \plitemsep=1pt %
 \plparsep=1pt %
 
-\c@secnumdepth=\z@
-\c@tocdepth=\z@
-
 \renewcommand\title[2][]{%
   \gdef\@title{#2}%
   \ifx\relax#1\relax\gdef\@@title{#2}\else\gdef\@@title{#1}\fi%
@@ -380,9 +380,9 @@
       \endgroup
     }
     \renewcommand*\idx@heading{%
-      %\addchap{\indexname}%
+      \chapter{\indexname}%
       %\SectionFont   \large\sf
-      \addsec{\indexname}%
+      %\section{\indexname}%
       \markright{\indexname}%
       \ifx\index@preamble\relax
       \else\index@preamble\let\index@preamble=\relax\fi
@@ -401,8 +401,12 @@
         \parindent\z@
         \setlength{\parskip}{\z@ \@plus .3\p@}%
         \setlength{\parfillskip}{\z@ \@plus 1fil}%
+        \raggedright
         \def\item##1\@nil{\DTK@scan@item##1\@nil
-          \par\textbf{\DTK@tempa}\hfill[\DTK@tempc]\par\DTK@tempb}%
+          \par\parbox{\columnwidth}{%
+            \textbf{\DTK@tempa}\hfill[\ignorespaces \DTK@tempc]\par\DTK@tempb
+          }%
+        }%
     }{%
       \end{multicols}%
     }
