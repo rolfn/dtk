@@ -5,23 +5,28 @@
 # -- unveränderlich --
 
 LATEX = lualatex
+LATEX = pdflatex
 LATEX_OPTS = "--shell-escape"
 
 MAKEINDEXSTYLE = dtk-idx.ist
 MAKEGLOSSARYSTYLE = dtk-adr.ist
 
-IDXSTY = dtk.xdy
-###MKIDX = xindy -v -C utf8 -I latex -M $(IDXSTY)
-MKIDX = xindy -v -C utf8 -M $(IDXSTY) -L general -I latex
+IDX_STYLE = dtk.xdy
+MAKEINDEX = xindy -v -C utf8 -M $(IDX_STYLE) -L general -I latex
 
-komoedie.pdf : komoedie.tex $(ARTICELS)
-	$(LATEX) $(LATEX_OPTS)
-	biber $*
-	$(MKIDX) $*-addresses.idx -o $*-addresses.ind
-	$(LATEX) $(LATEX_OPTS)
+$(MAIN).pdf : $(MAIN).tex $(ARTICELS)
+	$(LATEX) $(LATEX_OPTS) $<
+	biber $(basename $<)
+	$(MAKEINDEX) $(basename $<)-addresses.idx -o $(basename $<)-addresses.ind
+	$(LATEX) $(LATEX_OPTS) $<
 
-record : komoedie0.tex
-	pdflatex $<
+record : userpackages.tex
 
-%.ind : %.idx
-	$(MKIDX) -o $@ $<
+userpackages.tex : $(MAIN)0.tex $(ARTICLES)
+	pdflatex -draftmode $<
+
+clean :
+	$(RM) $(addprefix $(MAIN), .log .aux .blg .toc .bbl .bcf .idx .ind .run.xml)
+
+veryclean : clean
+	$(RM) $(addprefix $(MAIN), .pdf) userpackages.tex
