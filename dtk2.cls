@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/07/16 v0.1b dtk document class (RN)]
+  [2015/07/20 v0.1b dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -49,6 +49,8 @@
 
 \LoadClass[
 ,fontsize=10pt
+,captions=oneline
+,parskip=full*
 ]{scrbook}
 
 \ifDTK@Author@\else\setcounter{errorcontextlines}{100}\fi
@@ -413,5 +415,14 @@
     \let\lettergroup=\indexsection
   \fi
 \fi
+
+\addtokomafont{caption}{\small\sffamily}
+\addtokomafont{captionlabel}{\bfseries\sffamily}
+\setcapindent{1em}
+\setcapwidth[c]{.8\textwidth}
+
+\renewcommand\thefigure{\arabic{figure}}
+\renewcommand\thetable{\arabic{table}}
+\renewcommand\theequation{\arabic{equation}}
 
 \endinput

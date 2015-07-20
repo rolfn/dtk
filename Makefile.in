@@ -14,7 +14,7 @@ MAKEGLOSSARYSTYLE = dtk-adr.ist
 IDX_STYLE = dtk.xdy
 MAKEINDEX = xindy -v -C utf8 -M $(IDX_STYLE) -L general -I latex
 
-$(MAIN).pdf : $(MAIN).tex $(ARTICELS)
+$(MAIN).pdf : $(MAIN).tex $(ARTICLES)
 	$(LATEX) $(LATEX_OPTS) $<
 	biber $(basename $<)
 	$(MAKEINDEX) $(basename $<)-addresses.idx -o $(basename $<)-addresses.ind
@@ -23,7 +23,7 @@ $(MAIN).pdf : $(MAIN).tex $(ARTICELS)
 record : userpackages.tex
 
 userpackages.tex : $(MAIN)0.tex $(ARTICLES)
-	pdflatex -draftmode $<
+	pdflatex -draftmode -interaction=nonstopmode $<
 
 clean :
 	$(RM) $(addprefix $(MAIN), .log .aux .blg .toc .bbl .bcf .idx .ind .run.xml)

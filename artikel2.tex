@@ -1,6 +1,5 @@
 \documentclass{dtk2}
-\usepackage[bible]{blindtext}
-\usepackage{pict2e}
+\usepackage{graphicx,mwe}
 \author{Ellen Bogen}
 \address{Ellen}{Bogen}%
         {Hinter dem Berg~17\\
@@ -15,7 +14,14 @@
 
 Siehe~\cite{lamport:handbuch}
 
-Etwas Text \clearpage
+Etwas Text
+
+\begin{figure} \centering
+  \includegraphics[width=.6\textwidth]{example-image}
+  \caption{Ein Testbild, ein Testbild, ein Testbild, ein Testbild, ein
+  Testbild, ein Testbild, ein Testbild, ein Testbild, ein Testbild, ein
+  Testbild, ein Testbild, ein Testbild}
+\end{figure}
 
 \bibliography{\jobname}
 
