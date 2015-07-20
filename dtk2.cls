@@ -79,8 +79,8 @@
 \widowpenalty = 10000 %
 \raggedbottom
 
-\c@secnumdepth=\z@
-\c@tocdepth=\z@
+\setcounter{secnumdepth}{\numexpr\partnumdepth-1\relax}
+\setcounter{tocdepth}{\chapternumdepth}
 
 \@fptop=\z@
 \renewcommand\topfraction{.9}
@@ -381,7 +381,8 @@
     \begin{minipage}{\textwidth}
       \raggedright
       %\TitleFont
-      {\Large\sffamily\RaggedRight \@title}
+      %{\Large\sffamily\RaggedRight \@title}%
+      \chapter{\@title}%
       \ifx\@author\@empty\else
         \bigskip\par
         %\AuthorFont
@@ -390,8 +391,8 @@
     \end{minipage}%
     \@thanks
     \let\thanks\@gobble
-    \addcontentsline{toc}{chapter}{\@@title}%
-    \markboth{\@@title}{\@@title}% ???
+    %\addcontentsline{toc}{chapter}{\@@title}%
+    %\markboth{\@@title}{\@@title}% ???
   \endgroup
   \let\@title=\@empty
   \let\@author=\@empty
@@ -490,4 +491,58 @@
 \setkomafont{pagenumber}{\sffamily}
 \setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
 
+\renewcommand\tableofcontents{%
+  \clearpage
+  \thispagestyle{empty}%
+  %%%\markboth{\contentsname}{\contentsname}%
+  %%%\ContentsArt
+  \begingroup
+    \parskip=\ContentsParSkip
+    \let\\=\relax
+    \TOC@configure
+    \raggedright%%%%%%%%%%%%%%%%%% hv 2009-07-25
+    \@starttoc{toc}
+  \endgroup
+}
+
+\renewcommand*{\tableofcontents}{%
+  \begingroup\let\if@dynlist\if@tocleft\listoftoc{toc}\endgroup
+}
+
+\renewcommand*\l@part[2]{% TODO: KOMA-fizieren
+  \addpenalty{-\@highpenalty}%
+  \addvspace{0.5em plus 0pt}% space above part line
+  \@tempdima 1.5em
+  \begingroup
+    \bfseries
+    \advance\leftskip\@tempdima
+    \hskip -\leftskip
+    #1\par
+    \penalty\@highpenalty
+  \endgroup
+  \addvspace{0.2em}%
+}
+\renewcommand*\l@chapter[2]{%
+  \begingroup
+     \vskip \z@ \@plus.2\p@
+     \@afterindenttrue
+     \interlinepenalty\@M
+     \@tempdima 1.5em\relax % number width
+     \@tempdimb 2.5em\relax % indent
+     \advance\leftskip \@tempdimb
+     \advance\rightskip \@tempdimb
+     \noindent\hskip -\leftskip
+     \hbox to\@tempdimb{#2\hss}%
+     #1\par
+  \endgroup
+}
+
+\deftocheading{toc}{%
+  \clearpage\thispagestyle{empty}% \thispagestyle{dtk-toc}
+  \vspace*{16pt minus 8pt}%
+  \let\\=\relax
+  \raggedright
+}
+
 \endinput
+
