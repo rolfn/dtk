@@ -53,6 +53,8 @@
 ,parskip=full*
 ]{scrbook}
 
+% *** Konstanten ***
+
 \ifDTK@Author@\else\setcounter{errorcontextlines}{100}\fi
 
 \paperwidth  = 148mm %
@@ -84,6 +86,56 @@
 \renewcommand\topfraction{.9}
 \renewcommand\bottomfraction{.9}
 \renewcommand\textfraction{.1}
+
+\newcommand*\journalname{Die \TeX{}nische Kom\"odie}
+
+\newcommand*\DTK@year{}
+\newcommand*\DTK@month{}
+\newcommand*\DTK@issue{}
+\newcommand*\DTK@volume{}
+\newcommand*\DTK@date{}
+\newcommand*\DTK@corr@version{}
+
+\newif\ifDTK@corr@ \DTK@corr@true
+
+\newcommand*\DieTeXnischeKomoedie{% #1=Ausgabe, #2=Monat, #3=Jahr
+  \@ifstar{\global\DTK@corr@true\DTK@DieTeXnischeKomoedie}%
+    {\global\DTK@corr@false\DTK@DieTeXnischeKomoedie}%
+}
+\newcommand\DTK@DieTeXnischeKomoedie[3]{%
+  \thispagestyle{empty}%
+  \gdef\DTK@issue{#1}%
+  \gdef\DTK@month{#2}%
+  \gdef\DTK@year{#3}%
+  \xdef\DTK@volume{\the\numexpr\DTK@year-1989+1\relax}%
+  \ifx\relax\DTK@issue\relax\gdef\DTK@date{?/??}\else\xdef\DTK@date{#1/#3}\fi
+  \ifDTK@corr@
+    \xdef\DTK@corr@version{\noexpand\fbox{Korrekturversion: \DTK@today}}%
+  \fi
+}
+
+% maketitle
+%\thispagestyle{empty}%
+% ...
+% \newpage
+
+\begingroup
+  \ifluatex
+    \catcode`\%=12\relax
+    \xdef\DTK@today{\directlua{tex.print(os.date("%Y-%m-%d %H:%M:%S"))}}
+  \else
+    \count@\time
+    \divide\count@ 60 %
+    \count2=-\count@
+    \multiply\count2 60 %
+    \advance\count2 \time
+    \xdef\DTK@today{\the\year-\two@digits{\the\month}-\two@digits{\the\day} %
+      \space\two@digits{\the\count@}:\two@digits{\the\count2}}
+  \fi
+\endgroup
+
+\newcommand\Volume{?/??}
+
 
 \RequirePackage{xcolor,listings,multicol,ragged2e}
 %\RequirePackage{etex} % ???
@@ -134,21 +186,6 @@
     \fi
   \fi
 }
-
-\begingroup
-  \ifluatex
-    \catcode`\%=12\relax
-    \xdef\DTK@today{\directlua{tex.print(os.date("%Y-%m-%d %H:%M:%S"))}}
-  \else
-    \count@\time
-    \divide\count@ 60 %
-    \count2=-\count@
-    \multiply\count2 60 %
-    \advance\count2 \time
-    \xdef\DTK@today{\the\year-\two@digits{\the\month}-\two@digits{\the\day} %
-      \space\two@digits{\the\count@}:\two@digits{\the\count2}}
-  \fi
-\endgroup
 
 \RequirePackage[%
 ,style=dtk
@@ -239,13 +276,28 @@
         \immediate\write\@mainaux{\string\bibliography{#1}}%
         \printbibliography
       }%
-    }
+    }%
+    \AtBeginDocument{\let\maketitle=\DTK@maketitle}%
   \else
     % Gesamtlauf
     \def\DTK@@usepackage#1#2[#3]{}%
     \newcommand*\DTK@addbibresource[2][]{}%
     \renewcommand*\printbibliography[1][]{\DTK@bib@true}%
     \newcommand*\DTK@bibliography[1]{\DTK@bib@true}%
+    \AtBeginDocument{%
+      \renewcommand\maketitle[1][]{%
+        \thispagestyle{empty}%
+        \begin{titlepage}% ???
+          \Large\par
+          \journalname\par
+          \DTK@issue/\DTK@year\par
+          Jahrgang: \DTK@volume\par
+          { \Large\DTK@corr@version }
+        \end{titlepage}%
+        \global\let\maketitle=\DTK@maketitle
+        \newpage
+      }%
+    }
   \fi
 \fi
 
@@ -311,7 +363,7 @@
   \ifx\relax#1\relax\gdef\@@title{#2}\else\gdef\@@title{#1}\fi%
 }
 
-\renewcommand\maketitle[1][]{%
+\newcommand\DTK@maketitle[1][]{%
   %%%\ifDTK@Author@ \thispagestyle{part}\fi
   \begingroup % ???
     \dimen0=\vsize
@@ -416,7 +468,7 @@
   \fi
 \fi
 
-\addtokomafont{caption}{\small\sffamily}
+\addtokomafont{caption}{\small}
 \addtokomafont{captionlabel}{\bfseries\sffamily}
 \setcapindent{1em}
 \setcapwidth[c]{.8\textwidth}
@@ -424,5 +476,18 @@
 \renewcommand\thefigure{\arabic{figure}}
 \renewcommand\thetable{\arabic{table}}
 \renewcommand\theequation{\arabic{equation}}
+
+\RequirePackage[automark]{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\clearpairofpagestyles
+\automark[chapter]{chapter}
+\ihead{\headmark}
+\ohead{\pagemark}
+\cfoot*{\DTK@corr@version}
+\ifoot{\journalname \DTK@date}
+
+\setkomafont{pagehead}{\sffamily\slshape}% \itshape?
+\setkomafont{pagenumber}{\sffamily}
+\setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
 
 \endinput
