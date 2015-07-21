@@ -7,7 +7,7 @@
 \RequirePackage{unicode-math}
 
 \RequirePackage[lining=true]{libertine}
-\setmathfont[Scale=0.9,math-style=TeX,bold-style=TeX]{XITS Math}
-\setmonofont[Scale=0.81,FakeStretch=0.9]{DejaVu Sans Mono}
+\setmathfont[Scale=0.9,math-style=TeX,bold-style=TeX]{XITSMath}
+\setmonofont[Scale=0.81,FakeStretch=0.9]{DejaVuSansMono}
 
 \endinput

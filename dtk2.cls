@@ -649,9 +649,6 @@
 \def\partheadstartvskip{% 12.0pt plus 1.0fil
   \null\vskip-\baselineskip\vskip 10pt %
 }
-\def\partheadmidvskip{% unwichtig!
-  \par\nobreak\vskip \@tempskipa
-}
 
 \def\partheadendvskip{% 0.0pt plus 1.0fil
   %\vskip \@tempskipa \newpage
@@ -659,16 +656,6 @@
 }
 
 \let\partheademptypage=\relax% ???
-\renewcommand*{\@endpart}{\vbox to\z@{\use@preamble{part@u}\vss}%
-  \@tempskipa=\glueexpr\scr@part@afterskip\relax
-  \ifdim\@tempskipa<\z@\@tempskipa-\@tempskipa\fi
-  \partheadendvskip
-  \partheademptypage
-  \if@tempswa
-    \twocolumn
-  \fi
-}
-
 \let\raggedpart\raggedright
 
 \endinput
