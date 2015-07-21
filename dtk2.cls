@@ -47,10 +47,12 @@
 
 \PassOptionsToPackage{pagesize,twoside=true}{typearea}
 
-\LoadClass[
+\LoadClass[%
 ,fontsize=10pt
 ,captions=oneline
 ,parskip=full*
+,headings=small
+%,toc=flat
 ]{scrbook}
 
 % *** Konstanten ***
@@ -508,7 +510,77 @@
 \renewcommand*{\tableofcontents}{%
   \begingroup\let\if@dynlist\if@tocleft\listoftoc{toc}\endgroup
 }
-
+\renewcommand*\l@part[2]{%
+  \ifnum \c@tocdepth <\parttocdepth \else
+    \addpenalty{-\@highpenalty}%
+    \addvspace{2.25em \@plus\p@}%
+    \setlength{\@tempdima}{\scr@part@tocnumwidth}%
+    \if@tocleft
+      \ifx\toc@l@number\@empty\else
+        \setlength\@tempdima{0\toc@l@number}%
+      \fi
+    \fi
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      \usekomafont{partentry}{#1\nobreak
+        \usekomafont{partentrypagenumber}{\hfil\nobreak
+          \hb@xt@\@pnumwidth{\hss#2}}}\par
+      \expandafter\ifnum\scr@v@is@gt{2.96}\relax
+      \endgroup
+      \penalty20010
+      \else
+          \penalty\@highpenalty
+      \endgroup
+    \fi
+  \fi
+}
+\renewcommand*\l@chapter[2]{%
+  \ifnum \c@tocdepth <\chaptertocdepth \else
+    \ifnum \lastpenalty<20010
+      \addpenalty{-\@highpenalty}%
+    \fi
+    \expandafter\ifnum\scr@v@is@lt{3.15}%
+      \vskip 1.0em \@plus\p@
+    \else
+      \addvspace{1.0em \@plus\p@}%
+    \fi
+    \setlength\@tempdima{\scr@chapter@tocnumwidth}%
+    \if@tocleft
+      \ifx\toc@l@number\@empty\else
+        \setlength\@tempdima{0\toc@l@number}%
+      \fi
+    \fi
+    \begingroup
+      \raggedchapterentry
+      \parindent \z@ \advance\rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \interlinepenalty\@M
+      \leavevmode
+      \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+      \edef\@pnumwidth{\the\dimexpr\@pnumwidth\relax}%
+      \usekomafont{chapterentry}{#1\nobreak
+        \usekomafont{chapterentrypagenumber}{%
+          {\usekomafont{chapterentrydots}{%
+              \if@chapterentrywithdots
+                \leaders\hbox{$\m@th
+                  \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
+                  mu$}%
+              \fi
+              \hfill}}\nobreak
+          \hb@xt@\@pnumwidth{\hss#2}}}\par
+      \expandafter\ifnum\scr@v@is@gt{2.96}\relax
+      \endgroup
+      \penalty20009
+      \else
+        \penalty\@highpenalty
+      \endgroup
+    \fi
+  \fi
+}
 \renewcommand*\l@part[2]{% TODO: KOMA-fizieren
   \addpenalty{-\@highpenalty}%
   \addvspace{0.5em plus 0pt}% space above part line
@@ -537,12 +609,67 @@
   \endgroup
 }
 
+\setkomafont{chapterentry}{}
+%%%\setkomafont{chapterentrypagenumber}{}
+%\edef\@pnumwidth{\the\dimexpr\@pnumwidth\relax}%
+%%% \hb@xt@\@pnumwidth{\hss#2}
+
 \deftocheading{toc}{%
   \clearpage\thispagestyle{empty}% \thispagestyle{dtk-toc}
   \vspace*{16pt minus 8pt}%
   \let\\=\relax
   \raggedright
 }
+
+\iffalse
+\RedeclareSectionCommand[%
+,font=\Large
+%,style=???
+%,pagestyle=scrheadings
+]{part}
+\fi
+
+
+\setkomafont{disposition}{\sffamily}
+\setkomafont{part}{\usekomafont{disposition}\huge}
+\setkomafont{chapter}{\usekomafont{disposition}\Large}
+
+\newcommand\Part[2][]{%
+  \def\DTK@tempa{\part[#1]{#2}}\DTK@Part
+}
+\newcommand\DTK@Part[1][]{%
+  \setpartpreamble{%
+    \vskip-.25\baselineskip\nobreak
+    \noindent\rule{\textwidth}{2pt} {\sffamily\large\par\smallskip #1}%
+  }%
+  \DTK@tempa
+}
+%\z@ \@plus 1fil + \baselineskip
+
+\def\partheadstartvskip{% 12.0pt plus 1.0fil
+  \null\vskip-\baselineskip\vskip 10pt %
+}
+\def\partheadmidvskip{% unwichtig!
+  \par\nobreak\vskip \@tempskipa
+}
+
+\def\partheadendvskip{% 0.0pt plus 1.0fil
+  %\vskip \@tempskipa \newpage
+  \bigskip\par
+}
+
+\let\partheademptypage=\relax% ???
+\renewcommand*{\@endpart}{\vbox to\z@{\use@preamble{part@u}\vss}%
+  \@tempskipa=\glueexpr\scr@part@afterskip\relax
+  \ifdim\@tempskipa<\z@\@tempskipa-\@tempskipa\fi
+  \partheadendvskip
+  \partheademptypage
+  \if@tempswa
+    \twocolumn
+  \fi
+}
+
+\let\raggedpart\raggedright
 
 \endinput
 
