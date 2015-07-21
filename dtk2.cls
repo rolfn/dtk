@@ -276,7 +276,7 @@
     \AfterEndPreamble{%
       \renewcommand*\bibliography[1]{%
         \immediate\write\@mainaux{\string\bibliography{#1}}%
-        \printbibliography
+        \printbibliography[heading=dtk]
       }%
     }%
     \AtBeginDocument{\let\maketitle=\DTK@maketitle}%
@@ -330,7 +330,7 @@
     \c@equation=\z@
     \renewenvironment*{document}%
       {\DTK@embedded@begindocumenthook}%
-      {\ifDTK@bib@\ORIG@printbibliography\fi
+      {\ifDTK@bib@\ORIG@printbibliography[heading=dtk]\fi
        \DTK@embedded@enddocumenthook\endinput}%
     \refsection[\the\c@refsection]%
       \input{\DTK@local@inputname}%
@@ -476,6 +476,9 @@
 \setcapindent{1em}
 \setcapwidth[c]{.8\textwidth}
 
+\defbibheading{dtk}{\section{\bibname}}
+\renewcaptionname{ngerman}{\bibname}{Literatur und Software}
+
 \renewcommand\thefigure{\arabic{figure}}
 \renewcommand\thetable{\arabic{table}}
 \renewcommand\theequation{\arabic{equation}}
@@ -493,94 +496,6 @@
 \setkomafont{pagenumber}{\sffamily}
 \setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
 
-\renewcommand\tableofcontents{%
-  \clearpage
-  \thispagestyle{empty}%
-  %%%\markboth{\contentsname}{\contentsname}%
-  %%%\ContentsArt
-  \begingroup
-    \parskip=\ContentsParSkip
-    \let\\=\relax
-    \TOC@configure
-    \raggedright%%%%%%%%%%%%%%%%%% hv 2009-07-25
-    \@starttoc{toc}
-  \endgroup
-}
-
-\renewcommand*{\tableofcontents}{%
-  \begingroup\let\if@dynlist\if@tocleft\listoftoc{toc}\endgroup
-}
-\renewcommand*\l@part[2]{%
-  \ifnum \c@tocdepth <\parttocdepth \else
-    \addpenalty{-\@highpenalty}%
-    \addvspace{2.25em \@plus\p@}%
-    \setlength{\@tempdima}{\scr@part@tocnumwidth}%
-    \if@tocleft
-      \ifx\toc@l@number\@empty\else
-        \setlength\@tempdima{0\toc@l@number}%
-      \fi
-    \fi
-    \begingroup
-      \parindent \z@ \rightskip \@pnumwidth
-      \parfillskip -\@pnumwidth
-      \leavevmode
-      \advance\leftskip\@tempdima
-      \hskip -\leftskip
-      \usekomafont{partentry}{#1\nobreak
-        \usekomafont{partentrypagenumber}{\hfil\nobreak
-          \hb@xt@\@pnumwidth{\hss#2}}}\par
-      \expandafter\ifnum\scr@v@is@gt{2.96}\relax
-      \endgroup
-      \penalty20010
-      \else
-          \penalty\@highpenalty
-      \endgroup
-    \fi
-  \fi
-}
-\renewcommand*\l@chapter[2]{%
-  \ifnum \c@tocdepth <\chaptertocdepth \else
-    \ifnum \lastpenalty<20010
-      \addpenalty{-\@highpenalty}%
-    \fi
-    \expandafter\ifnum\scr@v@is@lt{3.15}%
-      \vskip 1.0em \@plus\p@
-    \else
-      \addvspace{1.0em \@plus\p@}%
-    \fi
-    \setlength\@tempdima{\scr@chapter@tocnumwidth}%
-    \if@tocleft
-      \ifx\toc@l@number\@empty\else
-        \setlength\@tempdima{0\toc@l@number}%
-      \fi
-    \fi
-    \begingroup
-      \raggedchapterentry
-      \parindent \z@ \advance\rightskip \@pnumwidth
-      \parfillskip -\@pnumwidth
-      \interlinepenalty\@M
-      \leavevmode
-      \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
-      \edef\@pnumwidth{\the\dimexpr\@pnumwidth\relax}%
-      \usekomafont{chapterentry}{#1\nobreak
-        \usekomafont{chapterentrypagenumber}{%
-          {\usekomafont{chapterentrydots}{%
-              \if@chapterentrywithdots
-                \leaders\hbox{$\m@th
-                  \mkern \@dotsep mu\hbox{.}\mkern \@dotsep
-                  mu$}%
-              \fi
-              \hfill}}\nobreak
-          \hb@xt@\@pnumwidth{\hss#2}}}\par
-      \expandafter\ifnum\scr@v@is@gt{2.96}\relax
-      \endgroup
-      \penalty20009
-      \else
-        \penalty\@highpenalty
-      \endgroup
-    \fi
-  \fi
-}
 \renewcommand*\l@part[2]{% TODO: KOMA-fizieren
   \addpenalty{-\@highpenalty}%
   \addvspace{0.5em plus 0pt}% space above part line
@@ -652,11 +567,19 @@
 
 \def\partheadendvskip{% 0.0pt plus 1.0fil
   %\vskip \@tempskipa \newpage
-  \bigskip\par
+  %\bigskip\par
+  \par\vskip-\baselineskip
 }
 
 \let\partheademptypage=\relax% ???
 \let\raggedpart\raggedright
+
+%\show\chapterheadstartvskip %\vspace {\@tempskipa }
+%\show\chapterheadendvskip
+
+\def\chapterheadstartvskip{%
+  %%%\par\vskip-\baselineskip
+}
 
 \endinput
 
