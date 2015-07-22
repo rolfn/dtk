@@ -379,18 +379,18 @@
   %\Advance@Label@Prefix % ???
   \markboth{}{}%
   \begingroup
-    \vspace{32pt plus 8pt minus 16pt}
-    \begin{minipage}{\textwidth}
+    %\vspace{32pt plus 8pt minus 16pt}
+    %\begin{minipage}{\textwidth}
+      \chapter{\@title}%
       \raggedright
       %\TitleFont
       %{\Large\sffamily\RaggedRight \@title}%
-      \chapter{\@title}%
       \ifx\@author\@empty\else
         \bigskip\par
         %\AuthorFont
         \@author
       \fi
-    \end{minipage}%
+    %\end{minipage}%
     \@thanks
     \let\thanks\@gobble
     %\addcontentsline{toc}{chapter}{\@@title}%
@@ -416,13 +416,14 @@
     \RequirePackage[split,protected]{splitidx} \makeindex
     \newindex[\addressname]{addresses}
     \newcommand*\listofaddresses{%
+      \clearpage
       \markboth{\addressname}{\addressname}%
       %\thispagestyle{empty}%
       \begingroup
         %\language\langwohyphens
         %\show\printsubindex
         \renewenvironment{theindex}{\theaddresses}{\endtheaddresses}%
-        \printsubindex[addresses]%
+        \printindex[addresses]%
       \endgroup
     }
     \newcommand\address[3]{% TODO: Auch "!" und "|" maskieren?
@@ -436,6 +437,7 @@
         \x
       \endgroup
     }
+    \let\indexspace=\relax
     \renewcommand*\idx@heading{%
       \chapter{\indexname}%
       %\SectionFont   \large\sf
@@ -448,12 +450,8 @@
       \def\DTK@tempa{#1}\def\DTK@tempb{#2}\def\DTK@tempc{#3}%
     }
     \newenvironment{theaddresses}{%
-      \setchapterpreamble{\index@preamble}
-      %\idx@heading
-      %\index@preamble
-      \columnseprule=\z@
-      \columnsep=10\p@
-      \begin{multicols}{2}[\idx@heading\vspace{-1\baselineskip}]%
+      \columnseprule=\z@ \columnsep=10\p@
+      \begin{multicols}{2}[\idx@heading]%
         \makeatletter
         \parindent\z@
         \setlength{\parskip}{\z@ \@plus .3\p@}%
@@ -554,8 +552,10 @@
 }
 \newcommand\DTK@Part[1][]{%
   \setpartpreamble{%
-    \vskip-.25\baselineskip\nobreak
-    \noindent\rule{\textwidth}{2pt} {\sffamily\large\par\smallskip #1}%
+    %\vskip-.25\baselineskip\nobreak
+    \noindent\rule{\textwidth}{2pt}
+    {\sffamily\large\par\smallskip #1\par}%
+    %\noindent\rule{\textwidth}{2pt}
   }%
   \DTK@tempa
 }
@@ -568,18 +568,16 @@
 \def\partheadendvskip{% 0.0pt plus 1.0fil
   %\vskip \@tempskipa \newpage
   %\bigskip\par
-  \par\vskip-\baselineskip
+  %\par\vskip-\baselineskip
 }
 
 \let\partheademptypage=\relax% ???
 \let\raggedpart\raggedright
 
-%\show\chapterheadstartvskip %\vspace {\@tempskipa }
-%\show\chapterheadendvskip
+\def\chapterheadstartvskip{}
+\def\chapterheadstartvskip{} %\vspace {\@tempskipa }
 
-\def\chapterheadstartvskip{%
-  %%%\par\vskip-\baselineskip
-}
+%\renewcommand*{\use@chapter@o@preamble}{}%
 
 \endinput
 
