@@ -52,6 +52,7 @@
 ,captions=oneline
 ,parskip=full*
 ,headings=small
+,open=any
 %,toc=flat
 ]{scrbook}
 
@@ -139,7 +140,7 @@
 \newcommand\Volume{?/??}
 
 
-\RequirePackage{xcolor,listings,multicol,ragged2e}
+\RequirePackage{xpatch,xcolor,listings,multicol,ragged2e}
 %\RequirePackage{etex} % ???
 
 \newdimen\DTK@tempdima
@@ -366,7 +367,7 @@
 }
 
 \newcommand\DTK@maketitle[1][]{%
-  %%%\ifDTK@Author@ \thispagestyle{part}\fi
+  %%%\markboth{}{}%
   \begingroup % ???
     \dimen0=\vsize
     \advance\dimen0 by -\pagetotal
@@ -375,57 +376,29 @@
       \newpage
       %\global\FirstArticletrue
     \fi
-  \endgroup
-  %\Advance@Label@Prefix % ???
-  \markboth{}{}%
-  \begingroup
-    %\vspace{32pt plus 8pt minus 16pt}
-    %\begin{minipage}{\textwidth}
-      \chapter{\@title}%
-      \raggedright
-      %\TitleFont
-      %{\Large\sffamily\RaggedRight \@title}%
-      \ifx\@author\@empty\else
-        \bigskip\par
-        %\AuthorFont
-        \@author
-      \fi
-    %\end{minipage}%
+    %\minipage{\textwidth}%
+    \chapter{\@title}%
+    \ifx\@author\@empty\else
+      \par { \usekomafont{section} \@author }% ???
+    \fi
+    %\endminipage%
     \@thanks
     \let\thanks\@gobble
-    %\addcontentsline{toc}{chapter}{\@@title}%
     %\markboth{\@@title}{\@@title}% ???
   \endgroup
   \let\@title=\@empty
   \let\@author=\@empty
   \let\@thanks=\@empty
-  \medskip\par}
+  \medskip\par
+}
 
 \newcommand*\addressname{Autoren/Organisatoren}
 
-%\newindex[\listofplacesname]{places}
-%\newindex{addresses}
-%\edef\index@addresses@name{\addressname}
-
-
 \ifDTKrecord
   \newcommand\address[3]{}
-  \newcommand*\listofaddresses{}
+  \newcommand*\listofaddresses{}% nötig?
 \else
   \ifDTK@Author@\else
-    \RequirePackage[split,protected]{splitidx} \makeindex
-    \newindex[\addressname]{addresses}
-    \newcommand*\listofaddresses{%
-      \clearpage
-      \markboth{\addressname}{\addressname}%
-      %\thispagestyle{empty}%
-      \begingroup
-        %\language\langwohyphens
-        %\show\printsubindex
-        \renewenvironment{theindex}{\theaddresses}{\endtheaddresses}%
-        \printindex[addresses]%
-      \endgroup
-    }
     \newcommand\address[3]{% TODO: Auch "!" und "|" maskieren?
       \begingroup
         \def\url##1{\escape@atsign##1\relax}%
@@ -433,16 +406,26 @@
           \noexpand\url\string{##1\string"@##2\string}%
         }
         \makeatletter
-        \scantokens{\protected@edef\x{\noexpand\sindex[addresses]{#2#1@#1 #2!#3}}}%
-        \x
+        \scantokens{\protected@edef\x{%
+          \noexpand\sindex[addresses]{#2#1@#1 #2!#3}}}\x
+      \endgroup
+    }
+    \RequirePackage[split,protected]{splitidx} \makeindex
+    \newindex[\addressname]{addresses}
+    \newcommand*\listofaddresses{%
+      \clearpage
+      %%%\markboth{\addressname}{\addressname}%
+      %\thispagestyle{empty}%
+      \begingroup
+        %\language\langwohyphens
+        \renewenvironment{theindex}{\theaddresses}{\endtheaddresses}%
+        \printindex[addresses]%
       \endgroup
     }
     \let\indexspace=\relax
     \renewcommand*\idx@heading{%
       \chapter{\indexname}%
-      %\SectionFont   \large\sf
-      %\section{\indexname}%
-      \markright{\indexname}%
+      %%%\markboth{\indexname}{\indexname}%
       \ifx\index@preamble\relax
       \else\index@preamble\let\index@preamble=\relax\fi
     }%
@@ -459,7 +442,7 @@
         \raggedright
         \def\item##1\@nil{\DTK@scan@item##1\@nil
           \par\parbox{\columnwidth}{%
-            \textbf{\DTK@tempa}\hfill[\ignorespaces \DTK@tempc]\par\DTK@tempb
+            \textbf{\DTK@tempa}\hfill[\DTK@tempc]\par\DTK@tempb
           }%
         }%
     }{%
@@ -484,11 +467,13 @@
 \RequirePackage[automark]{scrlayer-scrpage}
 \pagestyle{scrheadings}
 \clearpairofpagestyles
-\automark[chapter]{chapter}
 \ihead{\headmark}
 \ohead{\pagemark}
 \cfoot*{\DTK@corr@version}
-\ifoot{\journalname \DTK@date}
+\ifoot*{\journalname~~\DTK@date}
+\automark[chapter]{chapter}
+
+\deftriplepagestyle{dtk-toc}[0pt][1mm]{}{\Huge DTK}{}{}{}{}
 
 \setkomafont{pagehead}{\sffamily\slshape}% \itshape?
 \setkomafont{pagenumber}{\sffamily}
@@ -497,7 +482,7 @@
 \renewcommand*\l@part[2]{% TODO: KOMA-fizieren
   \addpenalty{-\@highpenalty}%
   \addvspace{0.5em plus 0pt}% space above part line
-  \@tempdima 1.5em
+  \@tempdima=1.5em %
   \begingroup
     \bfseries
     \advance\leftskip\@tempdima
@@ -528,7 +513,7 @@
 %%% \hb@xt@\@pnumwidth{\hss#2}
 
 \deftocheading{toc}{%
-  \clearpage\thispagestyle{empty}% \thispagestyle{dtk-toc}
+  \clearpage\thispagestyle{dtk-toc}%
   \vspace*{16pt minus 8pt}%
   \let\\=\relax
   \raggedright
@@ -546,38 +531,41 @@
 \setkomafont{disposition}{\sffamily}
 \setkomafont{part}{\usekomafont{disposition}\huge}
 \setkomafont{chapter}{\usekomafont{disposition}\Large}
+\setkomafont{section}{\usekomafont{disposition}\large}
 
 \newcommand\Part[2][]{%
   \def\DTK@tempa{\part[#1]{#2}}\DTK@Part
 }
 \newcommand\DTK@Part[1][]{%
-  \setpartpreamble{%
-    %\vskip-.25\baselineskip\nobreak
-    \noindent\rule{\textwidth}{2pt}
-    {\sffamily\large\par\smallskip #1\par}%
-    %\noindent\rule{\textwidth}{2pt}
-  }%
-  \DTK@tempa
+  \ifx\relax#1\relax\else
+    \setpartpreamble{%
+      %\vskip-.25\baselineskip\nobreak
+      \noindent\rule{\textwidth}{2pt}
+      \par\smallskip
+      { \usekomafont{section} #1\par }%
+    }%
+  \fi
+  \DTK@tempa\bigskip\par
 }
-%\z@ \@plus 1fil + \baselineskip
 
 \def\partheadstartvskip{% 12.0pt plus 1.0fil
   \null\vskip-\baselineskip\vskip 10pt %
 }
-
-\def\partheadendvskip{% 0.0pt plus 1.0fil
-  %\vskip \@tempskipa \newpage
-  %\bigskip\par
-  %\par\vskip-\baselineskip
+\def\partheadendvskip{%
+  \bigskip\bigskip\par
 }
-
 \let\partheademptypage=\relax% ???
 \let\raggedpart\raggedright
+\def\partpagestyle{plain.scrheadings}
 
 \def\chapterheadstartvskip{}
 \def\chapterheadstartvskip{} %\vspace {\@tempskipa }
+\def\chapterpagestyle{scrheadings}
+\xpatchcmd{\scr@startchapter}{\clearpage}{\relax}{}{\PaTchFaiLED}% ???
 
 %\renewcommand*{\use@chapter@o@preamble}{}%
+
+% Evtl. \let\par=\chapter    \let\chapter=\section usw.
 
 \endinput
 
