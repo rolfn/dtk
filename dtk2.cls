@@ -101,6 +101,11 @@
 
 \newif\ifDTK@corr@ \DTK@corr@true
 
+\newcommand*\DTK@get@month@name[1]{%  Paket?
+  \ifcase \number#1 \or Januar\or Februar\or M\"arz\or April\or Mai%
+  \or Juni\or Juli\or August\or September\or Oktober\or November\or Dezember\fi
+}
+
 \newcommand*\DieTeXnischeKomoedie{% #1=Ausgabe, #2=Monat, #3=Jahr
   \@ifstar{\global\DTK@corr@true\DTK@DieTeXnischeKomoedie}%
     {\global\DTK@corr@false\DTK@DieTeXnischeKomoedie}%
@@ -109,6 +114,7 @@
   \thispagestyle{empty}%
   \gdef\DTK@issue{#1}%
   \gdef\DTK@month{#2}%
+  \xdef\DTK@month@name{\DTK@get@month@name{\DTK@month}}%
   \gdef\DTK@year{#3}%
   \xdef\DTK@volume{\the\numexpr\DTK@year-1989+1\relax}%
   \ifx\relax\DTK@issue\relax\gdef\DTK@date{?/??}\else\xdef\DTK@date{#1/#3}\fi
@@ -473,7 +479,21 @@
 \ifoot*{\journalname~~\DTK@date}
 \automark[chapter]{chapter}
 
-\deftriplepagestyle{dtk-toc}[0pt][1mm]{}{\Huge DTK}{}{}{}{}
+\newcommand*\DTK@toc@head{%
+  \raisebox{-4mm}[0pt][0pt]{\parbox[t]{\textwidth}{%
+    \normalfont\Huge\raggedright
+    \color{black!60}Die \color{black}\TeX\color{black!60}nische Komödie \par
+    \footnotesize
+    \color{black}\addvspace{\dimexpr4mm-\baselineskip}%
+    \rule{\textwidth}{2pt}\par
+    %\null\hfill
+    \footnotesize\raggedleft
+    \DTK@volume. Jahrgang\quad Heft \DTK@issue\quad \DTK@month@name\ \DTK@year
+  }}
+}
+
+%\deftriplepagestyle{dtk-toc}[0pt][1mm]{}{\Huge DTK}{}{}{}{}
+\defpagestyle{dtk-toc}{{\DTK@toc@head}{}{}}{}
 
 \setkomafont{pagehead}{\sffamily\slshape}% \itshape?
 \setkomafont{pagenumber}{\sffamily}
@@ -513,7 +533,7 @@
 %%% \hb@xt@\@pnumwidth{\hss#2}
 
 \deftocheading{toc}{%
-  \clearpage\thispagestyle{dtk-toc}%
+  \cleardoubleevenstandardpage\thispagestyle{dtk-toc}%
   \vspace*{16pt minus 8pt}%
   \let\\=\relax
   \raggedright
