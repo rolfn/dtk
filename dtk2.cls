@@ -114,37 +114,17 @@
   \thispagestyle{empty}%
   \gdef\DTK@issue{#1}%
   \gdef\DTK@month{#2}%
-  \xdef\DTK@month@name{\DTK@get@month@name{\DTK@month}}%
+  \xdef\DTK@month@name{\DTMgermanmonthname{#2}}
   \gdef\DTK@year{#3}%
   \xdef\DTK@volume{\the\numexpr\DTK@year-1989+1\relax}%
   \ifx\relax\DTK@issue\relax\gdef\DTK@date{?/??}\else\xdef\DTK@date{#1/#3}\fi
   \ifDTK@corr@
-    \xdef\DTK@corr@version{\noexpand\fbox{Korrekturversion: \DTK@today}}%
+    \xdef\DTK@corr@version{\noexpand\normalfont
+      \noexpand\fbox{Korrekturversion: \DTMnow}}%
   \fi
 }
 
-% maketitle
-%\thispagestyle{empty}%
-% ...
-% \newpage
-
-\begingroup
-  \ifluatex
-    \catcode`\%=12\relax
-    \xdef\DTK@today{\directlua{tex.print(os.date("%Y-%m-%d %H:%M:%S"))}}
-  \else
-    \count@\time
-    \divide\count@ 60 %
-    \count2=-\count@
-    \multiply\count2 60 %
-    \advance\count2 \time
-    \xdef\DTK@today{\the\year-\two@digits{\the\month}-\two@digits{\the\day} %
-      \space\two@digits{\the\count@}:\two@digits{\the\count2}}
-  \fi
-\endgroup
-
 \newcommand\Volume{?/??}
-
 
 \RequirePackage{xpatch,xcolor,listings,multicol,ragged2e}
 %\RequirePackage{etex} % ???
@@ -163,6 +143,13 @@
   \input{dtk2-new-engines.clo}% LuaTeX oder XeTeX
 \fi
 
+\RequirePackage[main=ngerman]{babel}
+\RequirePackage[showzone=false]{datetime2}
+\RequirePackage[autostyle=true,babel=once,german=guillemets,maxlevel=3]{csquotes}%
+\MakeAutoQuote{»}{«}
+\defineshorthand{"`}{\openautoquote}%
+\defineshorthand{"'}{\closeautoquote}%
+
 \ifxetex\else
 \RequirePackage[%
 ,factor=1500
@@ -175,13 +162,6 @@
 ]{microtype}
 % TODO: Spezielle Angaben zu den Schriften
 \fi
-
-\RequirePackage[main=ngerman]{babel}
-
-\RequirePackage[autostyle=true,babel=once,german=guillemets,maxlevel=3]{csquotes}%
-\MakeAutoQuote{»}{«}
-\defineshorthand{"`}{\openautoquote}%
-\defineshorthand{"'}{\closeautoquote}%
 
 \AtEndOfClass{%
   \shorthandon{"}
@@ -248,7 +228,7 @@
   \@ifdefinable\User@Packages{%
     \newwrite\User@Packages
     \immediate\openout\User@Packages userpackages.tex\relax
-    \immediate\write\User@Packages{\@percentchar\space *** \DTK@today\space ***}%
+    \immediate\write\User@Packages{\@percentchar\space *** \DTMnow\space ***}%
     \AtEndDocument{\immediate\closeout\User@Packages\relax}%
   }
   \newcommand*\DTK@addbibresource[2][]{%
@@ -470,6 +450,25 @@
 \renewcommand\thetable{\arabic{table}}
 \renewcommand\theequation{\arabic{equation}}
 
+\newcommand*\DTK@toc@head{%
+  \raisebox{0mm}[0pt][0pt]{%
+    \parbox[t]{\textwidth}{%
+      \normalfont\nointerlineskip
+      \begingroup
+        \Huge\raggedright
+        \color{black!60}Die \color{black}\TeX\color{black!60}nische Kom\"odie \\
+      \endgroup
+      \addvspace{\dimexpr5mm-\baselineskip}%
+      \rule{\textwidth}{2pt}\\[0.5mm]%
+      \begingroup
+        \footnotesize\raggedleft
+        \DTK@volume. Jahrgang\quad Heft \DTK@issue\quad
+          \DTK@month@name\ \DTK@year \\
+      \endgroup
+    }%
+  }%
+}
+
 \RequirePackage[automark]{scrlayer-scrpage}
 \pagestyle{scrheadings}
 \clearpairofpagestyles
@@ -479,32 +478,19 @@
 \ifoot*{\journalname~~\DTK@date}
 \automark[chapter]{chapter}
 
-\newcommand*\DTK@toc@head{%
-  \raisebox{-4mm}[0pt][0pt]{\parbox[t]{\textwidth}{%
-    \normalfont\Huge\raggedright
-    \color{black!60}Die \color{black}\TeX\color{black!60}nische Komödie \par
-    \footnotesize
-    \color{black}\addvspace{\dimexpr4mm-\baselineskip}%
-    \rule{\textwidth}{2pt}\par
-    %\null\hfill
-    \footnotesize\raggedleft
-    \DTK@volume. Jahrgang\quad Heft \DTK@issue\quad \DTK@month@name\ \DTK@year
-  }}
-}
-
-%\deftriplepagestyle{dtk-toc}[0pt][1mm]{}{\Huge DTK}{}{}{}{}
-\defpagestyle{dtk-toc}{{\DTK@toc@head}{}{}}{}
+\defpagestyle{dtk-toc}%
+  {{\DTK@toc@head}{}{}}{{\hfill\DTK@corr@version\hfill\null}{}{}}
 
 \setkomafont{pagehead}{\sffamily\slshape}% \itshape?
 \setkomafont{pagenumber}{\sffamily}
 \setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
 
-\renewcommand*\l@part[2]{% TODO: KOMA-fizieren
-  \addpenalty{-\@highpenalty}%
-  \addvspace{0.5em plus 0pt}% space above part line
-  \@tempdima=1.5em %
+\renewcommand*\l@part[2]{%
   \begingroup
-    \bfseries
+    \addpenalty{-\@highpenalty}%
+    \usekomafont{partentry}%
+    \addvspace{0.5em plus 0pt}% space above part line
+    \@tempdima=1.5em %
     \advance\leftskip\@tempdima
     \hskip -\leftskip
     #1\par
@@ -512,25 +498,24 @@
   \endgroup
   \addvspace{0.2em}%
 }
-\renewcommand*\l@chapter[2]{%
+\renewcommand*\l@chapter[2]{%    TODO: Abstände richtig?
   \begingroup
-     \vskip \z@ \@plus.2\p@
-     \@afterindenttrue
-     \interlinepenalty\@M
-     \@tempdima 1.5em\relax % number width
-     \@tempdimb 2.5em\relax % indent
-     \advance\leftskip \@tempdimb
-     \advance\rightskip \@tempdimb
-     \noindent\hskip -\leftskip
-     \hbox to\@tempdimb{#2\hss}%
-     #1\par
+    \usekomafont{chapterentry}%
+    \vskip \z@ \@plus.2\p@
+    \@afterindenttrue
+    \interlinepenalty\@M
+    \@tempdimb 2.5em\relax % indent
+    \advance\leftskip \@tempdimb
+    \advance\rightskip \@tempdimb
+    \noindent\hskip -\leftskip
+    \hbox to\@tempdimb{\usekomafont{chapterentrypagenumber}#2\hss}%
+    #1\par
   \endgroup
 }
 
-\setkomafont{chapterentry}{}
-%%%\setkomafont{chapterentrypagenumber}{}
-%\edef\@pnumwidth{\the\dimexpr\@pnumwidth\relax}%
-%%% \hb@xt@\@pnumwidth{\hss#2}
+\setkomafont{chapterentry}{\normalfont\small}
+\setkomafont{chapterentrypagenumber}{\usekomafont{chapterentry}}
+\setkomafont{partentry}{\usekomafont{chapterentry}\bfseries}
 
 \deftocheading{toc}{%
   \cleardoubleevenstandardpage\thispagestyle{dtk-toc}%
