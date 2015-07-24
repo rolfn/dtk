@@ -518,20 +518,12 @@
 \setkomafont{partentry}{\usekomafont{chapterentry}\bfseries}
 
 \deftocheading{toc}{%
-  \cleardoubleevenstandardpage\thispagestyle{dtk-toc}%
+  \cleardoubleevenpageusingstyle{empty}%
+  \thispagestyle{dtk-toc}%
   \vspace*{16pt minus 8pt}%
   \let\\=\relax
   \raggedright
 }
-
-\iffalse
-\RedeclareSectionCommand[%
-,font=\Large
-%,style=???
-%,pagestyle=scrheadings
-]{part}
-\fi
-
 
 \setkomafont{disposition}{\sffamily}
 \setkomafont{part}{\usekomafont{disposition}\huge}
