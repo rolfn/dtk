@@ -101,23 +101,17 @@
 
 \newif\ifDTK@corr@ \DTK@corr@true
 
-\newcommand*\DTK@get@month@name[1]{%  Paket?
-  \ifcase \number#1 \or Januar\or Februar\or M\"arz\or April\or Mai%
-  \or Juni\or Juli\or August\or September\or Oktober\or November\or Dezember\fi
-}
-
 \newcommand*\DieTeXnischeKomoedie{% #1=Ausgabe, #2=Monat, #3=Jahr
   \@ifstar{\global\DTK@corr@true\DTK@DieTeXnischeKomoedie}%
     {\global\DTK@corr@false\DTK@DieTeXnischeKomoedie}%
 }
 \newcommand\DTK@DieTeXnischeKomoedie[3]{%
-  \thispagestyle{empty}%
   \gdef\DTK@issue{#1}%
+  \ifx\relax\DTK@issue\relax\gdef\DTK@date{?/??}\else\xdef\DTK@date{#1/#3}\fi
   \gdef\DTK@month{#2}%
   \xdef\DTK@month@name{\DTMgermanmonthname{#2}}
   \gdef\DTK@year{#3}%
   \xdef\DTK@volume{\the\numexpr\DTK@year-1989+1\relax}%
-  \ifx\relax\DTK@issue\relax\gdef\DTK@date{?/??}\else\xdef\DTK@date{#1/#3}\fi
   \ifDTK@corr@
     \xdef\DTK@corr@version{\noexpand\normalfont
       \noexpand\fbox{Korrekturversion: \DTMnow}}%
@@ -378,10 +372,10 @@
   \medskip\par
 }
 
+\newcommand\address[3]{}
 \newcommand*\addressname{Autoren/Organisatoren}
 
 \ifDTKrecord
-  \newcommand\address[3]{}
   \newcommand*\listofaddresses{}% nötig?
 \else
   \ifDTK@Author@\else
