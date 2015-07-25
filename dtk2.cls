@@ -478,12 +478,8 @@
 \ifoot*{\journalname~~\DTK@date}
 \automark[chapter]{chapter}
 
-\defpagestyle{dtk-toc}%
-  {{\DTK@toc@head}{}{}}{{\hfill\DTK@corr@version\hfill\null}{}{}}
-
-\setkomafont{pagehead}{\sffamily\slshape}% \itshape?
-\setkomafont{pagenumber}{\sffamily}
-\setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
+\defpagestyle{dtk-toc}{{\DTK@toc@head}{}{}}%
+  {{\hfill\DTK@corr@version\hfill\null}{}{}}
 
 \renewcommand*\l@part[2]{%
   \begingroup
@@ -529,6 +525,9 @@
 \setkomafont{part}{\usekomafont{disposition}\huge}
 \setkomafont{chapter}{\usekomafont{disposition}\Large}
 \setkomafont{section}{\usekomafont{disposition}\large}
+\setkomafont{pagenumber}{\normalfont\sffamily}
+\setkomafont{pagehead}{\sffamily\slshape}% \itshape?
+\setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
 
 \newcommand\Part[2][]{%
   \def\DTK@tempa{\part[#1]{#2}}\DTK@Part
