@@ -269,16 +269,9 @@
     \newcommand*\DTK@bibliography[1]{\DTK@bib@true}%
     \AtBeginDocument{%
       \renewcommand\maketitle[1][]{%
-        \thispagestyle{empty}%
-        \begin{titlepage}% ???
-          \Large\par
-          \journalname\par
-          \DTK@issue/\DTK@year\par
-          Jahrgang: \DTK@volume\par
-          { \Large\DTK@corr@version }
-        \end{titlepage}%
+        \thispagestyle{dtk-title}%
         \global\let\maketitle=\DTK@maketitle
-        \newpage
+        \mbox{}\newpage
       }%
     }
   \fi
@@ -376,10 +369,10 @@
 \newcommand*\addressname{Autoren/Organisatoren}
 
 \ifDTKrecord
-  \newcommand*\listofaddresses{}% nötig?
+  \renewcommand*\listofaddresses{}% nötig?
 \else
   \ifDTK@Author@\else
-    \newcommand\address[3]{% TODO: Auch "!" und "|" maskieren?
+    \renewcommand\address[3]{% TODO: Auch "!" und "|" maskieren?
       \begingroup
         \def\url##1{\escape@atsign##1\relax}%
         \def\escape@atsign##1@##2\relax{%
@@ -463,6 +456,22 @@
   }%
 }
 
+\RequirePackage{picture}
+\newcommand*\DTK@title@content{%
+  \begin{picture}(0,0)(0,-\baselineskip)% TODO: Nicht ganz "genullt"
+    \put(.25\paperwidth,-.25\paperheight){%
+      \parbox{.5\paperwidth}{%
+        \Large\par
+        \journalname\par
+        \DTK@issue/\DTK@year\par
+        \DTK@month@name~\DTK@year\par
+        Jahrgang: \DTK@volume\par
+        { \Large\DTK@corr@version }
+      }%
+    }%
+  \end{picture}%
+}
+
 \RequirePackage[automark]{scrlayer-scrpage}
 \pagestyle{scrheadings}
 \clearpairofpagestyles
@@ -474,6 +483,9 @@
 
 \defpagestyle{dtk-toc}{{\DTK@toc@head}{}{}}%
   {{\hfill\DTK@corr@version\hfill\null}{}{}}
+\defpagestyle{dtk-title}{}{}
+\DeclareNewLayer[foreground,contents={\DTK@title@content}]{dtk-title-content}
+\AddLayersToPageStyle{dtk-title}{dtk-title-content}
 
 \renewcommand*\l@part[2]{%
   \begingroup
