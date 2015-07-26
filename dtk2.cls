@@ -456,9 +456,10 @@
   }%
 }
 
-\RequirePackage{picture}
-\newcommand*\DTK@title@content{%
+\RequirePackage{pict2e,picture}
+\newcommand\DTK@title@content{%
   \begin{picture}(0,0)(0,-\baselineskip)% TODO: Nicht ganz "genullt"
+    \put(0,0){\circle{100mm}}%
     \put(.25\paperwidth,-.25\paperheight){%
       \parbox{.5\paperwidth}{%
         \Large\par
@@ -484,7 +485,8 @@
 \defpagestyle{dtk-toc}{{\DTK@toc@head}{}{}}%
   {{\hfill\DTK@corr@version\hfill\null}{}{}}
 \defpagestyle{dtk-title}{}{}
-\DeclareNewLayer[foreground,contents={\DTK@title@content}]{dtk-title-content}
+\DeclareNewLayer[foreground,contents={\layercontentsmeasure
+\DTK@title@content}]{dtk-title-content}
 \AddLayersToPageStyle{dtk-title}{dtk-title-content}
 
 \renewcommand*\l@part[2]{%
