@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/07/20 v0.1b dtk document class (RN)]
+  [2015/07/27 v0.1c dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -109,7 +109,7 @@
 }
 \newcommand\DTK@DieTeXnischeKomoedie[3]{%
   \gdef\DTK@issue{#1}%
-  \ifx\relax\DTK@issue\relax\gdef\DTK@date{?/??}\else\xdef\DTK@date{#1/#3}\fi
+  \ifx\relax#1\relax\gdef\DTK@date{?/??}\else\xdef\DTK@date{#1/#3}\fi
   \gdef\DTK@month{#2}%
   \xdef\DTK@month@name{\DTMgermanmonthname{#2}}
   \gdef\DTK@year{#3}%
@@ -121,8 +121,6 @@
 }
 \newcommand*\DTK@fullEdition{\DTK@volume. Jahrgang\quad
   Heft \DTK@issue/\DTK@year\quad \DTK@month@name\ \DTK@year}
-
-\newcommand\Volume{?/??}
 
 \RequirePackage{xpatch,xcolor,listings,multicol,ragged2e}
 %\RequirePackage{etex} % ???
@@ -276,7 +274,7 @@
       \renewcommand\maketitle[1][]{%
         \thispagestyle{dtk-title}%
         \global\let\maketitle=\DTK@maketitle
-        \mbox{}\newpage
+        \null\newpage
       }%
     }
   \fi
@@ -557,7 +555,7 @@
   \raggedright
 }
 
-\setkomafont{disposition}{\sffamily}
+\setkomafont{disposition}{\normalfont\sffamily}
 \setkomafont{part}{\usekomafont{disposition}\huge}
 \setkomafont{chapter}{\usekomafont{disposition}\Large}
 \setkomafont{section}{\usekomafont{disposition}\large}
@@ -571,7 +569,6 @@
 \newcommand\DTK@Part[1][]{%
   \ifx\relax#1\relax\else
     \setpartpreamble{%
-      %\vskip-.25\baselineskip\nobreak
       \noindent\rule{\textwidth}{2pt}
       \par\smallskip
       { \usekomafont{section} #1\par }%
@@ -594,10 +591,6 @@
 \def\chapterheadstartvskip{} %\vspace {\@tempskipa }
 \def\chapterpagestyle{scrheadings}
 \xpatchcmd{\scr@startchapter}{\clearpage}{\relax}{}{\PaTchFaiLED}% ???
-
-%\renewcommand*{\use@chapter@o@preamble}{}%
-
-% Evtl. \let\par=\chapter    \let\chapter=\section usw.
 
 \endinput
 
