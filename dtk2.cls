@@ -91,6 +91,8 @@
 \renewcommand\textfraction{.1}
 
 \newcommand*\journalname{Die \TeX{}nische Kom\"odie}
+\newcommand*\DTK@fancyJournalname{%
+  \color{black!60}Die \color{black}\TeX\color{black!60}nische Kom\"odie}
 
 \newcommand*\DTK@year{}
 \newcommand*\DTK@month{}
@@ -117,11 +119,14 @@
       \noexpand\fbox{Korrekturversion: \DTMnow}}%
   \fi
 }
+\newcommand*\DTK@fullEdition{\DTK@volume. Jahrgang\quad
+  Heft \DTK@issue/\DTK@year\quad \DTK@month@name\ \DTK@year}
 
 \newcommand\Volume{?/??}
 
 \RequirePackage{xpatch,xcolor,listings,multicol,ragged2e}
 %\RequirePackage{etex} % ???
+\RequirePackage{dantelogo,hologo,dtklogos}
 
 \newdimen\DTK@tempdima
 \newdimen\DTK@tempdimb
@@ -443,14 +448,13 @@
       \normalfont\nointerlineskip
       \begingroup
         \Huge\raggedright
-        \color{black!60}Die \color{black}\TeX\color{black!60}nische Kom\"odie \\
+        \DTK@fancyJournalname \\
       \endgroup
       \addvspace{\dimexpr5mm-\baselineskip}%
       \rule{\textwidth}{2pt}\\[0.5mm]%
       \begingroup
         \footnotesize\raggedleft
-        \DTK@volume. Jahrgang\quad Heft \DTK@issue\quad
-          \DTK@month@name\ \DTK@year \\
+        \DTK@fullEdition \\
       \endgroup
     }%
   }%
@@ -458,18 +462,42 @@
 
 \RequirePackage{pict2e,picture}
 \newcommand\DTK@title@content{%
-  \begin{picture}(0,0)(0,-\baselineskip)% TODO: Nicht ganz "genullt"
-    \put(0,0){\circle{100mm}}%
-    \put(.25\paperwidth,-.25\paperheight){%
-      \parbox{.5\paperwidth}{%
-        \Large\par
-        \journalname\par
-        \DTK@issue/\DTK@year\par
-        \DTK@month@name~\DTK@year\par
-        Jahrgang: \DTK@volume\par
-        { \Large\DTK@corr@version }
+  \begin{picture}(0,0)(0,-\ht\strutbox)%
+    \put(24mm,-.5\paperheight){%
+      \makebox(0,0)[c]{\rotatebox[origin=c]{90}{%
+        \resizebox{14cm}{!}{\Huge\DTK@fancyJournalname}}}%
+    }%
+    \put(32mm,-.5\paperheight){%
+      \makebox(0,0)[c]{\rule{2.41pt}{\textheight}}%
+    }%
+    \put(53mm,-68mm){%
+      \parbox[t]{78mm}{%
+        \raggedleft
+        \begingroup % ???
+          %\Huge\dantelogo % ???
+          \Huge DANTE \par
+        \endgroup
+        \begingroup
+          \Large
+          Deutschsprachige \\
+          Anwendervereinigung \TeX\ \eV \par
+        \endgroup
+        \addvspace{4mm}%
+        \begingroup
+          \raggedright\footnotesize
+          \DTK@fullEdition \par
+        \endgroup
+        \addvspace{60mm}%
+        \begingroup
+          \Large\DTK@corr@version
+        \endgroup
       }%
     }%
+    \put(86mm,-186mm){%
+      \begingroup
+        \color[gray]{.8}\resizebox{45mm}{!}{\Huge\DTK@issue/\DTK@year}%
+      \endgroup
+    }
   \end{picture}%
 }
 
@@ -485,8 +513,8 @@
 \defpagestyle{dtk-toc}{{\DTK@toc@head}{}{}}%
   {{\hfill\DTK@corr@version\hfill\null}{}{}}
 \defpagestyle{dtk-title}{}{}
-\DeclareNewLayer[foreground,contents={\layercontentsmeasure
-\DTK@title@content}]{dtk-title-content}
+\DeclareNewLayer[foreground,contents={%\layercontentsmeasure
+  \DTK@title@content}]{dtk-title-content}
 \AddLayersToPageStyle{dtk-title}{dtk-title-content}
 
 \renewcommand*\l@part[2]{%
