@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/07/27 v0.1c dtk document class (RN)]
+  [2015/07/28 v0.1c dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -99,28 +99,49 @@
 \newcommand*\DTK@issue{}
 \newcommand*\DTK@volume{}
 \newcommand*\DTK@date{}
-\newcommand*\DTK@corr@version{}
+\newcommand*\DTK@corrVersion{}
+\newcommand*\DTK@fullEdition{}
 
 \newif\ifDTK@corr@ \DTK@corr@true
+\newif\ifDTK@lineno@ \DTK@lineno@false
 
 \newcommand*\DieTeXnischeKomoedie{% #1=Ausgabe, #2=Monat, #3=Jahr
   \@ifstar{\global\DTK@corr@true\DTK@DieTeXnischeKomoedie}%
     {\global\DTK@corr@false\DTK@DieTeXnischeKomoedie}%
 }
-\newcommand\DTK@DieTeXnischeKomoedie[3]{%
+\newcommand\DTK@DieTeXnischeKomoedie{%
+  \@ifstar{\global\DTK@lineno@true\DTK@@DieTeXnischeKomoedie}%
+    {\global\DTK@lineno@false\DTK@@DieTeXnischeKomoedie}%
+}
+\newcommand*\DTK@@DieTeXnischeKomoedie[3]{%
   \gdef\DTK@issue{#1}%
   \ifx\relax#1\relax\gdef\DTK@date{?/??}\else\xdef\DTK@date{#1/#3}\fi
   \gdef\DTK@month{#2}%
   \xdef\DTK@month@name{\DTMgermanmonthname{#2}}
   \gdef\DTK@year{#3}%
   \xdef\DTK@volume{\the\numexpr\DTK@year-1989+1\relax}%
+  \xdef\DTK@fullEdition{\DTK@volume. Jahrgang\quad
+    Heft \DTK@issue/\DTK@year\quad \DTK@month@name\ \DTK@year}
   \ifDTK@corr@
-    \xdef\DTK@corr@version{\noexpand\normalfont
+    \xdef\DTK@corrVersion{\noexpand\normalfont
       \noexpand\fbox{Korrekturversion: \DTMnow}}%
   \fi
 }
-\newcommand*\DTK@fullEdition{\DTK@volume. Jahrgang\quad
-  Heft \DTK@issue/\DTK@year\quad \DTK@month@name\ \DTK@year}
+
+% TODO: Nur Laden, wenn \DTK@lineno@true; Problem: "pagewise"
+\let\@LN=\@gobbletwo% Wegen .aux-Datei von vorherigem lineno-Lauf
+\RequirePackage[pagewise]{lineno}
+\linenumbersep=.8ex %
+\def\linenumberfont{\normalfont\footnotesize\ttfamily}%
+\def\thelinenumber{%
+  \fboxsep=.3ex %
+  \fcolorbox{black}{red!30}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
+}%
+\AtBeginDocument{%
+  \ifDTK@lineno@
+    \linenumbers
+  \fi
+}
 
 \RequirePackage{xpatch,xcolor,listings,multicol,ragged2e}
 %\RequirePackage{etex} % ???
@@ -215,7 +236,7 @@
 }%
 \newcommand*\DTK@@usepackage{}
 \newcommand*\DTK@documentclass[2][]{%
-  \DTK@embedded@documentclasshook
+  \DTK@embedded@documentclasshook% TODO: nötig?
   \DTK@eat@version
 }
 
@@ -343,24 +364,21 @@
 }
 
 \newcommand\DTK@maketitle[1][]{%
-  %%%\markboth{}{}%
-  \begingroup % ???
+  \begingroup
     \dimen0=\vsize
     \advance\dimen0 by -\pagetotal
-    %\ifdim\dimen0<\NewpageThreshold
     \ifdim\dimen0<100pt %
       \newpage
       %\global\FirstArticletrue
     \fi
-    %\minipage{\textwidth}%
-    \chapter{\@title}%
-    \ifx\@author\@empty\else
-      \par { \usekomafont{section} \@author }% ???
+    \chapter[\@@title]{\@title}%
+    \ifx\@author\@empty\else\par
+      \begingroup
+        \usekomafont{section} \@author
+      \endgroup
     \fi
-    %\endminipage%
     \@thanks
     \let\thanks\@gobble
-    %\markboth{\@@title}{\@@title}% ???
   \endgroup
   \let\@title=\@empty
   \let\@author=\@empty
@@ -390,8 +408,6 @@
     \newindex[\addressname]{addresses}
     \newcommand*\listofaddresses{%
       \clearpage
-      %%%\markboth{\addressname}{\addressname}%
-      %\thispagestyle{empty}%
       \begingroup
         %\language\langwohyphens
         \renewenvironment{theindex}{\theaddresses}{\endtheaddresses}%
@@ -401,7 +417,6 @@
     \let\indexspace=\relax
     \renewcommand*\idx@heading{%
       \chapter{\indexname}%
-      %%%\markboth{\indexname}{\indexname}%
       \ifx\index@preamble\relax
       \else\index@preamble\let\index@preamble=\relax\fi
     }%
@@ -458,44 +473,37 @@
   }%
 }
 
-\RequirePackage{pict2e,picture}
+\RequirePackage{pict2e}
+\RequirePackage{picture}
 \newcommand\DTK@title@content{%
   \begin{picture}(0,0)(0,-\ht\strutbox)%
     \put(24mm,-.5\paperheight){%
       \makebox(0,0)[c]{\rotatebox[origin=c]{90}{%
         \resizebox{14cm}{!}{\Huge\DTK@fancyJournalname}}}%
-    }%
-    \put(32mm,-.5\paperheight){%
-      \makebox(0,0)[c]{\rule{2.41pt}{\textheight}}%
+      \put(8mm,0){%
+        \makebox(0,0)[c]{\rule{0.85mm}{\textheight}}}%
     }%
     \put(53mm,-68mm){%
       \parbox[t]{78mm}{%
         \raggedleft
-        \begingroup % ???
-          %\Huge\dantelogo % ???
-          \Huge DANTE \par
-        \endgroup
-        \begingroup
-          \Large
-          Deutschsprachige \\
-          Anwendervereinigung \TeX\ \eV \par
-        \endgroup
+        %\Huge\dantelogo % ???
+        \Huge DANTE \\
+        \Large Deutschsprachige \\
+        Anwendervereinigung \TeX\ \eV \\
         \addvspace{4mm}%
         \begingroup
           \raggedright\footnotesize
-          \DTK@fullEdition \par
+          \DTK@fullEdition \\
         \endgroup
-        \addvspace{60mm}%
-        \begingroup
-          \Large\DTK@corr@version
-        \endgroup
+        \addvspace{40mm}%
+        \makebox(0,0)[r]{\Large\DTK@corrVersion}
       }%
     }%
     \put(86mm,-186mm){%
       \begingroup
-        \color[gray]{.8}\resizebox{45mm}{!}{\Huge\DTK@issue/\DTK@year}%
+        \color[gray]{.8}\resizebox{45mm}{!}{\Huge\DTK@date}%
       \endgroup
-    }
+    }%
   \end{picture}%
 }
 
@@ -504,12 +512,12 @@
 \clearpairofpagestyles
 \ihead{\headmark}
 \ohead{\pagemark}
-\cfoot*{\DTK@corr@version}
+\cfoot*{\DTK@corrVersion}
 \ifoot*{\journalname~~\DTK@date}
 \automark[chapter]{chapter}
 
 \defpagestyle{dtk-toc}{{\DTK@toc@head}{}{}}%
-  {{\hfill\DTK@corr@version\hfill\null}{}{}}
+  {{\hfill\DTK@corrVersion\hfill\null}{}{}}
 \defpagestyle{dtk-title}{}{}
 \DeclareNewLayer[foreground,contents={%\layercontentsmeasure
   \DTK@title@content}]{dtk-title-content}
