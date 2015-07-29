@@ -13,6 +13,6 @@
 
 \let\tableofcontents=\relax
 \newcommand*\keywords[1]{}
-
+\newcommand\address[3]{}
 
 \endinput

@@ -131,7 +131,6 @@
 ]{biblatex}
 
 \newcommand*\journalname{Die \TeX{}nische Kom\"odie}
-\newcommand\address[3]{}
 
 \newcommand*\DTK@year{????}
 \newcommand*\DTK@month{?????}

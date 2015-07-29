@@ -109,7 +109,10 @@
       }%
     }%
   }%
-  \newcommand*\listofaddresses{}
+  \newcommand\address[3]{}%
+  \newcommand*\listofaddresses{}%
+  \let\tableofcontents=\relax
+  \renewcommand\maketitle[1][]{}%
 \else
   \AtEndOfClass{%
     \InputIfFileExists{userpackages.tex}{%
@@ -135,7 +138,7 @@
       \printindex[addresses]%
     \endgroup
   }%
-  \renewcommand\address[3]{% TODO: Auch "!" und "|" maskieren?
+  \newcommand\address[3]{% TODO: Auch "!" und "|" maskieren?
     \begingroup
       \def\url##1{\escape@atsign##1\relax}%
       \def\escape@atsign##1@##2\relax{%
@@ -146,15 +149,12 @@
         \noexpand\sindex[addresses]{#2#1@#1 #2!#3}}}\x
     \endgroup
   }%
-\fi
-
-\AtBeginDocument{%
   \renewcommand\maketitle[1][]{%
     \thispagestyle{dtk-title}%
     \global\let\maketitle=\DTK@maketitle
     \null\newpage
   }%
-}%
+\fi
 
 %%% Laden eines Einzeldokuments
 \newcommand*\DTKinput[1]{%
