@@ -22,14 +22,14 @@
     {\global\DTK@lineno@false\DTK@@DieTeXnischeKomoedie}%
 }
 \newcommand*\DTK@@DieTeXnischeKomoedie[3]{%
-  \gdef\DTK@issue{#1}%
+  \xdef\DTK@issue{#1}%
   \xdef\DTK@date{#1/#3}%
-  \gdef\DTK@month{#2}%
-  \xdef\DTK@month@name{\DTMgermanmonthname{#2}}
-  \gdef\DTK@year{#3}%
+  \xdef\DTK@month{#2}%
+  \xdef\DTK@monthName{\DTMgermanmonthname{#2}}
+  \xdef\DTK@year{#3}%
   \xdef\DTK@volume{\the\numexpr\DTK@year-1989+1\relax}%
   \xdef\DTK@fullIssue{\DTK@volume. Jahrgang\quad
-    Heft \DTK@issue/\DTK@year\quad \DTK@month@name\ \DTK@year}
+    Heft \DTK@issue/\DTK@year\quad \DTK@monthName\ \DTK@year}
   \ifDTK@corr@
     \xdef\DTK@corrVersion{\noexpand\normalfont
       \noexpand\fbox{Korrekturversion: \DTMnow}}%

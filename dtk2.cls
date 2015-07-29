@@ -180,9 +180,8 @@
 
 \newcommand\DTK@maketitle[1][]{%
   \begingroup
-    \dimen0=\vsize
-    \advance\dimen0 by -\pagetotal
-    \ifdim\dimen0<100pt %
+    \dimen0=\dimexpr\textheight - \pagetotal
+    \ifdim\dimen0<.2\textheight
       \newpage
       %\global\FirstArticletrue
     \fi
