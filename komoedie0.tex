@@ -1,8 +1,8 @@
 % Erzeugt Datei `userpackages.tex' mit usepackage- und addbibresource-Anweisungen
 % aus den Einzeldokumenten.
 
+\makeatletter\def\shipout{\deadcycles\z@\setbox\@tempboxa=}
 \newif\ifDTKrecord \DTKrecordtrue
-\PassOptionsToClass{draft}{dtk2}
 \nofiles
 \input{komoedie.tex}
 

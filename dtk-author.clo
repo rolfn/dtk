@@ -1,0 +1,18 @@
+\ProvidesFile{dtk-author.clo}%
+  [2015/07/29 v0.1a dtk class options for author mode (RN)]
+
+% Falls \bibliography{...} in traditioneller Weise nach \begin{document}.
+% (2xLaTeX-Lauf + biber + 1xLaTeX-Lauf)
+\AfterEndPreamble{%
+  \renewcommand*\bibliography[1]{%
+    \immediate\write\@mainaux{\string\bibliography{#1}}%
+    \printbibliography[heading=dtk]
+  }%
+}%
+\AtBeginDocument{\let\maketitle=\DTK@maketitle}%
+
+\let\tableofcontents=\relax
+\newcommand*\keywords[1]{}
+
+
+\endinput
