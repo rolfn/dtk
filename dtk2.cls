@@ -130,9 +130,6 @@
 %,defernumbers=true
 ]{biblatex}
 
-\newcommand*\ORIG@printbibliography{}
-\let\ORIG@printbibliography=\printbibliography
-
 \newcommand*\journalname{Die \TeX{}nische Kom\"odie}
 \newcommand\address[3]{}
 

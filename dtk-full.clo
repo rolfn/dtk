@@ -112,15 +112,17 @@
   \newcommand*\listofaddresses{}
 \else
   \AtEndOfClass{%
-    \shorthandon{"}
     \InputIfFileExists{userpackages.tex}{%
       \typeout{*************************************^^J%
                * File `userpackages.tex' used.^^J%
                *************************************}%
     }{}%
+    \shorthandon{"}%
   }
   \def\DTK@@usepackage#1#2[#3]{}%
   \newcommand*\DTK@addbibresource[2][]{}%
+  \newcommand*\ORIG@printbibliography{}
+  \let\ORIG@printbibliography=\printbibliography
   \renewcommand*\printbibliography[1][]{\DTK@bib@true}%
   \newcommand*\DTK@bibliography[1]{\DTK@bib@true}%
   \RequirePackage[split,protected]{splitidx} \makeindex
@@ -315,17 +317,18 @@
 }
 
 \newcommand\Part[2][]{%
-  \def\DTK@tempa{\part[#1]{#2}}\DTK@Part
+  \ifx\relax#1\relax\part{#2}\else\part[#1]{#2}\fi
+  \DTK@Part
 }
 \newcommand\DTK@Part[1][]{%
   \ifx\relax#1\relax\else
     \setpartpreamble{%
       \noindent\rule{\textwidth}{2pt}
       \par\smallskip
-      { \usekomafont{section} #1\par }%
+      \usekomafont{section} #1\par
     }%
   \fi
-  \DTK@tempa\bigskip\par
+  \bigskip\par
 }
 
 \def\partheadstartvskip{% 12.0pt plus 1.0fil
