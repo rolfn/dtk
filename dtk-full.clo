@@ -4,17 +4,6 @@
 \RequirePackage{xpatch,xcolor,multicol,graphicx}
 \RequirePackage[showzone=false]{datetime2}
 
-\AtEndOfClass{%
-  \shorthandon{"}
-  \ifDTKrecord\else
-    \InputIfFileExists{userpackages.tex}{%
-      \typeout{*************************************^^J%
-               * File `userpackages.tex' used.^^J%
-               *************************************}%
-    }{}%
-  \fi
-}
-
 \newcommand*\addressname{Autoren/Organisatoren}
 \newcommand*\DTK@fancyJournalname{%
   \color{black!60}Die \color{black}\TeX\color{black!60}nische Kom\"odie}
@@ -39,11 +28,12 @@
   \xdef\DTK@month@name{\DTMgermanmonthname{#2}}
   \gdef\DTK@year{#3}%
   \xdef\DTK@volume{\the\numexpr\DTK@year-1989+1\relax}%
-  \xdef\DTK@fullEdition{\DTK@volume. Jahrgang\quad
+  \xdef\DTK@fullIssue{\DTK@volume. Jahrgang\quad
     Heft \DTK@issue/\DTK@year\quad \DTK@month@name\ \DTK@year}
   \ifDTK@corr@
     \xdef\DTK@corrVersion{\noexpand\normalfont
       \noexpand\fbox{Korrekturversion: \DTMnow}}%
+    \overfullrule=5pt %
   \fi
 }
 
@@ -109,7 +99,7 @@
     \DTK@addbibresource{\DTK@tempa}%
   }%
   \renewcommand*\printbibliography[1][]{}%
-  \def\DTK@@usepackage#1#2[#3]{%
+  \def\DTK@@usepackage#1#2[#3]{% TODO: \usepackage{inputenc}/\usepackage{fontenc} rausfiltern/auskomm.?
     \edef\@tempb{\zap@space#2 \@empty}%
     \@for\@tempa:=\@tempb\do{%
       \immediate\write\User@Packages{%
@@ -121,7 +111,14 @@
   }%
   \newcommand*\listofaddresses{}
 \else
-   % Gesamtlauf
+  \AtEndOfClass{%
+    \shorthandon{"}
+    \InputIfFileExists{userpackages.tex}{%
+      \typeout{*************************************^^J%
+               * File `userpackages.tex' used.^^J%
+               *************************************}%
+    }{}%
+  }
   \def\DTK@@usepackage#1#2[#3]{}%
   \newcommand*\DTK@addbibresource[2][]{}%
   \renewcommand*\printbibliography[1][]{\DTK@bib@true}%
@@ -230,7 +227,7 @@
       \rule{\textwidth}{2pt}\\[0.5mm]%
       \begingroup
         \footnotesize\raggedleft
-        \DTK@fullEdition \\
+        \DTK@fullIssue \\
       \endgroup
     }%
   }%
@@ -256,7 +253,7 @@
         \addvspace{4mm}%
         \begingroup
           \raggedright\footnotesize
-          \DTK@fullEdition \\
+          \DTK@fullIssue \\
         \endgroup
         \addvspace{40mm}%
         \makebox(0,0)[r]{\Large\DTK@corrVersion}

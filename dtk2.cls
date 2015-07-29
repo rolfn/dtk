@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/07/28 v0.1c dtk document class (RN)]
+  [2015/07/29 v0.1c dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -142,9 +142,8 @@
 \newcommand*\DTK@volume{??}
 \newcommand*\DTK@date{?/??}
 \newcommand*\DTK@corrVersion{}
-\newcommand*\DTK@fullEdition{}
+\newcommand*\DTK@fullIssue{}
 
-\@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 \ifDTK@Author@
   \input{dtk-author.clo}
 \else
