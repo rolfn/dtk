@@ -49,8 +49,6 @@
 ,open=any
 ]{scrbook}
 
-\RequirePackage[automark,draft=false]{scrlayer-scrpage}
-
 % *** Konstanten ***
 
 \ifDTK@Author@\else\setcounter{errorcontextlines}{100}\fi
@@ -140,12 +138,6 @@
 \newcommand*\DTK@corrVersion{}
 \newcommand*\DTK@fullIssue{}
 
-\ifDTK@Author@
-  \input{dtk-author.clo}
-\else
-  \input{dtk-full.clo}
-\fi
-
 \RequirePackage{xpatch,listings}
 %\RequirePackage{etex} % ???
 \RequirePackage{dantelogo,hologo,dtklogos}
@@ -221,6 +213,7 @@
 \renewcommand\thetable{\arabic{table}}
 \renewcommand\theequation{\arabic{equation}}
 
+\RequirePackage[automark,draft=false]{scrlayer-scrpage}
 \pagestyle{scrheadings}
 \clearpairofpagestyles
 \ihead{\headmark}
@@ -241,6 +234,12 @@
 \def\chapterheadstartvskip{} %\vspace {\@tempskipa }
 \def\chapterpagestyle{scrheadings}
 \xpatchcmd{\scr@startchapter}{\clearpage}{\relax}{}{\PaTchFaiLED}% ???
+
+\ifDTK@Author@
+  \input{dtk-author.clo}
+\else
+  \input{dtk-full.clo}
+\fi
 
 \endinput
 
