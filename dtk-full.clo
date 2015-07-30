@@ -70,7 +70,6 @@
   \DTK@eat@version
 }
 
-\@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 \ifDTKrecord
   % Testlauf zum Aufsammeln von Paket- und bib-Dateinamen
   \@ifdefinable\user@packages{%
@@ -268,7 +267,7 @@
 }
 
 \defpagestyle{dtk-toc}{{\DTK@toc@head}{}{}}%
-  {{\hfill\DTK@corrVersion\hfill\null}{}{}}
+  {{\hfill\normalsize\DTK@corrVersion\hfill\null}{}{}}
 \defpagestyle{dtk-title}{}{}
 \DeclareNewLayer[foreground,contents={%\layercontentsmeasure
   \DTK@title@content}]{dtk-title-content}

@@ -187,7 +187,7 @@
 \clearpairofpagestyles
 \ihead{\headmark}
 \ohead{\pagemark}
-\cfoot*{\DTK@corrVersion}
+\ofoot*{\normalsize\DTK@corrVersion}
 \ifoot*{\journalname~~\DTK@date}
 \automark[chapter]{chapter}
 
@@ -215,6 +215,9 @@
   \colorlet{DTKlstStrings}{black}
 \fi
 
+\RequirePackage{listings}
+
+\@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 \ifDTK@Author@
   \input{dtk-author.clo}
 \else
@@ -266,7 +269,6 @@
 
 % Listings
 \newcommand*\DTKlstfont{\small\ttfamily}
-\RequirePackage{listings}
 
 \lstdefinestyle{DTKlstBase}{%
 ,basicstyle=\DTKlstfont
@@ -294,5 +296,30 @@
 ,prebreak=
 ,postbreak=\mbox{$\hookrightarrow$}
 }
+
+\lstdefinestyle{DTKlstNumber}{%
+,style=DTKlstBase
+,numbers=left
+,numberstyle=\tiny\ttfamily
+,numbersep=1em
+,xleftmargin=1.5em
+}
+
+\lstdefinestyle{DTKlstNoNumber}{%
+,style=DTKlstBase
+,numbers=none
+,xleftmargin=\fboxsep
+}
+
+\lst@AddToHookExe{DeInit}{%    ???
+  \@tempdima=\lst@belowskip \advance\@tempdima-.65\baselineskip
+  \edef\lst@belowskip{\the\@tempdima}%
+}
+
+\let\verbatim=\relax
+\lstnewenvironment{verbatim}
+{\lstset{language={},style=DTKlstNoNumber}}{}
+
+
 \endinput
 
