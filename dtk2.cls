@@ -197,13 +197,30 @@
 \def\chapterpagestyle{scrheadings}
 \xpatchcmd{\scr@startchapter}{\clearpage}{\relax}{}{\PaTchFaiLED}% ???
 
+\RequirePackage{xcolor}
+\ifDTKcolor
+  \colorlet{DTK@markerColor}{red!30}
+  \definecolor{DTKlstBackground}{rgb}{1,1,0.95}
+  \definecolor{DTKlstKeys}{rgb}{0,0,1}
+  \definecolor{DTKlstIdentifiers}{rgb}{0,0,0}
+  \definecolor{DTKlstComments}{rgb}{1,0,0}
+  \definecolor{DTKlstStrings}{rgb}{0,0.5,0}
+\else
+  \colorlet{DTK@markerColor}{black!20}
+  \colorlet{DTKlstBackground}{black!5}
+  \colorlet{DTKlstKeys}{black}
+  \colorlet{DTKlstIdentifiers}{black}
+  \colorlet{DTKlstComments}{black}
+  \colorlet{DTKlstStrings}{black}
+\fi
+
 \ifDTK@Author@
   \input{dtk-author.clo}
 \else
   \input{dtk-full.clo}
 \fi
 
-\ifDTKrecord \expandafter \endinput \fi
+\ifDTKrecord \expandafter \endinput \fi % lohnt es?
 
 \addtokomafont{caption}{\small}
 \addtokomafont{captionlabel}{\bfseries\sffamily}

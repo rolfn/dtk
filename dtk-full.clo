@@ -32,7 +32,7 @@
     Heft \DTK@issue/\DTK@year\quad \DTK@monthName\ \DTK@year}
   \ifDTK@corr@
     \xdef\DTK@corrVersion{\noexpand\normalfont
-      \noexpand\fbox{Korrekturversion: \DTMnow}}%
+      \noexpand\fcolorbox{black}{DTK@markerColor}{Korrekturversion: \DTMnow}}%
     \overfullrule=5pt %
   \fi
 }
@@ -44,7 +44,7 @@
 \def\linenumberfont{\normalfont\footnotesize\ttfamily}%
 \def\thelinenumber{%
   \fboxsep=.3ex %
-  \fcolorbox{black}{red!30}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
+  \fcolorbox{black}{DTK@markerColor}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
 }%
 \AtBeginDocument{%
   \ifDTK@lineno@
