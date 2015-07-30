@@ -33,8 +33,10 @@
 
 \newif\ifDTK@Author@ \DTK@Author@true
 \newif\ifDTK@bib@ \DTK@bib@false
+\newif\ifDTKcolor \DTKcolorfalse % "@" ?
 
 \DeclareOption{full}{\DTK@Author@false}
+\DeclareOption{color}{\DTKcolortrue}
 \DeclareOption{draft}{\PassOptionsToClass{\CurrentOption}{scrbook}}
 \DeclareOption*{\OptionNotUsed}
 \ProcessOptions\relax
@@ -150,29 +152,6 @@
 \newcommand*\DTK@tempb{}
 \newcommand*\DTK@tempc{}
 
-% Kompakte Listen
-\RequirePackage[neverdecrease]{paralist}
-\newcommand*\DTK@begin@list[1]{%
-  \DTK@tempdima=\parindent
-  \DTK@tempdimb=\parskip
-  \@nameuse{#1}%
-  \parindent=\DTK@tempdima
-  \parskip=\DTK@tempdimb
-}
-\def\enumerate{\DTK@begin@list{compactenum}}
-\def\itemize{\DTK@begin@list{compactitem}}
-\def\description{\DTK@begin@list{compactdesc}}
-\let\enditemize\endcompactitem
-\let\endenumerate\endcompactenum
-\let\enddescription\endcompactdesc
-\pltopsep=\medskipamount
-\plitemsep=1pt %
-\plparsep=1pt %
-
-% Listings
-
-% ..............
-
 \renewcommand\title[2][]{%
   \gdef\@title{#2}%
   \ifx\relax#1\relax\gdef\@@title{#2}\else\gdef\@@title{#1}\fi%
@@ -180,7 +159,8 @@
 
 \newcommand\DTK@maketitle[1][]{%
   \begingroup
-    \dimen0=\dimexpr\textheight - \pagetotal
+    \dimen0=\textheight
+    \advance\dimen0 by -\pagetotal
     \ifdim\dimen0<.2\textheight
       \newpage
       %\global\FirstArticletrue
@@ -200,17 +180,8 @@
   \medskip\par
 }
 
-\addtokomafont{caption}{\small}
-\addtokomafont{captionlabel}{\bfseries\sffamily}
-\setcapindent{1em}
-\setcapwidth[c]{.8\textwidth}
-
 \renewcaptionname{ngerman}{\bibname}{Literatur und Software}
 \defbibheading{dtk}{\section{\bibname}}
-
-\renewcommand\thefigure{\arabic{figure}}
-\renewcommand\thetable{\arabic{table}}
-\renewcommand\theequation{\arabic{equation}}
 
 \RequirePackage[automark,draft=false]{scrlayer-scrpage}
 \pagestyle{scrheadings}
@@ -220,14 +191,6 @@
 \cfoot*{\DTK@corrVersion}
 \ifoot*{\journalname~~\DTK@date}
 \automark[chapter]{chapter}
-
-\setkomafont{disposition}{\normalfont\sffamily}
-\setkomafont{part}{\usekomafont{disposition}\huge}
-\setkomafont{chapter}{\usekomafont{disposition}\Large}
-\setkomafont{section}{\usekomafont{disposition}\large}
-\setkomafont{pagenumber}{\normalfont\sffamily}
-\setkomafont{pagehead}{\sffamily\slshape}% \itshape?
-\setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
 
 \def\chapterheadstartvskip{}
 \def\chapterheadstartvskip{} %\vspace {\@tempskipa }
@@ -239,6 +202,49 @@
 \else
   \input{dtk-full.clo}
 \fi
+
+\ifDTKrecord \expandafter \endinput \fi
+
+\addtokomafont{caption}{\small}
+\addtokomafont{captionlabel}{\bfseries\sffamily}
+\setcapindent{1em}
+\setcapwidth[c]{.8\textwidth}
+
+\renewcommand\thefigure{\arabic{figure}}
+\renewcommand\thetable{\arabic{table}}
+\renewcommand\theequation{\arabic{equation}}
+
+\setkomafont{disposition}{\normalfont\sffamily}
+\setkomafont{part}{\usekomafont{disposition}\huge}
+\setkomafont{chapter}{\usekomafont{disposition}\Large}
+\setkomafont{section}{\usekomafont{disposition}\large}
+\setkomafont{pagenumber}{\normalfont\sffamily}
+\setkomafont{pagehead}{\sffamily\slshape}% \itshape?
+\setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
+
+% Kompakte Listen
+\RequirePackage[neverdecrease]{paralist}
+\newcommand*\DTK@begin@list[1]{%
+  \DTK@tempdima=\parindent
+  \DTK@tempdimb=\parskip
+  \@nameuse{#1}%
+  \parindent=\DTK@tempdima
+  \parskip=\DTK@tempdimb
+}
+
+\def\enumerate{\DTK@begin@list{compactenum}}
+\def\itemize{\DTK@begin@list{compactitem}}
+\def\description{\DTK@begin@list{compactdesc}}
+\let\enditemize\endcompactitem
+\let\endenumerate\endcompactenum
+\let\enddescription\endcompactdesc
+\pltopsep=\medskipamount
+\plitemsep=1pt %
+\plparsep=1pt %
+
+% Listings
+
+% ..............
 
 \endinput
 
