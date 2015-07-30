@@ -1,12 +1,12 @@
 \ProvidesFile{dtk-full.clo}%
-  [2015/07/29 v0.1a dtk class options for full mode (RN)]
+  [2015/07/30 v0.1a dtk class options for full mode (RN)]
 
 \RequirePackage{xpatch,xcolor,multicol,graphicx}
 \RequirePackage[showzone=false]{datetime2}
 
-\newcommand*\addressname{Autoren/Organisatoren}
+\newcommand*\addressname{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
 \newcommand*\DTK@fancyJournalname{%
-  \color{black!60}Die \color{black}\TeX\color{black!60}nische Kom\"odie}
+  \color{DTK@fancy}Die \color{black}\TeX\color{DTK@fancy}nische Kom\"odie}
 \newcommand*\DTK@keywords{}
 \newcommand*\keywords[1]{\gdef\DTK@keywords{#1}}
 
@@ -29,10 +29,10 @@
   \xdef\DTK@year{#3}%
   \xdef\DTK@volume{\the\numexpr\DTK@year-1989+1\relax}%
   \xdef\DTK@fullIssue{\DTK@volume. Jahrgang\quad
-    Heft \DTK@issue/\DTK@year\quad \DTK@monthName\ \DTK@year}
+    Heft \DTK@issue/\DTK@year\quad \DTK@monthName\ \DTK@year}%
   \ifDTK@corr@
     \xdef\DTK@corrVersion{\noexpand\normalfont
-      \noexpand\fcolorbox{black}{DTK@markerColor}{Korrekturversion: \DTMnow}}%
+      \noexpand\fcolorbox{black}{DTK@marker}{Korrekturversion: \DTMnow}}%
     \overfullrule=5pt %
   \fi
 }
@@ -44,7 +44,7 @@
 \def\linenumberfont{\normalfont\footnotesize\ttfamily}%
 \def\thelinenumber{%
   \fboxsep=.3ex %
-  \fcolorbox{black}{DTK@markerColor}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
+  \fcolorbox{black}{DTK@marker}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
 }%
 \AtBeginDocument{%
   \ifDTK@lineno@
@@ -52,16 +52,12 @@
   \fi
 }
 
-\newcommand*\DTK@embedded@documentclasshook{}
-\newcommand*\AtEmbeddedDocumentclass{% TODO: Solches Zeug unnötig?
-  \g@addto@macro\DTK@embedded@documentclasshook}
 \newcommand*\DTK@embedded@begindocumenthook{}
 \newcommand*\AtEmbeddedBeginDocument{%
   \g@addto@macro\DTK@embedded@begindocumenthook}
 \newcommand*\DTK@embedded@enddocumenthook{}
 \newcommand*\AtEmbeddedEndDocument{%
   \g@addto@macro\DTK@embedded@enddocumenthook}
-\newcommand*\DTK@jobname{}
 \newcommand*\DTK@local@inputname{}
 \newcommand*\DTK@eat@version[1][]{\ignorespaces}
 \newcommand*\DTK@usepackage[2][]{%
@@ -71,23 +67,23 @@
 }%
 \newcommand*\DTK@@usepackage{}
 \newcommand*\DTK@documentclass[2][]{%
-  \DTK@embedded@documentclasshook% TODO: nötig?
   \DTK@eat@version
 }
 
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 \ifDTKrecord
   % Testlauf zum Aufsammeln von Paket- und bib-Dateinamen
-  \@ifdefinable\User@Packages{%
-    \newwrite\User@Packages
-    \immediate\openout\User@Packages userpackages.tex\relax
-    \immediate\write\User@Packages{\@percentchar\space *** \DTMnow\space ***}%
-    \AtEndDocument{\immediate\closeout\User@Packages\relax}%
+  \@ifdefinable\user@packages{%
+    \newwrite\user@packages
+    \immediate\openout\user@packages userpackages.tex\relax
+    \immediate\write\user@packages{\@percentchar\space *** \DTMnow\space ***}%
+    \AtEndDocument{\immediate\closeout\user@packages\relax}%
   }
+  \renewcommand*\printbibliography[1][]{}%
   \newcommand*\DTK@addbibresource[2][]{%
-    \immediate\write\User@Packages{%
+    \immediate\write\user@packages{%
       \string\addbibresource[datatype=bibtex,label=\the\c@refsection]{#2}%
-        \@percentchar\space From: \DTK@local@inputname
+        \@percentchar\space \DTK@local@inputname
     }%
   }%
   \newcommand*\DTK@bibliography[1]{%
@@ -98,17 +94,16 @@
       {\edef\DTK@tempa{#1}}%
     \DTK@addbibresource{\DTK@tempa}%
   }%
-  \renewcommand*\printbibliography[1][]{}%
   \def\DTK@@usepackage#1#2[#3]{%
     \edef\@tempb{\zap@space#2 \@empty}%
     \@for\@tempa:=\@tempb\do{%
       \DTK@tempa=\relax
       \ifstr{\@tempa}{inputenc}{\let\DTK@tempa=\@percentchar}{%
         \ifstr{\@tempa}{fontenc}{\let\DTK@tempa=\@percentchar}{}}%
-      \immediate\write\User@Packages{%
+      \immediate\write\user@packages{%
         \DTK@tempa\string\usepackage\ifx\relax#1\relax\else[#1]\fi{\@tempa}%
           \ifx\relax#3\relax\else[#3]\fi
-            \@percentchar\space From: \DTK@local@inputname
+            \@percentchar\space \DTK@local@inputname
       }%
     }%
   }%
@@ -168,8 +163,8 @@
       {\IfFileExists{\jobname.tex}%
         {\edef\DTK@local@inputname{\jobname.tex}}{}}%
       {\edef\DTK@local@inputname{#1}}%
-    \let\AtBeginDocument=\@gobble
-    \let\AtEndDocument=\@gobble
+    \let\AtBeginDocument=\AtEmbeddedBeginDocument
+    \let\AtEndDocument=\AtEmbeddedEndDocument
     \let\pagestyle=\@gobble
     \let\thispagestyle=\@gobble
     \let\listfiles=\relax

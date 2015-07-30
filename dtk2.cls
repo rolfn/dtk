@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/07/29 v0.1c dtk document class (RN)]
+  [2015/07/30 v0.1c dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -140,7 +140,6 @@
 \newcommand*\DTK@corrVersion{}
 \newcommand*\DTK@fullIssue{}
 
-\RequirePackage{xpatch,listings}
 %\RequirePackage{etex} % ???
 \RequirePackage{dantelogo,hologo,dtklogos}
 
@@ -192,21 +191,23 @@
 \ifoot*{\journalname~~\DTK@date}
 \automark[chapter]{chapter}
 
-\def\chapterheadstartvskip{}
+\RequirePackage{xpatch}
 \def\chapterheadstartvskip{} %\vspace {\@tempskipa }
 \def\chapterpagestyle{scrheadings}
 \xpatchcmd{\scr@startchapter}{\clearpage}{\relax}{}{\PaTchFaiLED}% ???
 
 \RequirePackage{xcolor}
 \ifDTKcolor
-  \colorlet{DTK@markerColor}{red!30}
+  \colorlet{DTK@marker}{red!30}
+  \definecolor{DTK@fancy}{rgb}{.72,.525,.044}
   \definecolor{DTKlstBackground}{rgb}{1,1,0.95}
   \definecolor{DTKlstKeys}{rgb}{0,0,1}
   \definecolor{DTKlstIdentifiers}{rgb}{0,0,0}
   \definecolor{DTKlstComments}{rgb}{1,0,0}
   \definecolor{DTKlstStrings}{rgb}{0,0.5,0}
 \else
-  \colorlet{DTK@markerColor}{black!20}
+  \colorlet{DTK@marker}{black!20}
+  \colorlet{DTK@fancy}{black!60}
   \colorlet{DTKlstBackground}{black!5}
   \colorlet{DTKlstKeys}{black}
   \colorlet{DTKlstIdentifiers}{black}
@@ -259,9 +260,39 @@
 \plitemsep=1pt %
 \plparsep=1pt %
 
+%\def\labelitemi{...}
+%\def\labelitemii{...}
+%\def\labelitemiii{...}
+
 % Listings
+\newcommand*\DTKlstfont{\small\ttfamily}
+\RequirePackage{listings}
 
-% ..............
-
+\lstdefinestyle{DTKlstBase}{%
+,basicstyle=\DTKlstfont
+,basewidth=0.55em
+,keepspaces
+,identifierstyle=\color{DTKlstIdentifiers}
+,keywordstyle=\color{DTKlstKeys}
+,stringstyle=\itshape\color{DTKlstStrings}
+,commentstyle=\itshape\color{DTKlstComments}
+,columns=fullflexible
+,tabsize=2
+,frame=single
+%,extendedchars=true
+,showspaces=false
+,showstringspaces=false
+,breaklines=true
+,breakindent=0.5em
+,backgroundcolor=\color{DTKlstBackground}
+,breakautoindent=true
+,captionpos=t
+,aboveskip=\medskipamount
+,belowskip=\medskipamount
+,xrightmargin=\fboxsep
+,emphstyle=\DTK@lst@colorbox{lightgray}
+,prebreak=
+,postbreak=\mbox{$\hookrightarrow$}
+}
 \endinput
 
