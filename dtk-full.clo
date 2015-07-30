@@ -99,11 +99,14 @@
     \DTK@addbibresource{\DTK@tempa}%
   }%
   \renewcommand*\printbibliography[1][]{}%
-  \def\DTK@@usepackage#1#2[#3]{% TODO: \usepackage{inputenc}/\usepackage{fontenc} rausfiltern/auskomm.?
+  \def\DTK@@usepackage#1#2[#3]{%
     \edef\@tempb{\zap@space#2 \@empty}%
     \@for\@tempa:=\@tempb\do{%
+      \DTK@tempa=\relax
+      \ifstr{\@tempa}{inputenc}{\let\DTK@tempa=\@percentchar}{%
+        \ifstr{\@tempa}{fontenc}{\let\DTK@tempa=\@percentchar}{}}%
       \immediate\write\User@Packages{%
-        \string\usepackage\ifx\relax#1\relax\else[#1]\fi{\@tempa}%
+        \DTK@tempa\string\usepackage\ifx\relax#1\relax\else[#1]\fi{\@tempa}%
           \ifx\relax#3\relax\else[#3]\fi
             \@percentchar\space From: \DTK@local@inputname
       }%
