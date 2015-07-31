@@ -15,6 +15,44 @@
 Siehe~\cite{lamport:handbuch}
 
 Etwas Text
+\begin{lstlisting}[language=C]
+#include <stdio.h>
+#define N 10
+/* Block
+ * comment */
+
+int main()
+{
+    int i;
+
+    // Line comment.
+    puts("Hello world!");
+
+    for (i = 0; i < N; i++)
+    {
+        puts("LaTeX is also great for programmers!");
+    }
+
+    return 0;
+}
+\end{lstlisting}
+\begin{lstlisting}[language={[LaTeX]TeX},style=nonumber,emph={Voegel}]
+    \documentclass[fontsize=11pt,paper=a4,pagesize]{scrartcl}
+    \usepackage[utf8]{inputenc}% Kommentar
+    \usepackage[T1]{fontenc}
+    \begin{document}
+      Alle Voegel sind schon da.
+    \end{document}
+    \end{lstlisting}
+\begin{verbatim}
+    \documentclass[fontsize=11pt,paper=a4,pagesize]{scrartcl}
+    \usepackage[utf8]{inputenc}% Kommentar
+    \usepackage[T1]{fontenc}
+    \begin{document}
+      Alle Voegel sind schon da.
+    \end{document}
+    \end{lstlisting}
+\end{verbatim}
 
 \begin{figure} \centering
   \includegraphics[width=.6\textwidth]{example-image}

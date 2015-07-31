@@ -4,6 +4,11 @@
 #
 # -- unveränderlich --
 
+## Generalized rule: how to build a .pdf from each .tex     ## !!! ???
+##LATEXPDFS=$(patsubst %.tex,%.pdf,$(wildcard *.tex))
+##$(LATEXPDFS): %.pdf: %.tex
+##	pdflatex -interaction nonstopmode $(patsubst %.pdf,%.tex,$@)
+
 LATEX = lualatex
 LATEX = pdflatex
 LATEX_OPTS = "--shell-escape"

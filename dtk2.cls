@@ -197,6 +197,8 @@
 \xpatchcmd{\scr@startchapter}{\clearpage}{\relax}{}{\PaTchFaiLED}% ???
 
 \RequirePackage{xcolor}
+
+\iffalse
 \ifDTKcolor
   \colorlet{DTK@marker}{red!30}
   \definecolor{DTK@fancy}{rgb}{.72,.525,.044}
@@ -205,6 +207,7 @@
   \definecolor{DTKlstIdentifiers}{rgb}{0,0,0}
   \definecolor{DTKlstComments}{rgb}{1,0,0}
   \definecolor{DTKlstStrings}{rgb}{0,0.5,0}
+  \newcommand*\DTKlstKeywordfont{\color{DTKlstKeys}}
 \else
   \colorlet{DTK@marker}{black!20}
   \colorlet{DTK@fancy}{black!60}
@@ -213,9 +216,34 @@
   \colorlet{DTKlstIdentifiers}{black}
   \colorlet{DTKlstComments}{black}
   \colorlet{DTKlstStrings}{black}
+  \newcommand*\DTKlstKeywordfont{\bfseries}
+\fi
 \fi
 
-\RequirePackage{listings}
+\ifDTKcolor
+  \colorlet{DTK@marker}{red!30}
+  \definecolor{DTK@fancy}{rgb}{.72,.525,.044}
+  \definecolor{DTKlstBackground}{rgb}{1,1,0.95}
+  \definecolor{DTKlstKeys}{HTML}{2AA198}
+  %\colorlet{DTKlstIdentifiers}{black}
+  \definecolor{DTKlstComments}{HTML}{93A1A1}
+  \definecolor{DTKlstStrings}{HTML}{268BD2}
+  \definecolor{DTKlstNumbers}{HTML}{6C71C4}
+  \newcommand*\DTKlstKeywordfont{\color{DTKlstKeys}}
+\else
+  \colorlet{DTK@marker}{black!20}
+  \colorlet{DTK@fancy}{black!60}
+  \colorlet{DTKlstBackground}{black!5}
+  \colorlet{DTKlstKeys}{black}
+  %\colorlet{DTKlstIdentifiers}{black}
+  \colorlet{DTKlstComments}{black}
+  \colorlet{DTKlstStrings}{black}
+  \colorlet{DTKlstNumbers}{black}
+  \newcommand*\DTKlstKeywordfont{\bfseries}
+\fi
+
+\RequirePackage[final]{listings}
+\RequirePackage{lstautogobble}
 
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 \ifDTK@Author@
@@ -270,34 +298,57 @@
 % Listings
 \newcommand*\DTKlstfont{\small\ttfamily}
 
-\lstdefinestyle{DTKlstBase}{%
+% siehe ggf.: https://github.com/jez/latex-solarized
+
+\lstdefinestyle{DTKlstSimple}{%
 ,basicstyle=\DTKlstfont
+,identifierstyle=\DTKlstfont
+,stringstyle=\DTKlstfont
+,commentstyle=\DTKlstfont
 ,basewidth=0.55em
 ,keepspaces
-,identifierstyle=\color{DTKlstIdentifiers}
-,keywordstyle=\color{DTKlstKeys}
+,autogobble=false
+,backgroundcolor=\color{DTKlstBackground}
+,numbers=none
+,tabsize=2
+,frame=single
+,framesep=\fboxsep
+,aboveskip=\medskipamount
+,belowskip=\medskipamount
+,xleftmargin=\fboxsep
+,xrightmargin=\fboxsep
+}
+
+\newcommand*\DTK@lst@colorbox[2]{%
+  \fboxsep=.16em %
+  \settowidth\DTK@tempdima{#2}\settoheight\DTK@tempdimb{#2}%
+  \settodepth\DTK@tempdimc{#2}%
+  \makebox[\DTK@tempdima][c]{\colorbox{#1}{%
+    \raisebox{0pt}[\DTK@tempdimb][\DTK@tempdimc]{#2}}}%
+}
+
+\lstdefinestyle{DTKlstBase}{%
+,style=DTKlstSimple
+%,identifierstyle=\color{DTKlstIdentifiers}
+,keywordstyle=\DTKlstKeywordfont
 ,stringstyle=\itshape\color{DTKlstStrings}
 ,commentstyle=\itshape\color{DTKlstComments}
 ,columns=fullflexible
-,tabsize=2
-,frame=single
 %,extendedchars=true
 ,showspaces=false
 ,showstringspaces=false
 ,breaklines=true
 ,breakindent=0.5em
-,backgroundcolor=\color{DTKlstBackground}
 ,breakautoindent=true
+,breakatwhitespace=false  % ???
 ,captionpos=t
-,aboveskip=\medskipamount
-,belowskip=\medskipamount
-,xrightmargin=\fboxsep
-,emphstyle=\DTK@lst@colorbox{lightgray}
-,prebreak=
+,emphstyle=\DTK@lst@colorbox{lightgray}   % DTKlstBackground!100!black!100
+%,prebreak=
 ,postbreak=\mbox{$\hookrightarrow$}
+,autogobble=true
 }
 
-\lstdefinestyle{DTKlstNumber}{%
+\lstdefinestyle{number}{%
 ,style=DTKlstBase
 ,numbers=left
 ,numberstyle=\tiny\ttfamily
@@ -305,20 +356,26 @@
 ,xleftmargin=1.5em
 }
 
-\lstdefinestyle{DTKlstNoNumber}{%
+\lstdefinestyle{noNumber}{%
 ,style=DTKlstBase
 ,numbers=none
-,xleftmargin=\fboxsep
+,xleftmargin=\fboxsep % ???
 }
 
+\lstset{style=number}
+
+% noHilit
+
+\iffalse
 \lst@AddToHookExe{DeInit}{%    ???
   \@tempdima=\lst@belowskip \advance\@tempdima-.65\baselineskip
   \edef\lst@belowskip{\the\@tempdima}%
 }
+\fi
 
 \let\verbatim=\relax
 \lstnewenvironment{verbatim}
-{\lstset{language={},style=DTKlstNoNumber}}{}
+{\lstset{language={},style=DTKlstSimple}}{}
 
 
 \endinput
