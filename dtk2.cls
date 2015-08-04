@@ -356,7 +356,7 @@
 ,xleftmargin=1.5em
 }
 
-\lstdefinestyle{noNumber}{%
+\lstdefinestyle{noNumber}{%    % TODO: Evtl. doch besser Zeilennummern ganz ausrücken?
 ,style=DTKlstBase
 ,numbers=none
 ,xleftmargin=\fboxsep % ???
@@ -364,14 +364,7 @@
 
 \lstset{style=number}
 
-% noHilit
-
-\iffalse
-\lst@AddToHookExe{DeInit}{%    ???
-  \@tempdima=\lst@belowskip \advance\@tempdima-.65\baselineskip
-  \edef\lst@belowskip{\the\@tempdima}%
-}
-\fi
+% noHilit, latex ???
 
 \let\verbatim=\relax
 \lstnewenvironment{verbatim}

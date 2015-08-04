@@ -15,26 +15,20 @@
 Siehe~\cite{lamport:handbuch}
 
 Etwas Text
-\begin{lstlisting}[language=C]
-#include <stdio.h>
-#define N 10
-/* Block
- * comment */
 
-int main()
-{
-    int i;
+\begin{lstlisting}[language={[5.3]Lua}]
+-- This example uses recursive factorial definition.
+function factorial(n)
+  if (n == 0) then
+    return 1
+  else
+    return n * factorial(n - 1)
+  end
+end
 
-    // Line comment.
-    puts("Hello world!");
-
-    for (i = 0; i < N; i++)
-    {
-        puts("LaTeX is also great for programmers!");
-    }
-
-    return 0;
-}
+for n = 0, 16 do
+  io.write(n, "! = ", factorial(n), "\n")
+end
 \end{lstlisting}
 \begin{lstlisting}[language={[LaTeX]TeX},style=nonumber,emph={Voegel}]
     \documentclass[fontsize=11pt,paper=a4,pagesize]{scrartcl}
@@ -43,7 +37,7 @@ int main()
     \begin{document}
       Alle Voegel sind schon da.
     \end{document}
-    \end{lstlisting}
+\end{lstlisting}
 \begin{verbatim}
     \documentclass[fontsize=11pt,paper=a4,pagesize]{scrartcl}
     \usepackage[utf8]{inputenc}% Kommentar
