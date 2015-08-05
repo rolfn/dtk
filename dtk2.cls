@@ -139,6 +139,7 @@
 \newcommand*\DTKdate{?/??}
 \newcommand*\DTKcorrVersion{}
 \newcommand*\DTKfullIssue{}
+\newcommand*\DTKissn{1434-5897}
 
 %\RequirePackage{etex} % ???
 \RequirePackage{dantelogo,hologo,dtklogos}
@@ -223,7 +224,7 @@
 \ifDTKcolor
   \colorlet{DTK@marker}{red!30}
   \definecolor{DTK@fancy}{rgb}{.72,.525,.044}
-  \definecolor{DTKlstBackground}{rgb}{1,1,0.95}
+  \definecolor{DTKlstBackground}{rgb}{1,1,0.86}
   \definecolor{DTKlstKeys}{HTML}{2AA198}
   %\colorlet{DTKlstIdentifiers}{black}
   \definecolor{DTKlstComments}{HTML}{93A1A1}
@@ -342,7 +343,7 @@
 ,breakautoindent=true
 ,breakatwhitespace=false  % ???
 ,captionpos=t
-,emphstyle=\DTK@lst@colorbox{DTKlstBackground!60!-DTKlstBackground}%
+,emphstyle=\DTK@lst@colorbox{DTKlstBackground!70!-DTKlstBackground}%
 %,prebreak=
 ,postbreak=\mbox{$\hookrightarrow$}
 ,autogobble=true
@@ -368,8 +369,7 @@
 
 \let\verbatim=\relax
 \lstnewenvironment{verbatim}
-{\lstset{language={},style=DTKlstSimple}}{}
-
+{\lstset{style=DTKlstSimple,language={}}}{}
 
 \endinput
 
