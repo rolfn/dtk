@@ -132,13 +132,13 @@
 
 \newcommand*\journalname{Die \TeX{}nische Kom\"odie}
 
-\newcommand*\DTK@year{????}
-\newcommand*\DTK@month{?????}
-\newcommand*\DTK@issue{?}
-\newcommand*\DTK@volume{??}
-\newcommand*\DTK@date{?/??}
-\newcommand*\DTK@corrVersion{}
-\newcommand*\DTK@fullIssue{}
+\newcommand*\DTKyear{????}
+\newcommand*\DTKmonth{?????}
+\newcommand*\DTKissue{?}
+\newcommand*\DTKvolume{??}
+\newcommand*\DTKdate{?/??}
+\newcommand*\DTKcorrVersion{}
+\newcommand*\DTKfullIssue{}
 
 %\RequirePackage{etex} % ???
 \RequirePackage{dantelogo,hologo,dtklogos}
@@ -187,8 +187,8 @@
 \clearpairofpagestyles
 \ihead{\headmark}
 \ohead{\pagemark}
-\ofoot*{\normalsize\DTK@corrVersion}
-\ifoot*{\journalname~~\DTK@date}
+\ofoot*{\normalsize\DTKcorrVersion}
+\ifoot*{\journalname~~\DTKdate}
 \automark[chapter]{chapter}
 
 \RequirePackage{xpatch}
@@ -202,7 +202,7 @@
 \ifDTKcolor
   \colorlet{DTK@marker}{red!30}
   \definecolor{DTK@fancy}{rgb}{.72,.525,.044}
-  \definecolor{DTKlstBackground}{rgb}{1,1,0.95}
+  \definecolor{DTKlstBackground}{rgb}{1,1,0.86}
   \definecolor{DTKlstKeys}{rgb}{0,0,1}
   \definecolor{DTKlstIdentifiers}{rgb}{0,0,0}
   \definecolor{DTKlstComments}{rgb}{1,0,0}
@@ -211,7 +211,7 @@
 \else
   \colorlet{DTK@marker}{black!20}
   \colorlet{DTK@fancy}{black!60}
-  \colorlet{DTKlstBackground}{black!5}
+  \colorlet{DTKlstBackground}{black!14}
   \colorlet{DTKlstKeys}{black}
   \colorlet{DTKlstIdentifiers}{black}
   \colorlet{DTKlstComments}{black}
@@ -252,7 +252,7 @@
   \input{dtk-full.clo}
 \fi
 
-\ifDTKrecord \expandafter \endinput \fi % lohnt es?
+%%%\ifDTKrecord \expandafter \endinput \fi % lohnt es?
 
 \addtokomafont{caption}{\small}
 \addtokomafont{captionlabel}{\bfseries\sffamily}
@@ -342,7 +342,7 @@
 ,breakautoindent=true
 ,breakatwhitespace=false  % ???
 ,captionpos=t
-,emphstyle=\DTK@lst@colorbox{lightgray}   % DTKlstBackground!100!black!100
+,emphstyle=\DTK@lst@colorbox{DTKlstBackground!60!-DTKlstBackground}%
 %,prebreak=
 ,postbreak=\mbox{$\hookrightarrow$}
 ,autogobble=true

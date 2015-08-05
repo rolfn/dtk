@@ -22,16 +22,16 @@
     {\global\DTK@lineno@false\DTK@@DieTeXnischeKomoedie}%
 }
 \newcommand*\DTK@@DieTeXnischeKomoedie[3]{%
-  \xdef\DTK@issue{#1}%
-  \xdef\DTK@date{#1/#3}%
-  \xdef\DTK@month{#2}%
-  \xdef\DTK@monthName{\DTMgermanmonthname{#2}}
-  \xdef\DTK@year{#3}%
-  \xdef\DTK@volume{\the\numexpr\DTK@year-1989+1\relax}%
-  \xdef\DTK@fullIssue{\DTK@volume. Jahrgang\quad
-    Heft \DTK@issue/\DTK@year\quad \DTK@monthName\ \DTK@year}%
+  \xdef\DTKissue{#1}%
+  \xdef\DTKdate{#1/#3}%
+  \xdef\DTKmonth{#2}%
+  \xdef\DTKmonthName{\DTMgermanmonthname{#2}}
+  \xdef\DTKyear{#3}%
+  \xdef\DTKvolume{\the\numexpr\DTKyear-1989+1\relax}%
+  \xdef\DTKfullIssue{\DTKvolume. Jahrgang\quad
+    Heft \DTKissue/\DTKyear\quad \DTKmonthName\ \DTKyear}%
   \ifDTK@corr@
-    \xdef\DTK@corrVersion{\noexpand\normalfont
+    \xdef\DTKcorrVersion{\noexpand\normalfont
       \noexpand\fcolorbox{black}{DTK@marker}{Korrekturversion: \DTMnow}}%
     \overfullrule=5pt %
   \fi
@@ -96,7 +96,7 @@
   \def\DTK@@usepackage#1#2[#3]{%
     \edef\@tempb{\zap@space#2 \@empty}%
     \@for\@tempa:=\@tempb\do{%
-      \DTK@tempa=\relax
+      \let\DTK@tempa=\relax
       \ifstr{\@tempa}{inputenc}{\let\DTK@tempa=\@percentchar}{%
         \ifstr{\@tempa}{fontenc}{\let\DTK@tempa=\@percentchar}{}}%
       \immediate\write\user@packages{%
@@ -226,7 +226,7 @@
       \rule{\textwidth}{2pt}\\[0.5mm]%
       \begingroup
         \footnotesize\raggedleft
-        \DTK@fullIssue \\
+        \DTKfullIssue \\
       \endgroup
     }%
   }%
@@ -252,22 +252,22 @@
         \addvspace{4mm}%
         \begingroup
           \raggedright\footnotesize
-          \DTK@fullIssue \\
+          \DTKfullIssue \\
         \endgroup
         \addvspace{40mm}%
-        \makebox(0,0)[r]{\Large\DTK@corrVersion}
+        \makebox(0,0)[r]{\Large\DTKcorrVersion}
       }%
     }%
     \put(86mm,-186mm){%
       \begingroup
-        \color[gray]{.8}\resizebox{45mm}{!}{\Huge\DTK@date}%
+        \color[gray]{.8}\resizebox{45mm}{!}{\Huge\DTKdate}%
       \endgroup
     }%
   \end{picture}%
 }
 
 \defpagestyle{dtk-toc}{{\DTK@toc@head}{}{}}%
-  {{\hfill\normalsize\DTK@corrVersion\hfill\null}{}{}}
+  {{\hfill\normalsize\DTKcorrVersion\hfill\null}{}{}}
 \defpagestyle{dtk-title}{}{}
 \DeclareNewLayer[foreground,contents={%\layercontentsmeasure
   \DTK@title@content}]{dtk-title-content}
@@ -313,24 +313,41 @@
   \raggedright
 }
 
-\newcommand\Part[2][]{%
-  \ifx\relax#1\relax\part{#2}\else\part[#1]{#2}\fi
-  \DTK@Part
+\newcommand*\Part{%
+% [#1]=toc, {#2}=Überschrift, [#3]=Präambel, *=nur Strich
+  \@ifstar{\global\@tempswatrue\DTK@Part}{\global\@tempswafalse\DTK@Part}%
 }
-\newcommand\DTK@Part[1][]{%
+
+\newcommand\DTK@Part[2][]{%
+  \protected@xdef\DTK@tempa{\ifx\relax#1\relax\noexpand\part{#2}\else\noexpand\part[#1]{#2}\fi}%
+  \DTK@@Part
+}
+
+\newcommand\DTK@@Part[1][]{%
+  \let\DTK@tempb=\partheadendvskip
+  \if@tempswa
+    \setpartpreamble{%
+      \noindent\raisebox{\height}[\height]{\rule{\textwidth}{2pt}}%
+    }%
+    \def\partheadendvskip{%
+      \medskip\par
+    }
+  \fi
   \ifx\relax#1\relax\else
     \setpartpreamble{%
-      \noindent\rule{\textwidth}{2pt}
-      \par\smallskip
+      \noindent\raisebox{\height}[\height]{\rule{\textwidth}{2pt}}\par
       \usekomafont{section} #1\par
     }%
   \fi
+  \DTK@tempa
+  \let\partheadendvskip=\DTK@tempb
   \bigskip\par
 }
 
 \def\partheadstartvskip{% 12.0pt plus 1.0fil
   \null\vskip-\baselineskip\vskip 10pt %
 }
+
 \def\partheadendvskip{%
   \bigskip\bigskip\par
 }
