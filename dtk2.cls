@@ -349,7 +349,7 @@
 ,autogobble=true
 }
 
-\lstdefinestyle{number}{%
+\lstdefinestyle{number}{%  TODO: Evtl. doch besser Zeilennummern ganz ausrücken?
 ,style=DTKlstBase
 ,numbers=left
 ,numberstyle=\tiny\ttfamily
@@ -357,7 +357,7 @@
 ,xleftmargin=1.5em
 }
 
-\lstdefinestyle{noNumber}{%    % TODO: Evtl. doch besser Zeilennummern ganz ausrücken?
+\lstdefinestyle{noNumber}{%
 ,style=DTKlstBase
 ,numbers=none
 ,xleftmargin=\fboxsep % ???

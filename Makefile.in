@@ -19,7 +19,8 @@ MAKEGLOSSARYSTYLE = dtk-adr.ist
 IDX_STYLE = dtk.xdy
 MAKEINDEX = xindy -v -C utf8 -M $(IDX_STYLE) -L general -I latex
 
-$(MAIN).pdf : $(MAIN).tex $(ARTICLES)
+# TODO: Test, ob "biber", "xindy"
+$(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES)
 	$(LATEX) $(LATEX_OPTS) $<
 	biber $(basename $<)
 	$(MAKEINDEX) $(basename $<)-addresses.idx -o $(basename $<)-addresses.ind
@@ -27,7 +28,7 @@ $(MAIN).pdf : $(MAIN).tex $(ARTICLES)
 
 record : userpackages.tex
 
-userpackages.tex : $(MAIN)0.tex $(ARTICLES)
+userpackages.tex : $(MAIN)0.tex
 	pdflatex -draftmode -interaction=nonstopmode $<
 
 clean :
