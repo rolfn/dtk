@@ -1,12 +1,12 @@
-# Rolf Niepraschk, 2015/07/14, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2015/08/07, Rolf.Niepraschk@gmx.de
 #
 # Hilfsdefinitionen zum make-Prozess für "Die TeXnische Komödie"
 #
 # -- unveränderlich --
 
 ## Generalized rule: how to build a .pdf from each .tex     ## !!! ???
-LATEXPDFS=$(patsubst %.tex,%.pdf,$(wildcard *.tex))
-##$(LATEXPDFS): %.pdf: %.tex
+## LATEXPDFS=$(patsubst %.tex,%.pdf,$(wildcard *.tex))
+## $(LATEXPDFS): %.pdf: %.tex
 ##	pdflatex -interaction nonstopmode $(patsubst %.pdf,%.tex,$@)
 
 LATEX = lualatex
@@ -19,21 +19,33 @@ MAKEGLOSSARYSTYLE = dtk-adr.ist
 IDX_STYLE = dtk.xdy
 MAKEINDEX = xindy -v -C utf8 -M $(IDX_STYLE) -L general -I latex
 BIBTEX = biber
-GREP = grep
+EGREP = grep -E
 
 TEMP_EXT = .log .aux .blg .toc .bbl .bcf .idx .ind .run.xml
 
-bibtexwarn = 'Please (re)run Biber on the file'
-rerunwarn = 'Rerun to get cross-references right'
-linenowarn = 'Linenumber reference failed'
+BIBTEX_WARN = (run Biber on the file)
+RERUN_WARN1 = Rerun to get cross-references right
+RERUN_WARN2 = Please rerun LaTeX
+RERUN_WARN3 = There were undefined references
+RERUN_WARN4 = Linenumber reference failed
+RERUN_WARNINGS = ($(RERUN_WARN1)|$(RERUN_WARN2)|$(RERUN_WARN3)|$(RERUN_WARN4))
 
-# TODO: Test, ob "biber", "xindy"
+MAX_LTX_RUNS = 3
+
+# NUMBERS = 1 2 3 4
+# doit:
+#         $(foreach var,$(NUMBERS),./a.out $(var);)
+
+# TODO: Test, ob "xindy"
 $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES)
 	$(LATEX) $(LATEX_OPTS) $<
-	@ if $(GREP) $(bibtexwarn) $(basename $<).log > /dev/null; \
+	if $(EGREP) '$(BIBTEX_WARN)' $(basename $<).log > /dev/null; \
 	  then $(BIBTEX) $(basename $<); fi;
 	$(MAKEINDEX) $(basename $<)-addresses.idx -o $(basename $<)-addresses.ind
-	$(LATEX) $(LATEX_OPTS) $<
+	if $(EGREP) '$(RERUN_WARNINGS)' $(basename $<).log > /dev/null; \
+	  then $(LATEX) $(LATEX_OPTS) $<; fi;
+	if $(EGREP) '$(RERUN_WARNINGS)' $(basename $<).log > /dev/null; \
+	  then $(LATEX) $(LATEX_OPTS) $<; fi;
 
 record : userpackages.tex
 
