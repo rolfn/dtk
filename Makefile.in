@@ -5,7 +5,7 @@
 # -- unveränderlich --
 
 ## Generalized rule: how to build a .pdf from each .tex     ## !!! ???
-##LATEXPDFS=$(patsubst %.tex,%.pdf,$(wildcard *.tex))
+LATEXPDFS=$(patsubst %.tex,%.pdf,$(wildcard *.tex))
 ##$(LATEXPDFS): %.pdf: %.tex
 ##	pdflatex -interaction nonstopmode $(patsubst %.pdf,%.tex,$@)
 
@@ -18,11 +18,20 @@ MAKEGLOSSARYSTYLE = dtk-adr.ist
 
 IDX_STYLE = dtk.xdy
 MAKEINDEX = xindy -v -C utf8 -M $(IDX_STYLE) -L general -I latex
+BIBTEX = biber
+GREP = grep
+
+TEMP_EXT = .log .aux .blg .toc .bbl .bcf .idx .ind .run.xml
+
+bibtexwarn = 'Please (re)run Biber on the file'
+rerunwarn = 'Rerun to get cross-references right'
+linenowarn = 'Linenumber reference failed'
 
 # TODO: Test, ob "biber", "xindy"
 $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES)
 	$(LATEX) $(LATEX_OPTS) $<
-	biber $(basename $<)
+	@ if $(GREP) $(bibtexwarn) $(basename $<).log > /dev/null; \
+	  then $(BIBTEX) $(basename $<); fi;
 	$(MAKEINDEX) $(basename $<)-addresses.idx -o $(basename $<)-addresses.ind
 	$(LATEX) $(LATEX_OPTS) $<
 
@@ -32,7 +41,8 @@ userpackages.tex : $(MAIN)0.tex
 	pdflatex -draftmode -interaction=nonstopmode $<
 
 clean :
-	$(RM) $(addprefix $(MAIN), .log .aux .blg .toc .bbl .bcf .idx .ind .run.xml)
+	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), $(TEMP_EXT)))
+	$(RM) $(MAIN)-addresses.idx $(MAIN)-addresses.ind  userpackages.tex
 
 veryclean : clean
-	$(RM) $(addprefix $(MAIN), .pdf) userpackages.tex
+	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), .pdf)) \
