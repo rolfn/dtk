@@ -8,11 +8,8 @@ LATEX = lualatex
 LATEX = pdflatex
 LATEX_OPTS = "--shell-escape"
 
-MAKEINDEXSTYLE = dtk-idx.ist
-MAKEGLOSSARYSTYLE = dtk-adr.ist
-
 IDX_STYLE = dtk.xdy
-MAKEINDEX = xindy -v -C utf8 -M $(IDX_STYLE) -L general -I latex
+XINDY = xindy -v -C utf8 -L general -I latex -M $(IDX_STYLE)
 BIBTEX = biber
 EGREP = grep -E
 
@@ -33,17 +30,16 @@ userpackages.tex : $(MAIN)0.tex
 	pdflatex -draftmode -interaction=nonstopmode $<
 
 $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES)
-	if test -f $(basename $<)-addresses.idx.old; \
+	if test -f $(basename $<)-addresses.idx; \
 	  then cp $(basename $<)-addresses.idx $(basename $<)-addresses.idx.old; \
 	  else touch $(basename $<)-addresses.idx.old; fi;
 	$(LATEX) $(LATEX_OPTS) $<
 	if ! diff $(basename $<)-addresses.idx $(basename $<)-addresses.idx.old \
-	  > /dev/null; then $(MAKEINDEX) $(basename $<)-addresses.idx \
+	  > /dev/null; then $(XINDY) $(basename $<)-addresses.idx \
 	  -o $(basename $<)-addresses.ind; fi;
 	if $(EGREP) '$(BIBTEX_WARN)' $(basename $<).log > /dev/null; \
 	  then $(BIBTEX) $(basename $<); fi;
-	for (( i=0; i < $(MAX_LTX_RUNS); i++ )) \
-	do \
+	for (( i=0; i < $(MAX_LTX_RUNS); i++ )) do \
 	  if $(EGREP) '$(RERUN_WARNINGS)' $(basename $<).log > /dev/null; \
 	  then $(LATEX) $(LATEX_OPTS) $<; fi; \
 	done
