@@ -36,15 +36,9 @@
       \noexpand\fcolorbox{black}{DTK@marker}{Korrekturversion: \DTMnow}}%
     \overfullrule=5pt %
   \fi
-  \ifDTKrecord\else\DTK@backside\fi
   \ifDTK@lineno@
     \let\@LN=\@gobbletwo% Wegen .aux-Datei von vorherigem lineno-Lauf
-    \RequirePackage[pagewise]{lineno}
-  \fi
-}
-
-\AtBeginDocument{%
-  \ifDTK@lineno@
+    \RequirePackage[pagewise]{lineno}%
     \linenumbers
     \linenumbersep=.8ex %
     \def\linenumberfont{\normalfont\footnotesize\ttfamily}%
@@ -53,6 +47,7 @@
       \fcolorbox{black}{DTK@marker}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
     }%
   \fi
+  \ifDTKrecord\else\DTK@backside\fi
 }
 
 \newcommand*\DTK@backside{%
