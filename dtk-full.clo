@@ -298,7 +298,7 @@
   \endgroup
   \addvspace{0.2em}%
 }
-\renewcommand*\l@chapter[2]{%    TODO: Abstände richtig?
+\renewcommand*\l@chapter[2]{%    TODO: Abstände richtig? "LaTeXifizieren?
   \begingroup
     \usekomafont{chapterentry}%
     \vskip \z@ \@plus.2\p@
@@ -308,7 +308,9 @@
     \advance\leftskip \@tempdimb
     \advance\rightskip \@tempdimb
     \noindent\hskip -\leftskip
-    \hbox to\@tempdimb{\usekomafont{chapterentrypagenumber}#2\hss}%
+    \settowidth\@tempdima{99}%
+    \hbox to\@tempdimb{\usekomafont{chapterentrypagenumber}%
+      \makebox[\@tempdima][r]{#2}\hss}%
     #1\par
   \endgroup
 }
