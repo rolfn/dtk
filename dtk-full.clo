@@ -17,6 +17,7 @@
   \@ifstar{\global\DTK@corr@true\DTK@DieTeXnischeKomoedie}%
     {\global\DTK@corr@false\DTK@DieTeXnischeKomoedie}%
 }
+\@onlypreamble\DieTeXnischeKomoedie
 \newcommand\DTK@DieTeXnischeKomoedie{%
   \@ifstar{\global\DTK@lineno@true\DTK@@DieTeXnischeKomoedie}%
     {\global\DTK@lineno@false\DTK@@DieTeXnischeKomoedie}%
@@ -36,6 +37,22 @@
     \overfullrule=5pt %
   \fi
   \ifDTKrecord\else\DTK@backside\fi
+  \ifDTK@lineno@
+    \let\@LN=\@gobbletwo% Wegen .aux-Datei von vorherigem lineno-Lauf
+    \RequirePackage[pagewise]{lineno}
+  \fi
+}
+
+\AtBeginDocument{%
+  \ifDTK@lineno@
+    \linenumbers
+    \linenumbersep=.8ex %
+    \def\linenumberfont{\normalfont\footnotesize\ttfamily}%
+    \def\thelinenumber{%
+      \fboxsep=.3ex %
+      \fcolorbox{black}{DTK@marker}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
+    }%
+  \fi
 }
 
 \newcommand*\DTK@backside{%
@@ -47,21 +64,6 @@
     \immediate\write\backside{\journalname\space\DTKdate}%
     \immediate\closeout\backside\relax%
   \endgroup
-}
-
-% TODO: Nur Laden, wenn \DTK@lineno@true; Problem: "pagewise"
-\let\@LN=\@gobbletwo% Wegen .aux-Datei von vorherigem lineno-Lauf
-\RequirePackage[pagewise]{lineno}
-\linenumbersep=.8ex %
-\def\linenumberfont{\normalfont\footnotesize\ttfamily}%
-\def\thelinenumber{%
-  \fboxsep=.3ex %
-  \fcolorbox{black}{DTK@marker}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
-}%
-\AtBeginDocument{%
-  \ifDTK@lineno@
-    \linenumbers
-  \fi
 }
 
 \newcommand*\DTK@embedded@begindocumenthook{}
