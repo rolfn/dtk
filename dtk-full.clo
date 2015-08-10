@@ -308,7 +308,7 @@
     \advance\leftskip \@tempdimb
     \advance\rightskip \@tempdimb
     \noindent\hskip -\leftskip
-    \settowidth\@tempdima{99}%
+    \settowidth\@tempdima{\the\c@page}%
     \hbox to\@tempdimb{\usekomafont{chapterentrypagenumber}%
       \makebox[\@tempdima][r]{#2}\hss}%
     #1\par
