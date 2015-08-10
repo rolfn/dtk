@@ -35,6 +35,45 @@
       \noexpand\fcolorbox{black}{DTK@marker}{Korrekturversion: \DTMnow}}%
     \overfullrule=5pt %
   \fi
+  \ifDTKrecord\else\DTK@backside\fi
+}
+
+\newcommand*\DTK@backside{%
+  \begingroup
+    \let\documentclass=\protect
+    \let\usepackage=\protect
+    \let\pagestyle=\protect
+    \let\begin=\protect
+    \let\end=\protect
+    \let\put=\protect
+    \let\makebox=\protect
+    \let\tiny=\protect
+    \let\space=\protect
+    \let\put=\protect
+    \let\line=\protect
+    \let\protect=\noexpand
+    \chardef\backside15 %
+    \ch@ck7\backside\write
+    \immediate\openout\backside ruecken.tex\relax
+    \immediate\write\backside{%
+      \documentclass[11pt,a4paper]{article}^^J%
+      \usepackage[T1]{fontenc}^^J%
+      \usepackage{libertine}^^J%
+      \oddsidemargin=-1in \@percentchar^^J%
+      \unitlength=1mm \@percentchar^^J%
+      \pagestyle{empty}^^J%
+      \begin{document}^^J%
+      \begin{picture}(210,4)^^J%
+        \put(5,2){\makebox(100,0)[l]{\tiny\journalname\space\DTKdate}}^^J%
+        \put(0,0){\line(-1,0){5}}^^J%
+        \put(0,0){\line(0,-1){5}}^^J%
+        \put(0,4){\line(-1,0){5}}^^J%
+        \put(0,4){\line(0,1){5}}^^J%
+      \end{picture}^^J%
+      \end{document}
+    }%
+    \immediate\closeout\backside\relax%
+  \endgroup
 }
 
 % TODO: Nur Laden, wenn \DTK@lineno@true; Problem: "pagewise"

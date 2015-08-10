@@ -33,10 +33,15 @@ $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES)
 	if test -f $(basename $<)-addresses.idx; \
 	  then cp $(basename $<)-addresses.idx $(basename $<)-addresses.idx.old; \
 	  else touch $(basename $<)-addresses.idx.old; fi;
+	if test -f ruecken.tex; \
+	  then cp ruecken.tex ruecken.tex.old; \
+	  else touch ruecken.tex.old; fi;
 	$(LATEX) $(LATEX_OPTS) $<
 	if ! diff $(basename $<)-addresses.idx $(basename $<)-addresses.idx.old \
 	  > /dev/null; then $(XINDY) $(basename $<)-addresses.idx \
 	  -o $(basename $<)-addresses.ind; fi;
+	if ! diff ruecken.tex ruecken.tex.old > /dev/null; \
+	  then pdflatex ruecken.tex; fi;
 	if $(EGREP) '$(BIBTEX_WARN)' $(basename $<).log > /dev/null; \
 	  then $(BIBTEX) $(basename $<); fi;
 	for (( i=0; i < $(MAX_LTX_RUNS); i++ )) do \
@@ -47,7 +52,8 @@ $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES)
 clean :
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), $(TEMP_EXT)))
 	$(RM) $(MAIN)-addresses.idx $(MAIN)-addresses.idx.old $(MAIN)-addresses.ind \
-	  userpackages.tex
+	  ruecken.tex ruecken.tex.old userpackages.tex
 
 veryclean : clean
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), .pdf)) \
+	  ruecken.pdf

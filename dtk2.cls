@@ -130,7 +130,7 @@
 %,defernumbers=true
 ]{biblatex}
 
-\newcommand*\journalname{Die \TeX{}nische Kom\"odie}
+\newcommand*\journalname{Die \protect\TeX{}nische Kom\"odie}
 
 \newcommand*\DTKyear{????}
 \newcommand*\DTKmonth{?????}
