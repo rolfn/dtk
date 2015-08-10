@@ -1,0 +1,19 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{libertine}
+\oddsidemargin=-1in %
+\unitlength=1mm %
+\pagestyle{empty}
+\begin{document}
+\begin{picture}(210,4)
+\put(5,2){%
+  \makebox(100,0)[l]{%
+    \tiny \input{ruecken.dat}%
+  }%
+}
+\put(0,0){\line(-1,0){5}}
+\put(0,0){\line(0,-1){5}}
+\put(0,4){\line(-1,0){5}}
+\put(0,4){\line(0,1){5}}
+\end{picture}
+\end{document}
