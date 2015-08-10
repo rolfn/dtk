@@ -174,6 +174,8 @@
       {\edef\DTK@local@inputname{#1}}%
     \let\AtBeginDocument=\AtEmbeddedBeginDocument
     \let\AtEndDocument=\AtEmbeddedEndDocument
+    \let\DTK@embedded@begindocumenthook=\@empty
+    \let\DTK@embedded@enddocumenthook=\@empty
     \let\pagestyle=\@gobble
     \let\thispagestyle=\@gobble
     \let\listfiles=\relax
@@ -188,7 +190,7 @@
     \c@figure=\z@
     \c@table=\z@
     \c@equation=\z@
-    \renewenvironment*{document}%
+    \renewenvironment{document}%
       {\DTK@embedded@begindocumenthook}%
       {\ifDTK@bib@\ORIG@printbibliography[heading=dtk]\fi
        \DTK@embedded@enddocumenthook\endinput}%
