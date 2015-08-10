@@ -37,7 +37,6 @@
     \overfullrule=5pt %
   \fi
   \ifDTK@lineno@
-    \let\@LN=\@gobbletwo% Wegen .aux-Datei von vorherigem lineno-Lauf
     \RequirePackage[pagewise]{lineno}%
     \linenumbers
     \linenumbersep=.8ex %
@@ -47,8 +46,9 @@
       \fcolorbox{black}{DTK@marker}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
     }%
   \fi
-  \ifDTKrecord\else\DTK@backside\fi
 }
+
+\let\@LN=\@gobbletwo% Wegen .aux-Datei von vorherigem lineno-Lauf
 
 \newcommand*\DTK@backside{%
   \begingroup
@@ -127,7 +127,8 @@
                *************************************}%
     }{}%
     \shorthandon{"}%
-  }
+  }%
+  \AtBeginDocument{\DTK@backside}%
   \def\DTK@@usepackage#1#2[#3]{}%
   \newcommand*\DTK@addbibresource[2][]{}%
   \newcommand*\ORIG@printbibliography{}

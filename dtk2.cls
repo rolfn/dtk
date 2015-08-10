@@ -134,11 +134,11 @@
 
 \newcommand*\DTKyear{????}
 \newcommand*\DTKmonth{?????}
-\newcommand*\DTKissue{?}
+\newcommand*\DTKissue{0}
 \newcommand*\DTKvolume{??}
 \newcommand*\DTKdate{?/??}
-\newcommand*\DTKcorrVersion{}
-\newcommand*\DTKfullIssue{}
+\newcommand*\DTKcorrVersion{\mbox{}}
+\newcommand*\DTKfullIssue{\mbox{}}
 \newcommand*\DTKissn{1434-5897}
 
 %\RequirePackage{etex} % ???
