@@ -105,7 +105,7 @@
   \def\DTK@@usepackage#1#2[#3]{%
     \edef\@tempb{\zap@space#2 \@empty}%
     \@for\@tempa:=\@tempb\do{%
-      \let\DTK@tempa=\relax
+      \let\DTK@tempa=\@empty
       \ifstr{\@tempa}{inputenc}{\let\DTK@tempa=\@percentchar}{%
         \ifstr{\@tempa}{fontenc}{\let\DTK@tempa=\@percentchar}{}}%
       \immediate\write\user@packages{%
