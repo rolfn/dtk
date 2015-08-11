@@ -24,10 +24,8 @@ RERUN_WARNINGS = ($(RERUN_WARN1)|$(RERUN_WARN2)|$(RERUN_WARN3)|$(RERUN_WARN4))
 
 MAX_LTX_RUNS = 3
 
-record : userpackages.tex
-
-userpackages.tex : $(MAIN)0.tex
-	pdflatex -draftmode -interaction=nonstopmode $<
+record userpackages.tex :
+	pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex
 
 $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES)
 	if test -f $(basename $<)-addresses.idx; \
