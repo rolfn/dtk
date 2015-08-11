@@ -152,6 +152,15 @@
 \newcommand*\DTK@tempb{}
 \newcommand*\DTK@tempc{}
 
+\def\DTK@tempa{2015/07/02 v3.18 KOMA-Script}% Problem mit "parskip=full*" usw.
+\ifx\KOMAScriptVersion\DTK@tempa
+  %\ifx\par@update\default@par@update\else
+    \AtBeginDocument{\par@updaterelative}%
+  %\fi
+\fi
+
+\AtBeginDocument{\par@updaterelative}%
+
 \renewcommand\title[2][]{%
   \gdef\@title{#2}%
   \ifx\relax#1\relax\gdef\@@title{#2}\else\gdef\@@title{#1}\fi%
