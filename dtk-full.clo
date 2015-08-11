@@ -110,8 +110,7 @@
         \ifstr{\@tempa}{fontenc}{\let\DTK@tempa=\@percentchar}{}}%
       \immediate\write\user@packages{%
         \DTK@tempa\string\usepackage\ifx\relax#1\relax\else[#1]\fi{\@tempa}%
-          \ifx\relax#3\relax\else[#3]\fi
-            \@percentchar\space \DTK@local@inputname
+        \ifx\relax#3\relax\else[#3]\fi\@percentchar\space \DTK@local@inputname
       }%
     }%
   }%

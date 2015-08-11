@@ -41,22 +41,38 @@
 \DeclareOption*{\OptionNotUsed}
 \ProcessOptions\relax
 
-\PassOptionsToPackage{pagesize,twoside=true}{typearea}
+\PassOptionsToPackage{paper=a5,pagesize}{typearea}
+
+\newdimen\DTK@tempdima
+\newdimen\DTK@tempdimb
+\newdimen\DTK@tempdimc
+
+\newcommand*\DTK@tempa{}
+\newcommand*\DTK@tempb{}
+\newcommand*\DTK@tempc{}
 
 \LoadClass[%
+,twoside
 ,fontsize=10pt
 ,captions=oneline
 ,parskip=full*
 ,headings=small
 ,open=any
+,pagesize
 ]{scrbook}
+
+\def\DTK@tempa{2015/07/02 v3.18 KOMA-Script}
+% http://www.komascript.de/release3.18
+\ifx\KOMAScriptVersion\DTK@tempa
+  \ifx\par@update\default@par@update\else
+    \AtBeginDocument{\par@updaterelative}%
+  \fi
+\fi
 
 % *** Konstanten ***
 
 \ifDTK@Author@\else\setcounter{errorcontextlines}{100}\fi
 
-\paperwidth  = 148mm %
-\paperheight = 210mm %
 \textheight = 485pt %
 \textwidth  = 333pt %
 \oddsidemargin  = -35.89157pt %
@@ -143,21 +159,6 @@
 
 %\RequirePackage{etex} % ???
 \RequirePackage{dantelogo,hologo,dtklogos}
-
-\newdimen\DTK@tempdima
-\newdimen\DTK@tempdimb
-\newdimen\DTK@tempdimc
-
-\newcommand*\DTK@tempa{}
-\newcommand*\DTK@tempb{}
-\newcommand*\DTK@tempc{}
-
-\def\DTK@tempa{2015/07/02 v3.18 KOMA-Script}% Problem mit "parskip=full*" usw.
-\ifx\KOMAScriptVersion\DTK@tempa
-  %\ifx\par@update\default@par@update\else
-    \AtBeginDocument{\par@updaterelative}%
-  %\fi
-\fi
 
 \AtBeginDocument{\par@updaterelative}%
 
