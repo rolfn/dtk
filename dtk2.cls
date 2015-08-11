@@ -61,13 +61,12 @@
 ,pagesize
 ]{scrbook}
 
-\def\DTK@tempa{2015/07/02 v3.18 KOMA-Script}
 % http://www.komascript.de/release3.18
-\ifx\KOMAScriptVersion\DTK@tempa
+\ifstr{\KOMAScriptVersion}{2015/07/02 v3.18 KOMA-Script}{%
   \ifx\par@update\default@par@update\else
     \AtBeginDocument{\par@updaterelative}%
   \fi
-\fi
+}{}
 
 % *** Konstanten ***
 
@@ -159,8 +158,6 @@
 
 %\RequirePackage{etex} % ???
 \RequirePackage{dantelogo,hologo,dtklogos}
-
-\AtBeginDocument{\par@updaterelative}%
 
 \renewcommand\title[2][]{%
   \gdef\@title{#2}%
