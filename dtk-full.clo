@@ -256,8 +256,7 @@
     \put(53mm,-68mm){%
       \parbox[t]{78mm}{%
         \raggedleft
-        %\Huge\dantelogo % ???
-        \Huge DANTE \\
+        \Huge\dantelogo \\
         \Large Deutschsprachige \\
         Anwendervereinigung \TeX\ \eV \\
         \addvspace{4mm}%
