@@ -3,7 +3,14 @@
 
 MAIN = komoedie
 
-ARTICLES = artikel1.tex artikel2.tex artikel3.tex
+ARTICLES += artikel1.tex
+#ADDINPUTS += artikel1-foo.tex abbildung17.png
+
+ARTICLES += artikel2.tex
+#ADDINPUTS += artikel2-bar.tex
+
+ARTICLES += artikel3.tex
+#ADDINPUTS += artikel3-baz.tex
 
 all : $(MAIN).pdf
 

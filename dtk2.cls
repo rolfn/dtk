@@ -267,10 +267,6 @@
 \setcapindent{1em}
 \setcapwidth[c]{.8\textwidth}
 
-\renewcommand\thefigure{\arabic{figure}}
-\renewcommand\thetable{\arabic{table}}
-\renewcommand\theequation{\arabic{equation}}
-
 \setkomafont{disposition}{\normalfont\sffamily}
 \setkomafont{part}{\usekomafont{disposition}\huge}
 \setkomafont{chapter}{\usekomafont{disposition}\Large}

@@ -27,7 +27,7 @@ MAX_LTX_RUNS = 3
 record userpackages.tex :
 	pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex
 
-$(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES)
+$(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS)
 	if test -f $(basename $<)-addresses.idx; \
 	  then cp $(basename $<)-addresses.idx $(basename $<)-addresses.idx.old; \
 	  else touch $(basename $<)-addresses.idx.old; fi;
