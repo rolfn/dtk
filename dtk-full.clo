@@ -27,7 +27,9 @@
     \gdef\DTKmonth{0}%
     \gdef\DTKmonthName{?????}%
   \else
-    \xdef\DTKmonth{\DTKissueTOmonth{\DTKissue}}%
+    \ifnum\DTKmonth=\z@
+      \xdef\DTKmonth{\DTKissueTOmonth{\DTKissue}}%
+    \fi
     \xdef\DTKmonthName{\DTMgermanmonthname{\DTKmonth}}%
   \fi
   \xdef\DTKdate{\DTKissue/\DTKyear}%
