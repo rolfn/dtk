@@ -4,9 +4,9 @@
 #
 # -- unveränderlicher Teil --
 
-LATEX = lualatex
-LATEX = pdflatex
-LATEX_OPTS = "--shell-escape"
+###LATEX = TEXINPUTS=./texmf: lualatex
+LATEX = TEXINPUTS=./texmf: pdflatex
+LATEX_OPTS = --shell-escape
 
 IDX_STYLE = dtk.xdy
 XINDY = xindy -v -C utf8 -L general -I latex -M $(IDX_STYLE)
@@ -25,7 +25,7 @@ RERUN_WARNINGS = ($(RERUN_WARN1)|$(RERUN_WARN2)|$(RERUN_WARN3)|$(RERUN_WARN4))
 MAX_LTX_RUNS = 3
 
 record userpackages.tex :
-	pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex
+	TEXINPUTS=./texmf: pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex
 
 $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS)
 	if test -f $(basename $<)-addresses.idx; \
