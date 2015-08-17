@@ -51,6 +51,8 @@
 \newcommand*\DTK@tempb{}
 \newcommand*\DTK@tempc{}
 
+\RequirePackage{xkeyval}
+
 \LoadClass[%
 ,twoside
 ,fontsize=10pt
@@ -147,8 +149,8 @@
 
 \newcommand*\journalname{Die \protect\TeX{}nische Kom\"odie}
 
-\newcommand*\DTKyear{????}
-\newcommand*\DTKmonth{?????}
+\newcommand*\DTKyear{\the\year}
+\newcommand*\DTKmonth{0}
 \newcommand*\DTKissue{0}
 \newcommand*\DTKvolume{??}
 \newcommand*\DTKdate{?/??}

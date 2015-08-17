@@ -10,33 +10,38 @@
 \newcommand*\DTK@keywords{}
 \newcommand*\keywords[1]{\gdef\DTK@keywords{#1}}
 
-\newif\ifDTK@corr@ \DTK@corr@true
-\newif\ifDTK@lineno@ \DTK@lineno@false
+\newif\ifDTK@corr \DTK@corrfalse
+\newif\ifDTK@lineno \DTK@linenofalse
 
-\newcommand*\DieTeXnischeKomoedie{% #1=Ausgabe, #2=Monat, #3=Jahr
-  \@ifstar{\global\DTK@corr@true\DTK@DieTeXnischeKomoedie}%
-    {\global\DTK@corr@false\DTK@DieTeXnischeKomoedie}%
-}
-\@onlypreamble\DieTeXnischeKomoedie
-\newcommand\DTK@DieTeXnischeKomoedie{%
-  \@ifstar{\global\DTK@lineno@true\DTK@@DieTeXnischeKomoedie}%
-    {\global\DTK@lineno@false\DTK@@DieTeXnischeKomoedie}%
-}
-\newcommand*\DTK@@DieTeXnischeKomoedie[3]{%
-  \xdef\DTKissue{#1}%
-  \xdef\DTKdate{#1/#3}%
-  \xdef\DTKmonth{#2}%
-  \xdef\DTKmonthName{\DTMgermanmonthname{#2}}
-  \xdef\DTKyear{#3}%
+\define@key{DTK}{issue}{\xdef\DTKissue{#1}}
+\define@key{DTK}{year}{\xdef\DTKyear{#1}}
+\define@key{DTK}{month}{\xdef\DTKmonth{#1}}
+\define@boolkey{DTK}[DTK@]{lineno}[true]{}
+\define@boolkey{DTK}[DTK@]{corr}[true]{}
+
+\newcommand*\DTKissueTOmonth[1]{\ifcase#1\relax0\or1\or4\or7\or10\fi}
+
+\newcommand*\DieTeXnischeKomoedie[1]{%
+  \setkeys{DTK}{#1}%
+  \ifnum\DTKissue=\z@
+    \gdef\DTKmonth{0}%
+    \gdef\DTKmonthName{?????}%
+  \else
+    \xdef\DTKmonth{\DTKissueTOmonth{\DTKissue}}%
+    \xdef\DTKmonthName{\DTMgermanmonthname{\DTKmonth}}%
+  \fi
+  \xdef\DTKdate{\DTKissue/\DTKyear}%
   \xdef\DTKvolume{\the\numexpr\DTKyear-1989+1\relax}%
   \xdef\DTKfullIssue{\DTKvolume. Jahrgang\quad
     Heft \DTKissue/\DTKyear\quad \DTKmonthName\ \DTKyear}%
-  \ifDTK@corr@
+  \ifDTK@corr
     \xdef\DTKcorrVersion{\noexpand\normalfont
       \noexpand\fcolorbox{black}{DTK@marker}{Korrekturversion: \DTMnow}}%
     \overfullrule=5pt %
+  \else
+    \DTK@linenofalse
   \fi
-  \ifDTK@lineno@
+  \ifDTK@lineno
     \RequirePackage[pagewise]{lineno}%
     \linenumbers
     \linenumbersep=.8ex %
@@ -46,7 +51,9 @@
       \fcolorbox{black}{DTK@marker}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
     }%
   \fi
+  \gdef\DieTeXnischeKomoedie{}%
 }
+\@onlypreamble\DieTeXnischeKomoedie
 
 \let\@LN=\@gobbletwo% Wegen .aux-Datei von vorherigem lineno-Lauf
 
