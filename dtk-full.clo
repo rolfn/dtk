@@ -11,12 +11,10 @@
 \newcommand*\keywords[1]{\gdef\DTK@keywords{#1}}
 
 \newif\ifDTK@corr \DTK@corrfalse
-\newif\ifDTK@lineno \DTK@linenofalse
 
 \define@key{DTK}{issue}{\xdef\DTKissue{#1}}
 \define@key{DTK}{year}{\xdef\DTKyear{#1}}
 \define@key{DTK}{month}{\xdef\DTKmonth{#1}}
-\define@boolkey{DTK}[DTK@]{lineno}[true]{}
 \define@boolkey{DTK}[DTK@]{corr}[true]{}
 
 \newcommand*\DTKissueTOmonth[1]{\ifcase#1\relax0\or1\or4\or7\or10\fi}
@@ -40,10 +38,6 @@
     \xdef\DTKcorrVersion{\noexpand\normalfont
       \noexpand\fcolorbox{black}{DTK@marker}{Korrekturversion: \DTMnow}}%
     \overfullrule=5pt %
-  \else
-    \DTK@linenofalse
-  \fi
-  \ifDTK@lineno
     \RequirePackage[pagewise]{lineno}%
     \linenumbers
     \linenumbersep=.8ex %
