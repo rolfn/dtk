@@ -4,8 +4,10 @@
 #
 # -- unveränderlicher Teil --
 
-###LATEX = TEXINPUTS=./texmf: lualatex
-LATEX = TEXINPUTS=./texmf: pdflatex
+LOCAL_PATH = ./texmf/
+
+###LATEX = TEXINPUTS=$(LOCAL_PATH): lualatex
+LATEX = TEXINPUTS=$(LOCAL_PATH): pdflatex
 LATEX_OPTS = --shell-escape
 
 IDX_STYLE = dtk.xdy
@@ -24,8 +26,11 @@ RERUN_WARNINGS = ($(RERUN_WARN1)|$(RERUN_WARN2)|$(RERUN_WARN3)|$(RERUN_WARN4))
 
 MAX_LTX_RUNS = 3
 
+ADDINPUTS += $(addprefix $(LOCAL_PATH), dtk2.cls dtk.bbx dtk.cbx dtk-full.clo \
+  dtk-new-engines.clo dtk-old-engines.clo komoedie0.tex ruecken.tex)
+
 record userpackages.tex :
-	TEXINPUTS=./texmf: pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex
+	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex
 
 $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS)
 	if test -f $(basename $<)-addresses.idx; \
@@ -39,7 +44,7 @@ $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS)
 	  > /dev/null; then $(XINDY) $(basename $<)-addresses.idx \
 	  -o $(basename $<)-addresses.ind; fi;
 	if ! diff ruecken.dat ruecken.dat.old > /dev/null; \
-	  then pdflatex ruecken.tex; fi;
+	  then TEXINPUTS=$(LOCAL_PATH): pdflatex ruecken.tex; fi;
 	if $(EGREP) '$(BIBTEX_WARN)' $(basename $<).log > /dev/null; \
 	  then $(BIBTEX) $(basename $<); fi;
 	for (( i=0; i < $(MAX_LTX_RUNS); i++ )) do \
