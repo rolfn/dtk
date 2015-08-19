@@ -1,5 +1,5 @@
 \ProvidesFile{dtk-full.clo}%
-  [2015/07/30 v0.1a dtk class options for full mode (RN)]
+  [2015/08/19 v0.1b dtk class options for full mode (RN)]
 
 \RequirePackage{xpatch,xcolor,multicol,graphicx}
 \RequirePackage[showzone=false]{datetime2}
