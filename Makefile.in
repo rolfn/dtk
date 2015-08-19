@@ -6,8 +6,11 @@
 
 LOCAL_PATH = ./texmf/
 
-###LATEX = TEXINPUTS=$(LOCAL_PATH): lualatex
-LATEX = TEXINPUTS=$(LOCAL_PATH): pdflatex
+ifneq ($(MAKECMDGOALS),x)
+  LATEX = TEXINPUTS=$(LOCAL_PATH): lualatex
+else
+  LATEX = TEXINPUTS=$(LOCAL_PATH): pdflatex
+endif
 LATEX_OPTS = --shell-escape
 
 IDX_STYLE = $(LOCAL_PATH)dtk.xdy
@@ -28,6 +31,8 @@ MAX_LTX_RUNS = 3
 
 ADDINPUTS += $(addprefix $(LOCAL_PATH), dtk2.cls dtk.bbx dtk.cbx dtk-full.clo \
   dtk-new-engines.clo dtk-old-engines.clo komoedie0.tex ruecken.tex) $(IDX_STYLE)
+
+all x : $(MAIN).pdf
 
 record userpackages.tex :
 	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex

@@ -12,8 +12,6 @@ ARTICLES += artikel2.tex
 ARTICLES += artikel3.tex
 #ADDINPUTS += artikel3-baz.tex
 
-all : $(MAIN).pdf
-
 include Makefile.in
 
 
