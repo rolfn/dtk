@@ -270,6 +270,8 @@
 \addtokomafont{captionlabel}{\bfseries\sffamily}
 \setcapindent{1em}
 \setcapwidth[c]{.8\textwidth}
+\renewcaptionname{ngerman}{\figurename}{Abb.}
+\renewcaptionname{ngerman}{\tablename}{Tab.}
 
 \setkomafont{disposition}{\normalfont\sffamily}
 \setkomafont{part}{\usekomafont{disposition}\huge}
@@ -396,6 +398,10 @@
   \end{center}%
   \quotation
 }{\endquotation}
+
+\renewcaptionname{ngerman,naustrian,nswissgerman}%
+{\figurename}{Abb.}
+
 
 %%%\AtBeginDocument{\renewcommand\figurename{Abb.}}
 
