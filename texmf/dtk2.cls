@@ -378,5 +378,18 @@
 \lstnewenvironment{verbatim}
 {\lstset{style=DTKlstSimple,language={}}}{}
 
+\newlength\fullwidth
+\setlength\fullwidth{\dimexpr\textwidth+\marginparwidth+\marginparsep\relax}
+\newenvironment{Figure}[2][\fullwidth]
+  {\figure[htb!]\setlength\columnsep{1.5em}%
+   \captionbeside{#2}[o][#1][0pt]*}%
+  {\endcaptionbeside\endfigure}
+\newenvironment{Table}[2][\fullwidth]
+  {\table[htb!]\setlength\columnsep{1.5em}%
+   \begincaptionbeside{#2}[o][#1][0pt]*}%
+  {\endcaptionbeside\endtable}
+
+%%%\AtBeginDocument{\renewcommand\figurename{Abb.}}
+
 \endinput
 
