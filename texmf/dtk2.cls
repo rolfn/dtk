@@ -389,6 +389,14 @@
    \begincaptionbeside{#2}[o][#1][0pt]*}%
   {\endcaptionbeside\endtable}
 
+\newenvironment{abstract}{%
+  \small
+  \begin{center}%
+    \bfseries \abstractname\vspace{-.5em}\vspace{0pt}
+  \end{center}%
+  \quotation
+}{\endquotation}
+
 %%%\AtBeginDocument{\renewcommand\figurename{Abb.}}
 
 \endinput
