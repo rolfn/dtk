@@ -1,5 +1,5 @@
 \ProvidesFile{dtk-full.clo}%
-  [2015/08/19 v0.1b dtk class options for full mode (RN)]
+  [2015/09/19 v0.1c dtk class options for full mode (RN)]
 
 \RequirePackage{xpatch,xcolor,multicol,graphicx}
 \RequirePackage[showzone=false]{datetime2}
@@ -12,10 +12,10 @@
 
 \newif\ifDTK@corr \DTK@corrfalse
 
-\define@key{DTK}{issue}{\xdef\DTKissue{#1}}
-\define@key{DTK}{year}{\xdef\DTKyear{#1}}
-\define@key{DTK}{month}{\xdef\DTKmonth{#1}}
-\define@boolkey{DTK}[DTK@]{corr}[true]{}
+\define@key{DTK}{Ausgabe}{\xdef\DTKissue{#1}}
+\define@key{DTK}{Jahr}{\xdef\DTKyear{#1}}
+\define@key{DTK}{Monat}{\xdef\DTKmonth{#1}}
+\define@boolkey{DTK}[DTK@]{korr}[true]{}
 
 \newcommand*\DTKissueTOmonth[1]{\ifcase#1\relax0\or1\or4\or7\or10\fi}
 
