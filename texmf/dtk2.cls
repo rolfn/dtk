@@ -268,7 +268,7 @@
 
 \addtokomafont{caption}{\small}
 \addtokomafont{captionlabel}{\bfseries\sffamily}
-\setcapindent{1em}
+\setcapindent{0pt}
 \setcapwidth[c]{.8\textwidth}
 \renewcaptionname{ngerman}{\figurename}{Abb.}
 \renewcaptionname{ngerman}{\tablename}{Tab.}
