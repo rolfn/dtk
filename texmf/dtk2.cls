@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/08/19 v0.1d dtk document class (RN)]
+  [2015/09/19 v0.1e dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -57,7 +57,7 @@
 ,twoside
 ,fontsize=10pt
 ,captions=oneline
-,parskip=full*
+,parskip=full-
 ,headings=small
 ,open=any
 ,pagesize
