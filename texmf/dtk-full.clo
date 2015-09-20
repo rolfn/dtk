@@ -10,7 +10,7 @@
 \newcommand*\DTK@keywords{}
 \newcommand*\keywords[1]{\gdef\DTK@keywords{#1}}
 
-\newif\ifDTK@corr \DTK@corrfalse
+\newif\ifDTK@korr \DTK@korrfalse
 
 \define@key{DTK}{Ausgabe}{\xdef\DTKissue{#1}}
 \define@key{DTK}{Jahr}{\xdef\DTKyear{#1}}
@@ -34,7 +34,7 @@
   \xdef\DTKvolume{\the\numexpr\DTKyear-1989+1\relax}%
   \xdef\DTKfullIssue{\DTKvolume. Jahrgang\quad
     Heft \DTKissue/\DTKyear\quad \DTKmonthName\ \DTKyear}%
-  \ifDTK@corr
+  \ifDTK@korr
     \xdef\DTKcorrVersion{\noexpand\normalfont
       \noexpand\fcolorbox{black}{DTK@marker}{Korrekturversion: \DTMnow}}%
     \overfullrule=5pt %
