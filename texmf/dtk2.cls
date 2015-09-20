@@ -281,6 +281,7 @@
 \renewcaptionname{ngerman}{\tablename}{Tab.}
 \def\thefigure{\@arabic\c@figure}
 \def\thetable{\@arabic\c@table}
+\def\theequation{\@arabic\c@equation}
 \def\thelstlisting{\@arabic\c@lstlisting}
 
 \setkomafont{disposition}{\normalfont\sffamily}
