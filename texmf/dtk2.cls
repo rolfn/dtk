@@ -217,49 +217,21 @@
 
 \RequirePackage{xcolor}
 
-\iffalse
 \ifDTKcolor
   \colorlet{DTK@marker}{red!30}
   \definecolor{DTK@fancy}{rgb}{.72,.525,.044}
-  \definecolor{DTKlstBackground}{rgb}{1,1,0.86}
-  \definecolor{DTKlstKeys}{rgb}{0,0,1}
-  \definecolor{DTKlstIdentifiers}{rgb}{0,0,0}
-  \definecolor{DTKlstComments}{rgb}{1,0,0}
-  \definecolor{DTKlstStrings}{rgb}{0,0.5,0}
-  \newcommand*\DTKlstKeywordfont{\color{DTKlstKeys}}
 \else
   \colorlet{DTK@marker}{black!20}
   \colorlet{DTK@fancy}{black!60}
-  \colorlet{DTKlstBackground}{black!14}
-  \colorlet{DTKlstKeys}{black}
-  \colorlet{DTKlstIdentifiers}{black}
-  \colorlet{DTKlstComments}{black}
-  \colorlet{DTKlstStrings}{black}
-  \newcommand*\DTKlstKeywordfont{\bfseries}
-\fi
 \fi
 
-\ifDTKcolor
-  \colorlet{DTK@marker}{red!30}
-  \definecolor{DTK@fancy}{rgb}{.72,.525,.044}
-  \definecolor{DTKlstBackground}{rgb}{1,1,0.86}
-  \definecolor{DTKlstKeys}{HTML}{2AA198}
-  %\colorlet{DTKlstIdentifiers}{black}
-  \definecolor{DTKlstComments}{HTML}{93A1A1}
-  \definecolor{DTKlstStrings}{HTML}{268BD2}
-  \definecolor{DTKlstNumbers}{HTML}{6C71C4}
-  \newcommand*\DTKlstKeywordfont{\color{DTKlstKeys}}
-\else
-  \colorlet{DTK@marker}{black!20}
-  \colorlet{DTK@fancy}{black!60}
-  \colorlet{DTKlstBackground}{black!5}
-  \colorlet{DTKlstKeys}{black}
-  %\colorlet{DTKlstIdentifiers}{black}
-  \colorlet{DTKlstComments}{black}
-  \colorlet{DTKlstStrings}{black}
-  \colorlet{DTKlstNumbers}{black}
-  \newcommand*\DTKlstKeywordfont{\bfseries}
-\fi
+\colorlet{DTKlstBackground}{black!5}
+\colorlet{DTKlstKeys}{black}
+%\colorlet{DTKlstIdentifiers}{black}
+\colorlet{DTKlstComments}{black}
+\colorlet{DTKlstStrings}{black}
+\colorlet{DTKlstNumbers}{black}
+\newcommand*\DTKlstKeywordfont{\bfseries}
 
 \RequirePackage[final]{listings}
 \RequirePackage{lstautogobble}
@@ -373,7 +345,7 @@
 ,style=DTKlstBase
 ,numbers=left
 ,numberstyle=\tiny\ttfamily
-,numbersep=1em
+,numbersep=1.3em
 ,xleftmargin=1.5em
 }
 
