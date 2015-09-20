@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/09/19 v0.1e dtk document class (RN)]
+  [2015/09/20 v0.1e dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -31,15 +31,35 @@
   \fi
 \fi
 
+\RequirePackage{xkeyval}
+
 \newif\ifDTK@Author@ \DTK@Author@true
 \newif\ifDTK@bib@ \DTK@bib@false
 \newif\ifDTKcolor \DTKcolorfalse % "@" ?
+\newif\ifDTK@korr@ \DTK@korr@false
 
-\DeclareOption{full}{\DTK@Author@false}
-\DeclareOption{color}{\DTKcolortrue}
-\DeclareOption{draft}{\PassOptionsToClass{\CurrentOption}{scrbook}}
-\DeclareOption*{\OptionNotUsed}
-\ProcessOptions\relax
+\newcommand*\journalname{Die \protect\TeX{}nische Kom\"odie}
+
+\newcommand*\DTKyear{} \edef\DTKyear{\the\year}
+\newcommand*\DTKmonth{0}
+\newcommand*\DTKissue{0}
+\newcommand*\DTKvolume{??}
+\newcommand*\DTKdate{?/??}
+\newcommand*\DTKcorrVersion{\mbox{}}
+\newcommand*\DTKfullIssue{\mbox{}}
+\newcommand*\DTKissn{1434-5897}
+
+\DeclareOptionX{Ausgabe}{\def\DTKissue{#1}}
+\DeclareOptionX{Jahr}{\def\DTKyear{#1}}
+\DeclareOptionX{Monat}{\def\DTKmonth{#1}}
+\DeclareOptionX{korr}[true]{\csname DTK@korr@#1\endcsname}
+\DeclareOptionX{full}[true]{\csname @tempswa#1\endcsname
+  \if@tempswa\DTK@Author@false\else\DTK@Author@true\fi}
+\DeclareOptionX{color}[true]{\csname DTKcolor#1\endcsname}
+\DeclareOptionX{draft}{\PassOptionsToClass{\CurrentOption}{scrbook}}
+
+\DeclareOptionX*{\OptionNotUsed}
+\ProcessOptionsX\relax
 
 \PassOptionsToPackage{paper=a5,pagesize}{typearea}
 
@@ -50,8 +70,6 @@
 \newcommand*\DTK@tempa{}
 \newcommand*\DTK@tempb{}
 \newcommand*\DTK@tempc{}
-
-\RequirePackage{xkeyval}
 
 \LoadClass[%
 ,twoside
@@ -148,17 +166,6 @@
 ,minnames=3
 %,defernumbers=true
 ]{biblatex}
-
-\newcommand*\journalname{Die \protect\TeX{}nische Kom\"odie}
-
-\newcommand*\DTKyear{\the\year}
-\newcommand*\DTKmonth{0}
-\newcommand*\DTKissue{0}
-\newcommand*\DTKvolume{??}
-\newcommand*\DTKdate{?/??}
-\newcommand*\DTKcorrVersion{\mbox{}}
-\newcommand*\DTKfullIssue{\mbox{}}
-\newcommand*\DTKissn{1434-5897}
 
 %\RequirePackage{etex} % ???
 \RequirePackage{dantelogo,hologo,dtklogos}
