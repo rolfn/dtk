@@ -66,7 +66,8 @@ $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS)
 clean :
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), $(TEMP_EXT)))
 	$(RM) $(MAIN)-addresses.idx $(MAIN)-addresses.idx.old $(MAIN)-addresses.ind \
-	  ruecken.dat ruecken.dat.old userpackages.tex komoedie0.log komoedie0.run.xml
+	  ruecken.dat ruecken.dat.old ruecken.log ruecken.aux userpackages.tex \
+	  komoedie0.log komoedie0.run.xml
 
 veryclean : clean
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), .pdf)) \
