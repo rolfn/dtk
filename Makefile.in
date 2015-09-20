@@ -40,7 +40,7 @@ all : $(MAIN).pdf
 
 x : $(XTARGET)
 
-record userpackages.tex :
+userpackages userpackages.tex :
 	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex
 
 $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS)
