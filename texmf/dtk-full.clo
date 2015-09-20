@@ -39,9 +39,10 @@
   }%
 \fi
 
-\@onlypreamble\DieTeXnischeKomoedie
-
-\let\@LN=\@gobbletwo% Wegen .aux-Datei von vorherigem lineno-Lauf
+\AtBeginDocument{%
+  \@ifundefined{@LN}{\@LN=\@gobbletwo}{}%
+  % Wegen .aux-Datei von vorherigem lineno-Lauf
+}
 
 \newcommand*\DTK@backside{%
   \begingroup
