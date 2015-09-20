@@ -1,4 +1,4 @@
-# Rolf Niepraschk, 2015/08/19, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2015/09/20, Rolf.Niepraschk@gmx.de
 #
 # Hilfsdefinitionen zum make-Prozess für "Die TeXnische Komödie"
 #
@@ -34,7 +34,7 @@ RERUN_WARNINGS = ($(RERUN_WARN1)|$(RERUN_WARN2)|$(RERUN_WARN3)|$(RERUN_WARN4))
 MAX_LTX_RUNS = 3
 
 ADDINPUTS += $(addprefix $(LOCAL_PATH), dtk2.cls dtk.bbx dtk.cbx dtk-full.clo \
-  dtk-new-engines.clo dtk-old-engines.clo) komoedie0.tex ruecken.tex $(IDX_STYLE)
+  dtk-new-engines.clo dtk-old-engines.clo komoedie0.tex ruecken.tex) $(IDX_STYLE)
 
 all : $(MAIN).pdf
 
@@ -66,7 +66,7 @@ $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS)
 clean :
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), $(TEMP_EXT)))
 	$(RM) $(MAIN)-addresses.idx $(MAIN)-addresses.idx.old $(MAIN)-addresses.ind \
-	  ruecken.dat ruecken.dat.old userpackages.tex
+	  ruecken.dat ruecken.dat.old userpackages.tex komoedie0.log komoedie0.run.xml
 
 veryclean : clean
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), .pdf)) \
