@@ -12,6 +12,8 @@ ARTICLES += artikel2.tex
 ARTICLES += artikel3.tex
 #ADDINPUTS += artikel3-baz.tex
 
+ARTICLES += artikel4.tex
+
 include Makefile.in
 
 
