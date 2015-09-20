@@ -279,6 +279,8 @@
 \setcapwidth[c]{.8\textwidth}
 \renewcaptionname{ngerman}{\figurename}{Abb.}
 \renewcaptionname{ngerman}{\tablename}{Tab.}
+\def\thefigure{\@arabic\c@figure}
+\def\thetable{\@arabic\c@table}
 
 \setkomafont{disposition}{\normalfont\sffamily}
 \setkomafont{part}{\usekomafont{disposition}\huge}
