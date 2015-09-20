@@ -213,6 +213,7 @@
       \par\parbox{\columnwidth}{%
         \textbf{\DTK@tempa}\hfill[\DTK@tempc]\par\DTK@tempb
       }%
+      \par\bigskip
     }%
 }{%
   \end{multicols}%
