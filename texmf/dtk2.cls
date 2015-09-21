@@ -150,21 +150,6 @@
 \RequirePackage[%
 ,style=dtk
 ,language=auto
-,hyperref=auto
-,abbreviate=true
-,sorting=nyt
-,bibencoding=utf8
-,block=ragged
-,backend=biber
-%,useprefix=true
-%,backrefstyle=two
-,sortlocale=de_DE
-%  ,sortlocale=de_DE_phonebook
-,dateabbrev=false
-,datezeros=false
-,maxnames=3
-,minnames=3
-%,defernumbers=true
 ]{biblatex}
 
 %\RequirePackage{etex} % ???
