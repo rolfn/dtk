@@ -363,4 +363,16 @@
 \let\raggedpart\raggedright
 \def\partpagestyle{plain.scrheadings}
 
+% TODO: sinnhaftigkeit überprüfen; bessere Stammtisch-Umgebung?
+\newenvironment{roll}%
+  {\@ifnextchar[{\r@ll}{\r@ll[0pt]}}%
+  {\end{list}}
+\def\r@ll[#1]{\begin{list}{}{%
+    \labelwidth = #1
+    \leftmargin = \labelwidth
+    \itemsep    = .3ex
+    \let\makelabel=\rolllabel}%
+  }
+\newcommand\rolllabel[1]{\hspace\labelsep \textbf{#1}\hfill}
+
 \endinput
