@@ -190,7 +190,7 @@
       \endgroup
     \fi
     \@thanks
-    \let\thanks\@gobble
+    \global\let\thanks\@gobble
   \endgroup
   \let\@title=\@empty
   \let\@author=\@empty
@@ -211,7 +211,7 @@
 \automark[chapter]{chapter}
 
 \RequirePackage{xpatch}
-\def\chapterheadstartvskip{} %\vspace {\@tempskipa }
+%%%\def\chapterheadstartvskip{} %\vspace {\@tempskipa }
 \def\chapterpagestyle{scrheadings}
 \xpatchcmd{\scr@startchapter}{\clearpage}{\relax}{}{\PaTchFaiLED}% ???
 

@@ -63,7 +63,7 @@
   \g@addto@macro\DTK@embedded@enddocumenthook}
 \newcommand*\DTK@local@inputname{}
 \newcommand*\DTK@eat@version[1][]{\ignorespaces}
-\newcommand*\DTK@usepackage[2][]{%
+\newcommand*\DTK@usepackage[2][]{%  TODO: Besser  \DTK@eat@version
   \@ifnextchar[%]
     {\DTK@@usepackage{#1}{#2}}%
     {\DTK@@usepackage{#1}{#2}[]}%
@@ -107,6 +107,7 @@
         \ifx\relax#3\relax\else[#3]\fi\@percentchar\space \DTK@local@inputname
       }%
     }%
+    \ignorespaces
   }%
   \newcommand\address[3]{}%
   \newcommand*\listofaddresses{}%
@@ -184,7 +185,7 @@
     \c@table=\z@
     \c@equation=\z@
     \renewenvironment{document}%
-      {\DTK@embedded@begindocumenthook}%
+      {\DTK@embedded@begindocumenthook\ignorespaces}%
       {\ifDTK@bib@\ORIG@printbibliography[heading=dtk]\fi
        \DTK@embedded@enddocumenthook\endinput}%
     \refsection[\the\c@refsection]%
