@@ -356,9 +356,7 @@
   \null\vskip-\baselineskip\vskip 10pt %
 }
 
-\def\partheadendvskip{%
-  \bigskip\bigskip\par
-}
+\def\partheadendvskip{}
 \let\partheademptypage=\relax% ???
 \let\raggedpart\raggedright
 \def\partpagestyle{plain.scrheadings}
