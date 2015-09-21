@@ -256,6 +256,14 @@
 \def\theequation{\@arabic\c@equation}
 \def\thelstlisting{\@arabic\c@lstlisting}
 
+\RedeclareSectionCommand[%
+  style=section,%
+  level=1,%
+  indent=\z@,%
+  beforeskip=-2.5ex \@plus -1ex \@minus -.2ex,%
+  afterskip=0.3ex \@plus.2ex,%
+]{section}
+
 \setkomafont{disposition}{\normalfont\sffamily}
 \setkomafont{part}{\usekomafont{disposition}\huge}
 \setkomafont{chapter}{\usekomafont{disposition}\Large}
