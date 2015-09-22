@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/09/20 v0.1e dtk document class (RN)]
+  [2015/09/21 v0.1f dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -251,8 +251,8 @@
 \RedeclareSectionCommand[%
   ,style=section
   ,indent=\z@
-  %%%,beforeskip=-2.5ex \@plus -1ex \@minus -.2ex,%
-  %%%,afterskip=0.3ex \@plus.2ex,%
+  %%%,beforeskip=-2.5ex \@plus -1ex \@minus -.2ex %
+  %%%,afterskip=0.3ex \@plus.2ex %
 ]{chapter}
 
 \setkomafont{disposition}{\normalfont\sffamily}
