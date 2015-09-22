@@ -11,15 +11,37 @@
 
 \ProvidesFile{dtk.bbx}[\abx@bbxid]
 
-%%[2015/05/23 v0.01 biblatex bibliography style]
+%%[2015/09/21 v0.02 biblatex bibliography style]
 
 % Load the standard style to avoid copy-pasting unnecessary material
-\RequireBibliographyStyle{numeric}
+\RequireBibliographyStyle{chem-angew}
+%\RequireBibliographyStyle{numeric}
 %\RequireBibliographyStyle{authoryear}
 
-%\ExecuteBibliographyOptions{dashed=false}
+\ExecuteBibliographyOptions
+  {
+    doi          = true ,
+    eprint       = true , 
+    firstinits   = true  ,
+    isbn         = true ,
+    maxnames     = 3   ,
+    minnames     = 1   ,
+%    maxcitenames = 2     ,
+    pageranges   = true  ,
+    url          = true,
+    articletitle = true,
+    chaptertitle = true,
+    pageranges   = true,
+%    biblabel     = parens,
+  }
+
 
 \DeclareFieldFormat[ctan]{url}{\mkbibacro{CTAN}\addcolon\space\url{#1}}
+\DeclareFieldFormat{date}{#1}
+\DeclareFieldFormat{booktitle}{#1\isdot}
+\DeclareFieldFormat{journaltitle}{\mkbibemph{#1}\isdot}
+\DeclareFieldFormat{removecomma}{\mkbibnocomma{#1}}
+\DeclareFieldFormat{title}{#1\isdot}
 
 \newbibmacro*{ctanurl}{\printfield{url}}
 
@@ -36,29 +58,29 @@
   \usebibmacro{bibindex}%
   \usebibmacro{begentry}%
   \usebibmacro{author/editor+others/translator+others}%
-  \setunit{\labelnamepunct}\newblock
+  \setunit{\labelnamepunct} %\newblock
   \usebibmacro{title}%
 %  \newunit
 %  \printlist{language}%
   \newunit\newblock
   \usebibmacro{byauthor}%
-  \newunit\newblock
+  \newunit %\newblock
   \usebibmacro{byeditor+others}%
-  \newunit\newblock
+  \newunit %\newblock
   \printfield{version}%
   \newunit
   \printfield{note}%
-  \newunit\newblock
+  \newunit %\newblock
   \printlist{organization}%
   \newunit\newblock
   \usebibmacro{date}%
-  \newunit\newblock
+  \newunit %\newblock
   \iftoggle{bbx:eprint}
     {\usebibmacro{eprint}}
     {}%
-  \newunit\newblock
+  \newunit %\newblock
   \usebibmacro{ctanurl+urldate}%
-  \newunit\newblock
+  \newunit %\newblock
   \usebibmacro{addendum+pubstate}%
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%
@@ -69,6 +91,7 @@
     {}%
   \usebibmacro{finentry}}
 %
+
 %\setlength\labelnumberwidth{1.5em}
 %\setlength\biblabelsep{1em}
 \defbibenvironment{dtk@bib}
