@@ -130,7 +130,7 @@
   \input{dtk-new-engines.clo}% LuaTeX oder XeTeX
 \fi
 
-\RequirePackage[main=ngerman]{babel}
+\RequirePackage[english,ngerman]{babel}
 \RequirePackage[autostyle=true,babel=once,german=guillemets,maxlevel=3]{csquotes}%
 \MakeAutoQuote{»}{«}
 \defineshorthand{"`}{\openautoquote}%
