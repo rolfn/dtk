@@ -90,6 +90,8 @@
   \fi
 }{}
 
+\AtEndOfClass{\InputIfFileExists{dtk2.cfg}{}{}}
+
 % *** Konstanten ***
 
 \ifDTK@Author@\else\setcounter{errorcontextlines}{100}\fi
