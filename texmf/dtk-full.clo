@@ -37,6 +37,7 @@
     \fboxsep=.3ex %
     \fcolorbox{black}{DTK@marker}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
   }%
+  \RequirePackage{dtk-url}
 \fi
 
 \AtBeginDocument{%
