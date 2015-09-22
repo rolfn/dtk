@@ -195,10 +195,12 @@
 \ifoot*{\journalname~~\DTKdate}
 \automark[chapter]{chapter}
 
+\iffalse
 \RequirePackage{xpatch}
 %%%\def\chapterheadstartvskip{} %\vspace {\@tempskipa }
 \def\chapterpagestyle{scrheadings}
 \xpatchcmd{\scr@startchapter}{\clearpage}{\relax}{}{\PaTchFaiLED}% ???
+\fi
 
 \RequirePackage{xcolor}
 
@@ -242,12 +244,16 @@
 \def\thelstlisting{\@arabic\c@lstlisting}
 
 \RedeclareSectionCommand[%
-  style=section,%
-  level=1,%
-  indent=\z@,%
-  beforeskip=-2.5ex \@plus -1ex \@minus -.2ex,%
-  afterskip=0.3ex \@plus.2ex,%
+  ,beforeskip=-2.5ex \@plus -1ex \@minus -.2ex %
+  ,afterskip=0.3ex \@plus.2ex %
 ]{section}
+
+\RedeclareSectionCommand[%
+  ,style=section
+  ,indent=\z@
+  %%%,beforeskip=-2.5ex \@plus -1ex \@minus -.2ex,%
+  %%%,afterskip=0.3ex \@plus.2ex,%
+]{chapter}
 
 \setkomafont{disposition}{\normalfont\sffamily}
 \setkomafont{part}{\usekomafont{disposition}\huge}
