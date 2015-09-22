@@ -372,4 +372,20 @@
   }
 \newcommand\rolllabel[1]{\hspace\labelsep \textbf{#1}\hfill}
 
+%% [#1]: Optionen für \includegraphics  [#2]: Compiler  #3: Dateiname
+%%
+\def\ErstelleGrafik{\@ifnextchar[{\ErstelleGrafik@i}{\ErstelleGrafik@i[]}}
+\def\ErstelleGrafik@i[#1]{\@ifnextchar[{\ErstelleGrafik@ii[#1]}{%
+  \ErstelleGrafik@ii[#1][xelatex]}}%
+\def\ErstelleGrafik@ii[#1][#2]#3{%
+  \gdef\dtk@dateiname{#3}%
+  \gdef\dtk@grafikOptionen{#1}%
+  \ifx\relax#2\relax\gdef\dtk@compiler{xelatex}\else\gdef\dtk@compiler{#2}\fi
+  \VerbatimOut{#3.tex}}
+\def\endErstelleGrafik{%
+  \endVerbatimOut
+  \immediate\write18{\dtk@compiler\space\dtk@dateiname}%
+  \expandafter\includegraphics\expandafter[\dtk@grafikOptionen]{\dtk@dateiname}%
+}
+
 \endinput
