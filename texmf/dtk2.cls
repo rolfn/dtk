@@ -171,9 +171,9 @@
       %\global\FirstArticletrue
     \fi
     \chapter[\@@title]{\@title}%
-    \ifx\@author\@empty\else\par
+    \ifx\@author\@empty\else
       \begingroup
-        \usekomafont{section} \@author
+        \usekomafont{section}\@author \par
       \endgroup
     \fi
     \@thanks
@@ -182,7 +182,7 @@
   \let\@title=\@empty
   \let\@author=\@empty
   \let\@thanks=\@empty
-  \medskip\par
+  %\medskip\par
 }
 
 \renewcaptionname{ngerman}{\bibname}{Literatur und Software}
@@ -245,16 +245,22 @@
 \def\theequation{\@arabic\c@equation}
 \def\thelstlisting{\@arabic\c@lstlisting}
 
+\iffalse
 \RedeclareSectionCommand[%
-  ,beforeskip=-2.5ex \@plus -1ex \@minus -.2ex %
-  ,afterskip=0.3ex \@plus.2ex %
+  %%%,beforeskip=-2.5ex \@plus -1ex \@minus -.2ex %
+  %%%,afterskip=0.3ex \@plus.2ex %
+  ,beforeskip=0pt %
+  ,afterskip=0pt %
 ]{section}
+\fi
 
 \RedeclareSectionCommand[%
   ,style=section
   ,indent=\z@
   %%%,beforeskip=-2.5ex \@plus -1ex \@minus -.2ex %
   %%%,afterskip=0.3ex \@plus.2ex %
+  %%%,beforeskip=0pt %
+  ,afterskip=1\baselineskip \@plus .1\baselineskip \@minus .1\baselineskip
 ]{chapter}
 
 \setkomafont{disposition}{\normalfont\sffamily}
@@ -375,13 +381,8 @@
    \begincaptionbeside{#2}[o][#1][0pt]*}%
   {\endcaptionbeside\endtable}
 
-\newenvironment{abstract}{%
-  \small
-  \begin{center}%
-    \bfseries \abstractname\vspace{-.5em}\vspace{0pt}
-  \end{center}%
-  \quotation
-}{\endquotation}
+\newenvironment{abstract}
+  {\quote\small}{\endquote\medskip\par}
 
 \renewcaptionname{ngerman,naustrian,nswissgerman}%
 {\figurename}{Abb.}
