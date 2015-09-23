@@ -1,7 +1,7 @@
 \ProvidesFile{dtk-full.clo}%
   [2015/09/20 v0.1c dtk class options for full mode (RN)]
 
-\RequirePackage{ragged2e,xcolor,multicol,graphicx}
+\RequirePackage{ragged2e,xcolor,multicol,graphicx,dtk-url}
 \RequirePackage[showzone=false]{datetime2}
 
 \newcommand*\addressname{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
@@ -37,7 +37,6 @@
     \fboxsep=.3ex %
     \fcolorbox{black}{DTK@marker}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
   }%
-  \RequirePackage{dtk-url}
 \fi
 
 \AtBeginDocument{%
