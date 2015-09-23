@@ -143,7 +143,7 @@
     \begingroup
       \def\url##1{\escape@atsign##1\relax}%
       \def\escape@atsign##1@##2\relax{%
-        \noexpand\url\string{##1\string"@##2\string}%
+        \noexpand\Email\string{##1\string"@##2\string}%
       }
       \makeatletter
       \scantokens{\protected@edef\x{%
