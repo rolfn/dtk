@@ -370,6 +370,7 @@
   }
 \newcommand\rolllabel[1]{\hspace\labelsep \textbf{#1}\hfill}
 
+\RequirePackage{fancyvrb}
 %% [#1]: Optionen für \includegraphics  [#2]: Compiler  #3: Dateiname
 %%
 \def\ErstelleGrafik{\@ifnextchar[{\ErstelleGrafik@i}{\ErstelleGrafik@i[]}}
