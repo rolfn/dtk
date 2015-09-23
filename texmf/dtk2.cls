@@ -234,7 +234,7 @@
 
 \RedeclareSectionCommand[%
   ,beforeskip=-2.3ex \@plus -1ex \@minus -.2ex % Betrag ist von Bedeutung!
-  ,afterskip=2.3ex \@plus .2ex %
+  ,afterskip=1.3ex \@plus .2ex %
 ]{section}
 
 \RedeclareSectionCommand[%
@@ -364,12 +364,6 @@
 
 \newenvironment{abstract}
   {\quote\small}{\endquote\medskip\par}
-
-\renewcaptionname{ngerman,naustrian,nswissgerman}%
-{\figurename}{Abb.}
-
-
-%%%\AtBeginDocument{\renewcommand\figurename{Abb.}}
 
 \endinput
 
