@@ -39,10 +39,8 @@
   }%
 \fi
 
-\AtBeginDocument{%
-  \@ifundefined{@LN}{\@LN=\@gobbletwo}{}%
-  % Wegen .aux-Datei von vorherigem lineno-Lauf
-}
+\@ifundefined{@LN}{\let\@LN=\@gobbletwo}{}%
+% Wegen .aux-Datei von vorherigem lineno-Lauf
 
 \newcommand*\DTK@backside{%
   \begingroup
