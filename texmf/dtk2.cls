@@ -240,7 +240,7 @@
 \RedeclareSectionCommand[%
   ,style=section
   ,indent=\z@
-  ,beforeskip=2\baselineskip \@plus .2\baselineskip \@minus .2\baselineskip
+  ,beforeskip=-2\baselineskip \@plus -.2\baselineskip \@minus -.2\baselineskip
   ,afterskip=1\baselineskip \@plus .1\baselineskip \@minus .1\baselineskip
 ]{chapter}
 
