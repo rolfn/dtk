@@ -168,21 +168,15 @@
     \advance\dimen0 by -\pagetotal
     \ifdim\dimen0<.2\textheight
       \newpage
-      %\global\FirstArticletrue
     \fi
     \chapter[\@@title]{\@title}%
-    \ifx\@author\@empty\else
-      \begingroup
-        \usekomafont{section}\@author \par
-      \endgroup
-    \fi
+    \ifx\@author\@empty\else\addsec*{\@author}\fi
     \@thanks
     \global\let\thanks\@gobble
   \endgroup
   \let\@title=\@empty
   \let\@author=\@empty
   \let\@thanks=\@empty
-  %\medskip\par
 }
 
 \renewcaptionname{ngerman}{\bibname}{Literatur und Software}
@@ -196,13 +190,6 @@
 \ofoot*{\normalsize\DTKcorrVersion}
 \ifoot*{\journalname~~\DTKdate}
 \automark[chapter]{chapter}
-
-\iffalse
-\RequirePackage{xpatch}
-%%%\def\chapterheadstartvskip{} %\vspace {\@tempskipa }
-\def\chapterpagestyle{scrheadings}
-\xpatchcmd{\scr@startchapter}{\clearpage}{\relax}{}{\PaTchFaiLED}% ???
-\fi
 
 \RequirePackage{xcolor}
 
@@ -245,21 +232,15 @@
 \def\theequation{\@arabic\c@equation}
 \def\thelstlisting{\@arabic\c@lstlisting}
 
-\iffalse
 \RedeclareSectionCommand[%
-  %%%,beforeskip=-2.5ex \@plus -1ex \@minus -.2ex %
-  %%%,afterskip=0.3ex \@plus.2ex %
-  ,beforeskip=0pt %
-  ,afterskip=0pt %
+  ,beforeskip=-2.3ex \@plus -1ex \@minus -.2ex % Betrag ist von Bedeutung!
+  ,afterskip=2.3ex \@plus .2ex %
 ]{section}
-\fi
 
 \RedeclareSectionCommand[%
   ,style=section
   ,indent=\z@
-  %%%,beforeskip=-2.5ex \@plus -1ex \@minus -.2ex %
-  %%%,afterskip=0.3ex \@plus.2ex %
-  %%%,beforeskip=0pt %
+  ,beforeskip=2\baselineskip \@plus .2\baselineskip \@minus .2\baselineskip
   ,afterskip=1\baselineskip \@plus .1\baselineskip \@minus .1\baselineskip
 ]{chapter}
 
