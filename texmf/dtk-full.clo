@@ -139,7 +139,7 @@
   }%
   \newcommand\address[3]{% TODO: Auch "!" und "|" maskieren?
     \begingroup
-      \def\url##1{\escape@atsign##1\relax}%
+      \def\Email##1{\escape@atsign##1\relax}%
       \def\escape@atsign##1@##2\relax{%
         \noexpand\Email\string{##1\string"@##2\string}%
       }
