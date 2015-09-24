@@ -86,14 +86,6 @@
         \@percentchar\space \DTK@local@inputname
     }%
   }%
-  \newcommand*\DTK@bibliography[1]{%
-    \filename@parse{#1}%
-    \@ifundefined{filename@ext}%
-      {\IfFileExists{\filename@base.bib}%
-        {\edef\DTK@tempa{\filename@base.bib}}{}}%
-      {\edef\DTK@tempa{#1}}%
-    \DTK@addbibresource{\DTK@tempa}%
-  }%
   \def\DTK@@usepackage#1#2[#3]{%
     \edef\@tempb{\zap@space#2 \@empty}%
     \@for\@tempa:=\@tempb\do{%
@@ -126,7 +118,6 @@
   \newcommand*\ORIG@printbibliography{}
   \let\ORIG@printbibliography=\printbibliography
   \renewcommand*\printbibliography[1][]{\DTK@bib@true}%
-  \newcommand*\DTK@bibliography[1]{\DTK@bib@true}%
   \RequirePackage[split,protected]{splitidx} \makeindex
   \newindex[\addressname]{addresses}%
   \newcommand*\listofaddresses{%
@@ -175,7 +166,6 @@
     \let\documentclass=\DTK@documentclass
     \let\usepackage=\DTK@usepackage
     \let\addbibresource=\DTK@addbibresource
-    \let\bibliography=\DTK@bibliography
     \DTK@bib@false
     \c@footnote=\z@
     \c@lstlisting=\z@
