@@ -11,7 +11,7 @@
 
 \ProvidesFile{dtk.bbx}[\abx@bbxid]
 
-%%[2015/09/21 v0.02 biblatex bibliography style]
+%%[2015/09/24 v0.03 biblatex bibliography style]
 
 % Load the standard style to avoid copy-pasting unnecessary material
 \RequireBibliographyStyle{chem-angew}
@@ -22,18 +22,18 @@
   {
     doi          = true ,
     eprint       = true , 
-    firstinits   = true  ,
+    firstinits   = false,
     isbn         = true ,
     maxnames     = 3   ,
     minnames     = 1   ,
-%    maxcitenames = 2     ,
-    pageranges   = true  ,
+%    maxcitenames= 2     ,
+%    pageranges  = true  ,
     url          = true,
     articletitle = true,
     chaptertitle = true,
-    pageranges   = true,
-%    biblabel     = parens,
-  }
+%    biblabel    = parens,
+     sorting     = nyvt,  
+}
 
 
 \DeclareFieldFormat[ctan]{url}{\mkbibacro{CTAN}\addcolon\space\url{#1}}
@@ -53,6 +53,28 @@
      \usebibmacro{urldate}}}
 
 \DeclareListFormat{language}{}{}
+
+\renewbibmacro*{author}{%
+  \ifboolexpr{
+    test \ifuseauthor
+    and
+    not test {\ifnameundef{author}}
+  }
+    {\printnames{author}%
+     \iffieldundef{authortype}
+       {}
+       {\setunit{\addcolon\space}%
+        \usebibmacro{authorstrg}}}
+    {}}
+\newbibmacro*{journal}{%
+  \iffieldundef{journaltitle}
+    {}
+    {\printtext[journaltitle]{%
+       \printfield[titlecase]{journaltitle}%
+       \setunit{\subtitlepunct}%
+       \printfield[titlecase]{journalsubtitle}}}%
+       \setunit{\addcomma\space}}
+
 
 \DeclareBibliographyDriver{ctan}{%
   \usebibmacro{bibindex}%
