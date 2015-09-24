@@ -182,10 +182,13 @@
     \c@figure=\z@
     \c@table=\z@
     \c@equation=\z@
-    \renewenvironment{document}%
-      {\DTK@embedded@begindocumenthook\ignorespaces}%
-      {\ifDTK@bib@\ORIG@printbibliography[heading=dtk]\fi
-       \DTK@embedded@enddocumenthook\endinput}%
+    \renewenvironment{document}{%
+      \ifDTKrecord\endgroup\expandafter\endinput\fi
+      \DTK@embedded@begindocumenthook\ignorespaces
+    }{%
+      \ifDTK@bib@\ORIG@printbibliography[heading=dtk]\fi
+      \DTK@embedded@enddocumenthook\endinput
+    }%
     \refsection[\the\c@refsection]%
       \input{\DTK@local@inputname}%
     \endrefsection
