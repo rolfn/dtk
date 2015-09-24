@@ -60,21 +60,34 @@
     and
     not test {\ifnameundef{author}}
   }
-    {\printnames{author}%
+    {\printnames{author}\setunit{\addcolon\space}%
      \iffieldundef{authortype}
        {}
        {\setunit{\addcolon\space}%
         \usebibmacro{authorstrg}}}
     {}}
-\newbibmacro*{journal}{%
-  \iffieldundef{journaltitle}
+    
+\renewbibmacro*{journal+issuetitle}{%
+  \usebibmacro{journal}%
+  \setunit*{\addcomma\addspace}%
+  \iffieldundef{series}
     {}
-    {\printtext[journaltitle]{%
-       \printfield[titlecase]{journaltitle}%
-       \setunit{\subtitlepunct}%
-       \printfield[titlecase]{journalsubtitle}}}%
-       \setunit{\addcomma\space}}
+    {\newunit
+     \printfield{series}%
+     \setunit{\addspace}}%
+  \usebibmacro{volume+number+eid}%
+  \setunit{\addspace}%
+  \usebibmacro{issue+date}%
+  \setunit{\addcolon\space}%
+  \usebibmacro{issue}%
+  \newunit}
 
+\renewcommand*\labelnamepunct{\addcolon\addspace}
+
+\DeclareNameFormat{default}{%
+%  \usebibmacro{name:first-last}{#1}{#3}{#5}{#7}%
+  \usebibmacro{name:first-last}{#1}{#4}{#5}{#7}%
+  \usebibmacro{name:andothers}}
 
 \DeclareBibliographyDriver{ctan}{%
   \usebibmacro{bibindex}%
