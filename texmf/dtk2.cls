@@ -222,6 +222,16 @@
   \input{dtk-full.clo}
 \fi
 
+\AfterEndPreamble{% "etoolbox"
+  \def\bibliography#1{%
+    \ClassError{dtk2}{%
+      Das Makro `\string\bibliography' wird nicht unterstützt!\MessageBreak
+      Verwende stattdessen `\string\addbibresource\string{#1.bib\string}'\MessageBreak
+      und `\string\printbibliography' (siehe biblatex-Dokumentation)
+    }{}%
+  }%
+}
+
 %%%\ifDTKrecord \expandafter \endinput \fi % lohnt es?
 
 \addtokomafont{caption}{\small}
