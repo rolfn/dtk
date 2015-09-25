@@ -152,7 +152,9 @@
 \RequirePackage[%
 ,style=dtk
 ,language=auto
-,firstinits=false
+,sorting=nyt
+,sortlocale=auto
+,backend=biber
 ]{biblatex}
 
 %\RequirePackage{etex} % ???
