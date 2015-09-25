@@ -4,7 +4,7 @@
 \RequirePackage{ragged2e,xcolor,multicol,graphicx,tabularx,dtk-url}
 \RequirePackage[showzone=false]{datetime2}
 
-\newcommand*\addressname{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
+\newcommand*\addressesname{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
 \newcommand*\DTK@fancyJournalname{%
   \color{DTK@fancy}Die \color{black}\TeX\color{DTK@fancy}nische Kom\"odie}
 \newcommand*\DTK@keywords{}
@@ -119,7 +119,7 @@
   \let\ORIG@printbibliography=\printbibliography
   \renewcommand*\printbibliography[1][]{\DTK@bib@true}%
   \RequirePackage[split,protected]{splitidx} \makeindex
-  \newindex[\addressname]{addresses}%
+  \newindex[\addressesname]{addresses}%
   \newcommand*\listofaddresses{%
     \clearpage
     \begingroup
