@@ -71,6 +71,8 @@
 \newcommand*\DTK@tempb{}
 \newcommand*\DTK@tempc{}
 
+\PassOptionsToPackage{hyphens}{url}
+
 \LoadClass[%
 ,twoside
 ,fontsize=10pt
