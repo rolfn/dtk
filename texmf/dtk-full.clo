@@ -1,7 +1,7 @@
 \ProvidesFile{dtk-full.clo}%
-  [2015/09/20 v0.1c dtk class options for full mode (RN)]
+  [2015/09/25 v0.1d dtk class options for full mode (RN)]
 
-\RequirePackage{ragged2e,xcolor,multicol,graphicx,dtk-url}
+\RequirePackage{ragged2e,xcolor,multicol,graphicx,tabularx,dtk-url}
 \RequirePackage[showzone=false]{datetime2}
 
 \newcommand*\addressname{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
