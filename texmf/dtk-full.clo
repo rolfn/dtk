@@ -262,8 +262,9 @@
   \end{picture}%
 }
 
-\defpagestyle{dtk-toc}{{\DTK@toc@head}{}{}}%
-  {{\hfill\normalsize\DTKcorrVersion\hfill\null}{}{}}
+\deftriplepagestyle{dtk-toc}%
+  {}{\DTK@toc@head}{}%
+  {}{\hfill\normalsize\DTKcorrVersion\hfill\null}{}
 \defpagestyle{dtk-title}{}{}
 \DeclareNewLayer[foreground,contents={%\layercontentsmeasure
   \DTK@title@content}]{dtk-title-content}
@@ -304,9 +305,9 @@
 \setkomafont{partentry}{\usekomafont{chapterentry}\bfseries}
 
 \deftocheading{toc}{%
-  \cleardoubleevenpageusingstyle{empty}%
+  \clearpage
   \thispagestyle{dtk-toc}%
-  \vspace*{16pt minus 8pt}%
+  \vspace*{16pt}%
   \let\\=\relax
   \raggedright
 }
@@ -317,7 +318,8 @@
 }
 
 \newcommand\DTK@Part[2][]{%
-  \protected@xdef\DTK@tempa{\ifx\relax#1\relax\noexpand\part{#2}\else\noexpand\part[#1]{#2}\fi}%
+  \protected@xdef\DTK@tempa{\ifx\relax#1\relax
+    \noexpand\part{#2}\else\noexpand\part[#1]{#2}\fi}%
   \DTK@@Part
 }
 
