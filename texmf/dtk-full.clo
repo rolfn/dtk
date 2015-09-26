@@ -365,7 +365,7 @@
   }
 \newcommand\rolllabel[1]{\hspace\labelsep \textbf{#1}\hfill}
 
-\RequirePackage{fancyvrb}
+\RequirePackage{filecontents}
 %% [#1]: Optionen für \includegraphics  [#2]: Compiler  #3: Dateiname
 %%
 \def\ErstelleGrafik{\@ifnextchar[{\ErstelleGrafik@i}{\ErstelleGrafik@i[]}}
@@ -375,9 +375,9 @@
   \gdef\dtk@dateiname{#3}%
   \gdef\dtk@grafikOptionen{#1}%
   \ifx\relax#2\relax\gdef\dtk@compiler{xelatex}\else\gdef\dtk@compiler{#2}\fi
-  \VerbatimOut{#3.tex}}
+  \@nameuse{filecontents*}{#3.tex}}
 \def\endErstelleGrafik{%
-  \endVerbatimOut
+  \@nameuse{endfilecontents*}
   \immediate\write18{\dtk@compiler\space\dtk@dateiname}%
   \expandafter\includegraphics\expandafter[\dtk@grafikOptionen]{\dtk@dateiname}%
 }
