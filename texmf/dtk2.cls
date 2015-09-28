@@ -267,29 +267,13 @@
 \setkomafont{pagehead}{\sffamily\slshape}% \itshape?
 \setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
 
-% Kompakte Listen
-\RequirePackage[neverdecrease]{paralist}
-\newcommand*\DTK@begin@list[1]{%
-  \DTK@tempdima=\parindent
-  \DTK@tempdimb=\parskip
-  \@nameuse{#1}%
-  \parindent=\DTK@tempdima
-  \parskip=\DTK@tempdimb
-}
-
-\def\enumerate{\DTK@begin@list{compactenum}}
-\def\itemize{\DTK@begin@list{compactitem}}
-\def\description{\DTK@begin@list{compactdesc}}
-\let\enditemize\endcompactitem
-\let\endenumerate\endcompactenum
-\let\enddescription\endcompactdesc
-\pltopsep=\medskipamount
-\plitemsep=1pt %
-\plparsep=1pt %
-
-%\def\labelitemi{...}
-%\def\labelitemii{...}
-%\def\labelitemiii{...}
+\RequirePackage{enumitem}
+\setlist{leftmargin=*}
+\setlist[1]{labelindent=1em}
+\setlist[itemize,1]{label=\large\textbullet}
+\setlist[itemize,2]{label=\raisebox{.2ex}{\footnotesize$\m@th\circ$}}
+\setlist[itemize,3]{label=\textasteriskcentered}% default
+\setlist[itemize,4]{label=\raisebox{.2ex}{\scriptsize$\m@th\triangleright$}}
 
 % Listings
 \newcommand*\DTKlstfont{\small\ttfamily}
