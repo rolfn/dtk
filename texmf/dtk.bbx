@@ -1,6 +1,6 @@
 %% ---------------------------------------------------------------
 %% biblatex-dtk --- A set of biblatex implementations of
-%%   dtk bibliography styles for DANTE journal 
+%%   dtk bibliography styles for DANTE's journal 
 %%   "Die TeXnische Komödie"
 %% Maintained by Herbert Voß
 %% (C) herbert@dante.de
@@ -8,10 +8,9 @@
 %% See http://www.latex-project.org/lppl.txt
 %% ---------------------------------------------------------------
 %% 
-
 \ProvidesFile{dtk.bbx}[\abx@bbxid]
-
-%%[2015/09/24 v0.03 biblatex bibliography style]
+%
+%%[2015/09/28 v0.04 biblatex bibliography style]
 
 % Load the standard style to avoid copy-pasting unnecessary material
 \RequireBibliographyStyle{chem-angew}
@@ -36,17 +35,15 @@
 }
 
 
-\DeclareFieldFormat[ctan]{url}{\mkbibacro{CTAN}\addcolon\space\url{#1}}
 \DeclareFieldFormat{date}{#1}
 \DeclareFieldFormat{booktitle}{#1\isdot}
 \DeclareFieldFormat{journaltitle}{\mkbibemph{#1}\isdot}
 \DeclareFieldFormat{removecomma}{\mkbibnocomma{#1}}
 \DeclareFieldFormat{title}{#1\isdot}
-
-\newbibmacro*{ctanurl}{\printfield{url}}
+\DeclareFieldFormat[ctan]{url}{\url{CTAN: #1}}
 
 \newbibmacro*{ctanurl+urldate}{%
-  \usebibmacro{ctanurl}%
+  \printfield{url}
   \iffieldundef{urlyear}
     {}
     {\setunit*{\addspace}%
