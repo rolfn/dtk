@@ -1,4 +1,4 @@
-# Rolf Niepraschk, 2015/09/20, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2015/09/28, Rolf.Niepraschk@gmx.de
 #
 # Hilfsdefinitionen zum make-Prozess für "Die TeXnische Komödie"
 #
@@ -22,7 +22,7 @@ XINDY = xindy -v -C utf8 -L general -I latex -M $(IDX_STYLE)
 BIBTEX = biber
 EGREP = grep -E
 
-TEMP_EXT = .log .aux .blg .toc .bbl .bcf .idx .ind .run.xml
+TEMP_EXT = .log .aux .blg .toc .bbl .bcf .idx .ind .run.xml .urls
 
 BIBTEX_WARN = (run Biber on the file)
 RERUN_WARN1 = Rerun to get cross-references right
