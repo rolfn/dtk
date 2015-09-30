@@ -280,6 +280,19 @@
 
 % siehe ggf.: https://github.com/jez/latex-solarized
 
+\lstdefinestyle{DTKlstVerbatim}{%
+,basicstyle=\DTKlstfont
+,numbers=none
+,tabsize=2
+,frame={}
+%,framesep=\fboxsep
+,aboveskip=\medskipamount
+,belowskip=\medskipamount
+%,xleftmargin=\fboxsep
+%,xrightmargin=\fboxsep
+}
+
+
 \lstdefinestyle{DTKlstSimple}{%
 ,basicstyle=\DTKlstfont
 ,identifierstyle=\DTKlstfont
@@ -348,7 +361,7 @@
 
 \let\verbatim=\relax
 \lstnewenvironment{verbatim}
-{\lstset{style=DTKlstSimple,language={}}}{}
+{\lstset{style=DTKlstVerbatim,language={}}}{}
 
 \newlength\fullwidth
 \setlength\fullwidth{\dimexpr\textwidth+\marginparwidth+\marginparsep\relax}
