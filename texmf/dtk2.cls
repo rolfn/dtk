@@ -280,21 +280,17 @@
 
 % siehe ggf.: https://github.com/jez/latex-solarized
 
-\lstdefinestyle{DTKlstVerbatim}{%
+\lstdefinestyle{DTKlstSimple0}{%
 ,basicstyle=\DTKlstfont
 ,numbers=none
 ,tabsize=2
 ,frame={}
-%,framesep=\fboxsep
 ,aboveskip=\medskipamount
-,belowskip=\medskipamount
-%,xleftmargin=\fboxsep
-%,xrightmargin=\fboxsep
+,belowskip= 1pt plus .5pt minus .5pt %
 }
 
-
-\lstdefinestyle{DTKlstSimple}{%
-,basicstyle=\DTKlstfont
+\lstdefinestyle{DTKlstSimple1}{%
+,style=DTKlstSimple0
 ,identifierstyle=\DTKlstfont
 ,stringstyle=\DTKlstfont
 ,commentstyle=\DTKlstfont
@@ -303,25 +299,21 @@
 ,autogobble=false
 ,backgroundcolor=\color{DTKlstBackground}
 ,numbers=none
-,tabsize=2
 ,frame=single
 ,framesep=\fboxsep
-,aboveskip=\medskipamount
-,belowskip=\medskipamount
 ,xleftmargin=\fboxsep
 ,xrightmargin=\fboxsep
 }
 
 \newcommand*\DTK@lst@colorbox[2]{%
-  \fboxsep=.16em %
+  \fboxsep=.3em %
   \settowidth\DTK@tempdima{#2}\settoheight\DTK@tempdimb{#2}%
-  \settodepth\DTK@tempdimc{#2}%
   \makebox[\DTK@tempdima][c]{\colorbox{#1}{%
-    \raisebox{0pt}[\DTK@tempdimb][\DTK@tempdimc]{#2}}}%
+    \raisebox{0pt}[\DTK@tempdimb][\z@]{#2}}}%
 }
 
 \lstdefinestyle{DTKlstBase}{%
-,style=DTKlstSimple
+,style=DTKlstSimple1
 %,identifierstyle=\color{DTKlstIdentifiers}
 ,keywordstyle=\DTKlstKeywordfont
 ,stringstyle=\itshape\color{DTKlstStrings}
@@ -361,7 +353,7 @@
 
 \let\verbatim=\relax
 \lstnewenvironment{verbatim}
-{\lstset{style=DTKlstVerbatim,language={}}}{}
+{\lstset{style=DTKlstSimple0,language={}}}{}
 
 \newlength\fullwidth
 \setlength\fullwidth{\dimexpr\textwidth+\marginparwidth+\marginparsep\relax}
