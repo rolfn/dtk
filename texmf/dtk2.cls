@@ -283,10 +283,15 @@
 \lstdefinestyle{DTKlstSimple0}{%
 ,basicstyle=\DTKlstfont
 ,numbers=none
+,backgroundcolor={}
 ,tabsize=2
-,frame={}
-,aboveskip=\medskipamount
-,belowskip= 1pt plus .5pt minus .5pt %
+,frame=none
+}
+
+\lstdefinestyle{DTKlstVerbatim}{
+,style=DTKlstSimple0
+,aboveskip=\smallskipamount
+,belowskip=0pt plus .25pt minus .25pt %
 }
 
 \lstdefinestyle{DTKlstSimple1}{%
@@ -301,6 +306,8 @@
 ,numbers=none
 ,frame=single
 ,framesep=\fboxsep
+,aboveskip=\medskipamount
+,belowskip=1pt plus .5pt minus .5pt %
 ,xleftmargin=\fboxsep
 ,xrightmargin=\fboxsep
 }
@@ -353,7 +360,7 @@
 
 \let\verbatim=\relax
 \lstnewenvironment{verbatim}
-{\lstset{style=DTKlstSimple0,language={}}}{}
+{\lstset{style=DTKlstVerbatim,language={}}}{}
 
 \newlength\fullwidth
 \setlength\fullwidth{\dimexpr\textwidth+\marginparwidth+\marginparsep\relax}
