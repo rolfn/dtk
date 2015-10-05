@@ -128,6 +128,12 @@
 
 \RequirePackage[english,ngerman]{babel}
 
+\defineshorthand{"|}{%
+  \ClassError{dtk2}{%
+    Shorthand `\string"|' wird nicht unterstützt! Entferne `\string"|'%
+  }{}%
+}
+
 \ifnum\DTK@engine < 3 %
   \input{dtk-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
 \else
