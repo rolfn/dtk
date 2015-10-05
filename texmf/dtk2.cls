@@ -126,13 +126,14 @@
 \renewcommand\bottomfraction{.9}
 \renewcommand\textfraction{.1}
 
+\RequirePackage[english,ngerman]{babel}
+
 \ifnum\DTK@engine < 3 %
   \input{dtk-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
 \else
   \input{dtk-new-engines.clo}% LuaTeX oder XeTeX
 \fi
 
-\RequirePackage[english,ngerman]{babel}
 \RequirePackage[autostyle=true,babel=once,german=guillemets,maxlevel=3]{csquotes}%
 \MakeAutoQuote{»}{«}
 \defineshorthand{"`}{\openautoquote}%
