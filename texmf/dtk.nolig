@@ -1,0 +1,13 @@
+\ProvidesFile{dtk.nolig}[2015/10/06 v0.1a nolig definitions (RN)]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%% Definitionen von Ausnahmen zur Ligaturbehandlung des Paketes "selnolig"
+%%
+%% Beispiel:
+%%
+%%   \nolig{Auflaufform}{Auf|lauf|form}
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\endinput

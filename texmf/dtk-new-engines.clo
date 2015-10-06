@@ -1,5 +1,5 @@
 \ProvidesFile{dtk-new-engines.clo}%
-  [2015/10/05 v0.1b dtk class options for XeTeX and LuaTeX (RN)]
+  [2015/10/06 v0.1c dtk class options for XeTeX and LuaTeX (RN)]
 
 \typeout{NEW-ENGINE}
 
@@ -11,8 +11,8 @@
 \setmonofont[Scale=0.81,FakeStretch=0.9]{DejaVuSansMono}
 
 \ifluatex
-  \iflanguage{ngerman}{\PassOptionsToPackage{ngerman}{selnolig}}{}
-  \RequirePackage[noftligs]{selnolig}
+  \RequirePackage[ngerman,noftligs]{selnolig}
+  \InputIfFileExists{dtk.nolig}{}{}
 \fi
 
 \endinput
