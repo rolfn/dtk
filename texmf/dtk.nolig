@@ -1,4 +1,4 @@
-\ProvidesFile{dtk.nolig}[2015/10/06 v0.1a nolig definitions (RN)]
+\ProvidesFile{dtk.nolig}[2015/10/06 v0.1b nolig definitions (RN)]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
@@ -8,6 +8,11 @@
 %%
 %%   \nolig{Auflaufform}{Auf|lauf|form}
 %%
+%%   (siehe Dokumentation zu "selnolig")
+%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\nolig{Herbstt[aruöe]}{Herbst|t}
+\nolig{Mitt[iruä]}{Mit|t}
 
 \endinput
