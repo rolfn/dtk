@@ -1,5 +1,13 @@
 \ProvidesFile{dtk-full.clo}%
-  [2015/09/25 v0.1d dtk class options for full mode (RN)]
+  [2015/10/06 v0.1d dtk class options for full mode (RN)]
+
+\@ifclasslater{scrbook}{2015/09/29}{}{%
+  \ClassError{dtk2}{%
+    Die geladene Version der Dokumentenklasse `scrbook' \MessageBreak
+    (\KOMAScriptVersion) ist zu alt. \MessageBreak
+    Gefordert ist die Version 2015/09/29 oder jünger. \MessageBreak
+    Abbruch}{}%
+}
 
 \RequirePackage{ragged2e,xcolor,multicol,graphicx,tabularx,dtk-url}
 \RequirePackage[showzone=false]{datetime2}
@@ -231,15 +239,17 @@
 }
 
 \RequirePackage{picture}
-\newcommand\DTK@title@content{%
-  \begin{picture}(0,0)(0,-\ht\strutbox)%
-    \put(24mm,-.5\paperheight){%
+
+\DeclareNewLayer[%
+  page,background,mode=picture,%
+  contents={%
+    \put(24mm,0.5\dimexpr\layerheight\relax){%
       \makebox(0,0)[c]{\rotatebox[origin=c]{90}{%
         \resizebox{14cm}{!}{\Huge\DTK@fancyJournalname}}}%
       \put(8mm,0){%
         \makebox(0,0)[c]{\rule{0.85mm}{\textheight}}}%
     }%
-    \put(53mm,-68mm){%
+    \put(52mm,145mm){%
       \parbox[t]{78mm}{%
         \raggedleft
         \Huge\dantelogo \\
@@ -254,21 +264,18 @@
         \makebox(0,0)[r]{\Large\DTKcorrVersion}
       }%
     }%
-    \put(86mm,-186mm){%
+    \put(86mm,27mm){%
       \begingroup
-        \color[gray]{.8}\resizebox{45mm}{!}{\Huge\DTKdate}%
+        \color[gray]{.8}\resizebox{47mm}{!}{\Huge\DTKdate}%
       \endgroup
     }%
-  \end{picture}%
-}
+  }%
+]{dtk-title-content}
+\DeclareNewPageStyleByLayers{dtk-title}{dtk-title-content}
 
 \deftriplepagestyle{dtk-toc}%
   {}{\DTK@toc@head}{}%
   {}{\hfill\normalsize\DTKcorrVersion\hfill\null}{}
-\defpagestyle{dtk-title}{}{}
-\DeclareNewLayer[foreground,contents={%\layercontentsmeasure
-  \DTK@title@content}]{dtk-title-content}
-\AddLayersToPageStyle{dtk-title}{dtk-title-content}
 
 \renewcommand*\l@part[2]{%
   \begingroup
