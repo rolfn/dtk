@@ -12,7 +12,11 @@
 
 \ifluatex
   \RequirePackage[ngerman,noftligs]{selnolig}
-  \InputIfFileExists{dtk.nolig}{}{}
+  \InputIfFileExists{dtk.nolig}{%
+    \typeout{*************************************^^J%
+             * File `dtk.nolig' used.^^J%
+             *************************************}%
+  }{}
 \fi
 
 \endinput
