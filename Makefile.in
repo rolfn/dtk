@@ -34,7 +34,8 @@ RERUN_WARNINGS = ($(RERUN_WARN1)|$(RERUN_WARN2)|$(RERUN_WARN3)|$(RERUN_WARN4))
 MAX_LTX_RUNS = 3
 
 ADDINPUTS += $(addprefix $(LOCAL_PATH), dtk2.cls dtk.bbx dtk.cbx dtk-full.clo \
-  dtk-new-engines.clo dtk-old-engines.clo komoedie0.tex ruecken.tex) $(IDX_STYLE)
+  dtk-new-engines.clo dtk-old-engines.clo komoedie0.tex ruecken.tex dtk.nolig) \
+  $(IDX_STYLE)
 
 all : $(MAIN).pdf
 
