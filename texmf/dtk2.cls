@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/09/21 v0.1f dtk document class (RN)]
+  [2015/10/08 v0.1g dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -243,7 +243,7 @@
 
 %%%\ifDTKrecord \expandafter \endinput \fi % lohnt es?
 
-\addtokomafont{caption}{\small}
+\addtokomafont{caption}{\RaggedRight\small}
 \addtokomafont{captionlabel}{\bfseries\sffamily}
 \setcapindent{0pt}
 \setcapwidth[c]{.8\textwidth}
@@ -275,7 +275,7 @@
 \setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
 
 \RequirePackage{enumitem}
-\setlist{leftmargin=*}
+\setlist{leftmargin=*,nosep}
 \setlist[1]{labelindent=1em}
 \setlist[itemize,1]{label=\large\textbullet}
 \setlist[itemize,2]{label=\raisebox{.2ex}{\footnotesize$\m@th\circ$}}
