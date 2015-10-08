@@ -389,4 +389,7 @@
   \expandafter\includegraphics\expandafter[\dtk@grafikOptionen]{\dtk@dateiname}%
 }
 
+\deffootnote[1.2em]{1.2em}{1.2em}{\textsuperscript{\thefootnotemark}\,}
+\addtokomafont{footnote}{\RaggedRight}% TODO: Evtl nach "dtk2.cl"; auch "ragged2e"
+
 \endinput
