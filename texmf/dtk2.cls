@@ -256,9 +256,13 @@
 \def\thelstlisting{\@arabic\c@lstlisting}
 
 \RedeclareSectionCommand[%
-  ,beforeskip=-2.3ex \@plus -1ex \@minus -.2ex % Betrag ist von Bedeutung!
-  ,afterskip=1.3ex \@plus .2ex %
+  ,beforeskip=-2.4ex \@plus -1ex \@minus -.2ex % Betrag ist von Bedeutung!
+  ,afterskip=0.8ex \@plus .1ex \@minus .1ex %
 ]{section}
+
+\RedeclareSectionCommand[%
+  ,afterskip=0.8ex \@plus .1ex %
+]{subsection}
 
 \RedeclareSectionCommand[%
   ,style=section
