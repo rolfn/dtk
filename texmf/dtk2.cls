@@ -126,7 +126,7 @@
 \renewcommand\bottomfraction{.9}
 \renewcommand\textfraction{.1}
 
-\RequirePackage[english,ngerman]{babel}
+\RequirePackage[english,main=ngerman]{babel}
 
 \defineshorthand{"|}{%
   \ClassError{dtk2}{%
@@ -181,11 +181,12 @@
     \ifdim\dimen0<.2\textheight
       \newpage
     \fi
-    \chapter[\@@title]{\@title}%
-    \ifx\@author\@empty\else\addsec*{\@author}\fi
-    \@thanks
-    \global\let\thanks\@gobble
   \endgroup
+  \chapter[\@@title]{\@title}%
+  \ifx\@author\@empty\else\addsec*{\@author}\fi
+  \@thanks
+  \let\thanks\@gobble
+  \let\@thanks=\@empty
   \let\@title=\@empty
   \let\@author=\@empty
   \let\@thanks=\@empty
