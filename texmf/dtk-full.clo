@@ -352,7 +352,7 @@
 }
 
 \def\partheadstartvskip{% 12.0pt plus 1.0fil
-  \null\vskip-\baselineskip\vskip 10pt %
+  \null\vskip-\baselineskip
 }
 
 \def\partheadendvskip{}
