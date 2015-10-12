@@ -1,16 +1,12 @@
 \ProvidesFile{dtk-new-engines.clo}%
-  [2015/10/09 v0.1c dtk class options for XeTeX and LuaTeX (RN)]
+  [2015/10/12 v0.1c dtk class options for XeTeX and LuaTeX (RN)]
 
 \typeout{NEW-ENGINE}
 
 \RequirePackage{fontspec}
 \RequirePackage{unicode-math}
 
-\ifDTK@alegreya@
-  \RequirePackage[lining]{Alegreya,AlegreyaSans}
-\else
-  \RequirePackage[lining=true]{libertine}
-\fi
+\RequirePackage[lining=true]{libertine}
 \setmathfont[Scale=0.9,math-style=TeX,bold-style=TeX]{XITSMath}
 \setmonofont[Scale=0.81,FakeStretch=0.9]{DejaVuSansMono}
 

@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/10/08 v0.1g dtk document class (RN)]
+  [2015/10/12 v0.1g dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -286,8 +286,19 @@
 \setkomafont{pagehead}{\sffamily\slshape}% \itshape?
 \setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
 
+%\addtokomafont{footnote}{\RaggedRight}
 \deffootnote[1.2em]{1.2em}{1.2em}{\textsuperscript{\thefootnotemark}\,}
-\addtokomafont{footnote}{\RaggedRight}
+\newcommand*\DTK@footnote{}
+\let\DTK@footnote=\footnote
+\newcommand*\DTK@@footnote[2][]{%
+  \edef\DTK@tempa{%
+    \noexpand\DTK@footnote\ifx\relax#1\relax\else[#1]\fi
+      {\noexpand\RaggedRight #2}}%
+  \DTK@tempa
+}
+\def\footnote{%
+  \@ifstar\DTK@@footnote\DTK@footnote
+}
 
 \RequirePackage{enumitem}
 \setlist{leftmargin=*,nosep}
