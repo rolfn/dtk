@@ -291,7 +291,7 @@
 \newcommand*\DTK@footnote{}
 \let\DTK@footnote=\footnote
 \newcommand*\DTK@@footnote[2][]{%
-  \edef\DTK@tempa{%
+  \protected@edef\DTK@tempa{%
     \noexpand\DTK@footnote\ifx\relax#1\relax\else[#1]\fi
       {\noexpand\RaggedRight #2}}%
   \DTK@tempa
