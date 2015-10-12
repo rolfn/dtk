@@ -37,7 +37,7 @@
 \newif\ifDTK@bib@ \DTK@bib@false
 \newif\ifDTKcolor \DTKcolorfalse % "@" ?
 \newif\ifDTK@korr@ \DTK@korr@false
-\newif\ifDTK@alegreya@ \DTK@alegreya@false
+\newif\ifDTK@exp@ \DTK@exp@false
 
 \newcommand*\journalname{Die \protect\TeX{}nische Kom\"odie}
 
@@ -58,7 +58,7 @@
   \if@tempswa\DTK@Author@false\else\DTK@Author@true\fi}
 \DeclareOptionX{color}[true]{\csname DTKcolor#1\endcsname}
 \DeclareOptionX{draft}{\PassOptionsToClass{\CurrentOption}{scrbook}}
-\DeclareOptionX{alegreya}[true]{\csname DTK@alegreya@#1\endcsname}
+\DeclareOptionX{exp}[true]{\csname DTK@exp@#1\endcsname}
 
 \DeclareOptionX*{\OptionNotUsed}
 \ProcessOptionsX\relax
@@ -94,7 +94,12 @@
   \fi
 }{}
 
-\AtEndOfClass{\InputIfFileExists{dtk2.cfg}{}{}}
+\AtEndOfClass{%
+  \InputIfFileExists{dtk.cfg}{}{}%
+  \ifDTK@exp@
+    \InputIfFileExists{dtk-exp.cfg}{}{}%
+  \fi
+}
 
 % *** Konstanten ***
 
@@ -282,7 +287,7 @@
 \setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
 
 \deffootnote[1.2em]{1.2em}{1.2em}{\textsuperscript{\thefootnotemark}\,}
-\addtokomafont{footnote}{\RaggedRight}% TODO: Evtl nach "dtk2.cl"; auch "ragged2e"
+\addtokomafont{footnote}{\RaggedRight}
 
 \RequirePackage{enumitem}
 \setlist{leftmargin=*,nosep}
