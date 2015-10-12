@@ -167,7 +167,7 @@
 ]{biblatex}
 
 %\RequirePackage{etex} % ???
-\RequirePackage{dantelogo,hologo,dtklogos}
+\RequirePackage{ragged2e,dantelogo,hologo,dtklogos}
 
 \renewcommand\title[2][]{%
   \gdef\@title{#2}%
@@ -278,6 +278,9 @@
 \setkomafont{pagenumber}{\normalfont\sffamily}
 \setkomafont{pagehead}{\sffamily\slshape}% \itshape?
 \setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
+
+\deffootnote[1.2em]{1.2em}{1.2em}{\textsuperscript{\thefootnotemark}\,}
+\addtokomafont{footnote}{\RaggedRight}% TODO: Evtl nach "dtk2.cl"; auch "ragged2e"
 
 \RequirePackage{enumitem}
 \setlist{leftmargin=*,nosep}

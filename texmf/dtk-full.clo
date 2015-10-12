@@ -9,7 +9,7 @@
     Abbruch}{}%
 }
 
-\RequirePackage{ragged2e,xcolor,multicol,graphicx,tabularx,dtk-url}
+\RequirePackage{xcolor,multicol,graphicx,tabularx,dtk-url}
 \RequirePackage[showzone=false]{datetime2}
 
 \newcommand*\addressesname{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
@@ -388,8 +388,5 @@
   \immediate\write18{\dtk@compiler\space\dtk@dateiname}%
   \expandafter\includegraphics\expandafter[\dtk@grafikOptionen]{\dtk@dateiname}%
 }
-
-\deffootnote[1.2em]{1.2em}{1.2em}{\textsuperscript{\thefootnotemark}\,}
-\addtokomafont{footnote}{\RaggedRight}% TODO: Evtl nach "dtk2.cl"; auch "ragged2e"
 
 \endinput
