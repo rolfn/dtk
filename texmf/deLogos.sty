@@ -11,7 +11,7 @@
 %
 \def\HoLogo@La#1{%
   L%
-  \kern-.23em%
+  \ifx\f@family\sfdefault\kern-.2em\else\kern-.23em\fi
   \begingroup
     \setbox\ltx@zero\hbox{T}%
     \vbox to\ht\ltx@zero{%
@@ -43,20 +43,7 @@
 \def\HanTheThanh{\hologo{HanTheThanh}}
 \def\iniTeX{\hologo{iniTeX}}
 \def\KOMAScript{\hologo{KOMAScript}}
-%\def\LaTeX{\hologo{LaTeX}}
 \def\LaTeX{\hologo{LaTeX}}
-\iffalse
-\DeclareRobustCommand{\LaTeX}{L\kern-.23em%
-        {\sbox\z@ T%
-         \vbox to\ht\z@{\hbox{\check@mathfonts
-                              \fontsize\sf@size\z@
-                              \math@fontsfalse\selectfont
-                              A}%
-                        \vss}%
-        }%
-        \kern-.15em%
-        \TeX}
-\fi
 \def\LaTeXe{\hologo{LaTeX2e}}
 \def\LaTeXIII{\hologo{LaTeX3}}
 \def\LaTeXML{\hologo{LaTeXML}}
