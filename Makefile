@@ -3,6 +3,8 @@
 
 MAIN = komoedie
 
+ARTICLES += impressum.tex
+
 ARTICLES += artikel1.tex
 #ADDINPUTS += artikel1-foo.tex abbildung17.png
 

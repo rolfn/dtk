@@ -1,5 +1,5 @@
 \ProvidesFile{dtk-full.clo}%
-  [2015/10/06 v0.1d dtk class options for full mode (RN)]
+  [2015/10/13 v0.1e dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -388,5 +388,12 @@
   \immediate\write18{\dtk@compiler\space\dtk@dateiname}%
   \expandafter\includegraphics\expandafter[\dtk@grafikOptionen]{\dtk@dateiname}%
 }
+
+%https://tex.stackexchange.com/questions/14145/how-do-i-create-a-macro-which-reads-the-content-of-a-file-when-the-macro-is-defi
+\RequirePackage{catchfile}
+\newcommand*\InfoTeX{???}
+\IfFileExists{engine.txt}{%
+  \CatchFileDef{\InfoTeX}{engine.txt}{\endlinechar=\m@ne}%
+}{}
 
 \endinput

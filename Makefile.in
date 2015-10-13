@@ -1,4 +1,4 @@
-# Rolf Niepraschk, 2015/10/06, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2015/10/13, Rolf.Niepraschk@gmx.de
 #
 # Hilfsdefinitionen zum make-Prozess für "Die TeXnische Komödie"
 #
@@ -8,8 +8,10 @@ LOCAL_PATH = ./texmf/
 
 ifeq ($(filter x,$(MAKECMDGOALS)),)
   LATEX = TEXINPUTS=$(LOCAL_PATH): lualatex
+  COMPILER_INFO = -v | head -n1 | cut -d" " -f3-
 else
   LATEX = TEXINPUTS=$(LOCAL_PATH): pdflatex
+  COMPILER_INFO = -v | head -n1
   XTARGET = $(filter-out x,$(MAKECMDGOALS))
   ifeq ($(XTARGET),)
     XTARGET = $(.DEFAULT_GOAL)
@@ -44,7 +46,10 @@ x : $(XTARGET)
 userpackages userpackages.tex :
 	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex
 
-$(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS)
+engine.txt : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS)
+	$(LATEX) $(COMPILER_INFO) > $@
+
+$(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS) engine.txt
 	if test -f $(basename $<)-addresses.idx; \
 	  then cp $(basename $<)-addresses.idx $(basename $<)-addresses.idx.old; \
 	  else touch $(basename $<)-addresses.idx.old; fi;
@@ -68,7 +73,7 @@ clean :
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), $(TEMP_EXT)))
 	$(RM) $(MAIN)-addresses.idx $(MAIN)-addresses.idx.old $(MAIN)-addresses.ind \
 	  ruecken.dat ruecken.dat.old ruecken.log ruecken.aux userpackages.tex \
-	  komoedie0.log komoedie0.run.xml
+	  komoedie0.log komoedie0.run.xml engine.txt
 
 veryclean : clean
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), .pdf)) \
