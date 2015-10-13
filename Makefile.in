@@ -43,9 +43,6 @@ all : $(MAIN).pdf
 
 x : $(XTARGET)
 
-debug :
-	@echo "$(COMPILER_INFO)"
-
 userpackages userpackages.tex :
 	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex
 
