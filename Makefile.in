@@ -8,16 +8,16 @@ LOCAL_PATH = ./texmf/
 
 ifeq ($(filter x,$(MAKECMDGOALS)),)
   LATEX = TEXINPUTS=$(LOCAL_PATH): lualatex
-  COMPILER_INFO = -v | head -n1 | cut -d" " -f3-
+  COMPILER_INFO = $(shell $(LATEX) -v | head -n1 | cut -d' ' -f3-)
 else
   LATEX = TEXINPUTS=$(LOCAL_PATH): pdflatex
-  COMPILER_INFO = -v | head -n1
+  COMPILER_INFO = $(shell $(LATEX) -v | head -n1)
   XTARGET = $(filter-out x,$(MAKECMDGOALS))
   ifeq ($(XTARGET),)
     XTARGET = $(.DEFAULT_GOAL)
   endif
 endif
-LATEX_OPTS = --shell-escape
+LATEX_OPTS = --shell-escape "\newcommand*\InfoTeX{$(COMPILER_INFO)}"
 
 IDX_STYLE = $(LOCAL_PATH)dtk.xdy
 XINDY = xindy -v -C utf8 -L general -I latex -M $(IDX_STYLE)
@@ -43,20 +43,20 @@ all : $(MAIN).pdf
 
 x : $(XTARGET)
 
+debug :
+	@echo "$(COMPILER_INFO)"
+
 userpackages userpackages.tex :
 	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex
 
-engine.txt : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS)
-	$(LATEX) $(COMPILER_INFO) > $@
-
-$(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS) engine.txt
+$(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS)
 	if test -f $(basename $<)-addresses.idx; \
 	  then cp $(basename $<)-addresses.idx $(basename $<)-addresses.idx.old; \
 	  else touch $(basename $<)-addresses.idx.old; fi;
 	if test -f ruecken.dat; \
 	  then cp ruecken.dat ruecken.dat.old; \
 	  else touch ruecken.dat.old; fi;
-	$(LATEX) $(LATEX_OPTS) $<
+	$(LATEX) $(LATEX_OPTS) "\input{$<}"
 	if ! diff $(basename $<)-addresses.idx $(basename $<)-addresses.idx.old \
 	  > /dev/null; then $(XINDY) $(basename $<)-addresses.idx \
 	  -o $(basename $<)-addresses.ind; fi;
@@ -66,7 +66,7 @@ $(MAIN).pdf : $(MAIN).tex userpackages.tex $(ARTICLES) $(ADDINPUTS) engine.txt
 	  then $(BIBTEX) $(basename $<); fi;
 	for (( i=0; i < $(MAX_LTX_RUNS); i++ )) do \
 	  if $(EGREP) '$(RERUN_WARNINGS)' $(basename $<).log > /dev/null; \
-	  then $(LATEX) $(LATEX_OPTS) $<; fi; \
+	  then $(LATEX) $(LATEX_OPTS) "\input{$<}"; fi; \
 	done
 
 clean :
