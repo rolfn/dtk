@@ -1,5 +1,5 @@
 \ProvidesFile{dtk-full.clo}%
-  [2015/10/13 v0.1e dtk class options for full mode (RN)]
+  [2015/10/14 v0.1e dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -422,5 +422,10 @@
 }
 
 \ErzeugeMitarbeiterListe \let\ErzeugeMitarbeiterListe=\relax
+
+\newcommand*\DTKschriftenListe{}
+\newcommand*\DTKschriften[4]{% #1=Serif, #2=Sanserif, #3=Typewriter, #4=Math
+  \gdef\DTKschriftenListe{#1, #2, #3 und #4}%
+}
 
 \endinput
