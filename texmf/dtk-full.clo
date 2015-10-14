@@ -391,4 +391,36 @@
 
 \providecommand*\InfoTeX{???}
 
+\newcommand*\MitarbeiterListe{}
+\newcommand*\ErzeugeMitarbeiterListe{%
+  \begingroup
+    \@temptokena{\begin{tabular}[t]{@{}lll@{}}}%
+    \IfFileExists{mitarbeiter.txt}{%
+        \openin\@inputcheck mitarbeiter.txt\relax
+        \endlinechar=\m@ne
+        \@tempcnta=\@ne
+        \loop%
+          \read\@inputcheck to \DTK@tempa
+          \ifx\DTK@tempa\@empty\else
+            \ifnum\@tempcnta=3\relax
+              \@tempcnta=\@ne \def\DTK@tempc{\\}%
+            \else
+              \advance\@tempcnta\@ne \def\DTK@tempc{&}%
+            \fi
+            \protected@edef\DTK@tempb{\the\@temptokena\DTK@tempa\DTK@tempc}%
+            \@temptokena\expandafter{\DTK@tempb}%
+          \fi
+        \ifeof\@inputcheck\else
+        \repeat
+        \closein\@inputcheck
+    }{%
+      \@temptokena\expandafter{\the\@temptokena ??? & ??? & ???}%
+    }
+    \@temptokena\expandafter{\the\@temptokena \end{tabular}}%
+    \xdef\MitarbeiterListe{\the\@temptokena}%
+  \endgroup
+}
+
+\ErzeugeMitarbeiterListe \let\ErzeugeMitarbeiterListe=\relax
+
 \endinput
