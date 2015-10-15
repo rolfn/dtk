@@ -18,7 +18,7 @@
 \newcommand*\DTK@keywords{}
 \newcommand*\keywords[1]{\gdef\DTK@keywords{#1}}
 
-\newcommand*\DTKissueTOmonth[1]{\ifcase#1\relax0\or1\or4\or7\or10\fi}
+\newcommand*\DTKissueTOmonth[1]{\numexpr#1*3-1\relax}
 
 \ifnum\DTKissue=\z@
   \def\DTKmonth{0}%
