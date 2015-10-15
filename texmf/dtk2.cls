@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/10/12 v0.1g dtk document class (RN)]
+  [2015/10/15 v0.1h dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -37,7 +37,6 @@
 \newif\ifDTK@bib@ \DTK@bib@false
 \newif\ifDTKcolor \DTKcolorfalse % "@" ?
 \newif\ifDTK@korr@ \DTK@korr@false
-\newif\ifDTK@exp@ \DTK@exp@false
 
 \newcommand*\journalname{Die \protect\TeX{}nische Kom\"odie}
 
@@ -58,7 +57,6 @@
   \if@tempswa\DTK@Author@false\else\DTK@Author@true\fi}
 \DeclareOptionX{color}[true]{\csname DTKcolor#1\endcsname}
 \DeclareOptionX{draft}{\PassOptionsToClass{\CurrentOption}{scrbook}}
-\DeclareOptionX{exp}[true]{\csname DTK@exp@#1\endcsname}
 
 \DeclareOptionX*{\OptionNotUsed}
 \ProcessOptionsX\relax
@@ -96,9 +94,6 @@
 
 \AtEndOfClass{%
   \InputIfFileExists{dtk.cfg}{}{}%
-  \ifDTK@exp@
-    \InputIfFileExists{dtk-exp.cfg}{}{}%
-  \fi
 }
 
 % *** Konstanten ***

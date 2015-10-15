@@ -1,14 +1,16 @@
 \ProvidesFile{dtk-new-engines.clo}%
-  [2015/10/12 v0.1c dtk class options for XeTeX and LuaTeX (RN)]
+  [2015/10/15 v0.1d dtk class options for LuaTeX and XeTeX (RN)]
 
 \typeout{NEW-ENGINE}
 
 \RequirePackage{fontspec}
 \RequirePackage{unicode-math}
 
-\RequirePackage[lining=true]{libertine}
-\setmathfont[Scale=0.9,math-style=TeX,bold-style=TeX]{XITSMath}
-\setmonofont[Scale=0.81,FakeStretch=0.9]{DejaVuSansMono}
+\InputIfFileExists{dtk-fonts.cfg}{}{%
+  \RequirePackage[lining=true]{libertine}
+  \setmathfont[Scale=0.9,math-style=TeX,bold-style=TeX]{XITSMath}
+  \setmonofont[Scale=0.81,FakeStretch=0.9]{DejaVuSansMono}
+}
 
 \ifluatex
   \RequirePackage[ngerman,noftligs]{selnolig}
