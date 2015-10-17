@@ -299,10 +299,12 @@
 \RequirePackage{enumitem}
 \setlist{leftmargin=*,nosep}
 \setlist[1]{labelindent=1em}
+\iffalse
 \setlist[itemize,1]{label=\raisebox{-.1ex}{\Large\textbullet}}
 \setlist[itemize,2]{label=\raisebox{-.1ex}{\Large$\m@th\circ$}}
 \setlist[itemize,3]{label=\raisebox{-.7ex}{\large\textasteriskcentered}}
 \setlist[itemize,4]{label=\raisebox{.4ex}{\tiny$\m@th\triangleright$}}
+\fi
 
 % Listings
 \newcommand*\DTKlstfont{\small\ttfamily}
