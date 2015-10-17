@@ -1,5 +1,5 @@
 \ProvidesFile{dtk-new-engines.clo}%
-  [2015/10/15 v0.1d dtk class options for LuaTeX and XeTeX (RN)]
+  [2015/10/17 v0.1e dtk class options for LuaTeX and XeTeX (RN)]
 
 \typeout{NEW-ENGINE}
 
@@ -7,9 +7,13 @@
 \RequirePackage{unicode-math}
 
 \InputIfFileExists{dtk-fonts.cfg}{}{%
-  \RequirePackage[lining=true]{libertine}
-  \setmathfont[Scale=0.9,math-style=TeX,bold-style=TeX]{XITSMath}
-  \setmonofont[Scale=0.81,FakeStretch=0.9]{DejaVuSansMono}
+  \RequirePackage[lining=true]{libertine}%
+    \def\DTKrmFontName{Linux Libertine}%
+    \def\DTKsfFontName{Linux Biolinum}%
+  \setmathfont[Scale=0.9,math-style=TeX,bold-style=TeX]{XITSMath}%
+    \def\DTKmathFontName{XITS Math}%
+  \setmonofont[Scale=0.81,FakeStretch=0.9]{DejaVuSansMono}%
+    \def\DTKttFontName{DejaVu Mono}%
 }
 
 \ifluatex

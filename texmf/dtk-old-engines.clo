@@ -1,5 +1,5 @@
 \ProvidesFile{dtk-old-engines.clo}%
-  [2015/10/15 v0.1b dtk class options for pdfTeX/TeX+dvips (RN)]
+  [2015/10/17 v0.1c dtk class options for pdfTeX/TeX+dvips (RN)]
 
 \typeout{OLD-ENGINE}
 
@@ -8,8 +8,13 @@
 \RequirePackage{textcomp}
 
 \InputIfFileExists{dtk-fonts.cfg}{}{%
-  \RequirePackage[lining=true]{libertine}
-  \RequirePackage[scaled=0.83]{DejaVuSansMono}
+  \RequirePackage[lining=true]{libertine}%
+    \def\DTKrmFontName{Linux Libertine}%
+    \def\DTKsfFontName{Linux Biolinum}%
+  \RequirePackage[scaled=0.83]{DejaVuSansMono}%
+    \def\DTKttFontName{DejaVu Mono}%
+    %
+    \def\DTKmathFontName{Computer Modern Math}% ???
 }
 
 \endinput

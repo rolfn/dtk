@@ -136,6 +136,20 @@
   }{}%
 }
 
+\newcommand*\DTK@FontNameMissing{%
+  \ClassError{dtk2}{%
+    Eines der Makros `\string\DTKrmFontName', `\string\DTKsfFontName',
+    \MessageBreak
+    `\string\DTKttFontName`' oder `\string\DTKmathFontName'
+    \MessageBreak
+    ist nicht korrekt definiert%
+  }{}%
+}
+\newcommand*\DTKrmFontName{}   \let\DTKrmFontName=\DTK@FontNameMissing
+\newcommand*\DTKsfFontName{}   \let\DTKsfFontName=\DTK@FontNameMissing
+\newcommand*\DTKttFontName{}   \let\DTKttFontName=\DTK@FontNameMissing
+\newcommand*\DTKmathFontName{} \let\DTKmathFontName=\DTK@FontNameMissing
+
 \ifnum\DTK@engine < 3 %
   \input{dtk-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
 \else

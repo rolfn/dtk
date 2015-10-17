@@ -423,9 +423,7 @@
 
 \ErzeugeMitarbeiterListe \let\ErzeugeMitarbeiterListe=\relax
 
-\newcommand*\DTKschriftenListe{}
-\newcommand*\DTKschriften[4]{% #1=Serif, #2=Sanserif, #3=Typewriter, #4=Math
-  \gdef\DTKschriftenListe{#1, #2, #3 und #4}%
-}
+\newcommand*\DTKschriftenListe{%
+  \DTKrmFontName, \DTKsfFontName, \DTKttFontName\ und \DTKmathFontName}
 
 \endinput
