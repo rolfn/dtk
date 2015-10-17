@@ -7,7 +7,7 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage{textcomp}
 
-\InputIfFileExists{dtk-fonts.cfg}{
+\InputIfFileExists{dtk-fonts.cfg}{%
   \typeout{*************************************^^J%
            * File `dtk-fonts.cfg' used.^^J%
            *************************************}%

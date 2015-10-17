@@ -180,8 +180,11 @@
 ,sorting=nyt
 ,sortlocale=auto
 ,backend=biber
-,block=ragged
+%,block=ragged
 ]{biblatex}
+
+\let\DTK@orig@bibsetup=\bibsetup
+\def\bibsetup{\DTK@orig@bibsetup\raggedright}
 
 %\RequirePackage{etex} % ???
 \RequirePackage{ragged2e,dantelogo,hologo,dtklogos}

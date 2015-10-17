@@ -6,7 +6,7 @@
 \RequirePackage{fontspec}
 \RequirePackage{unicode-math}
 
-\InputIfFileExists{dtk-fonts.cfg}{
+\InputIfFileExists{dtk-fonts.cfg}{%
   \typeout{*************************************^^J%
            * File `dtk-fonts.cfg' used.^^J%
            *************************************}%
