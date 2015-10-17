@@ -183,8 +183,7 @@
 %,block=ragged
 ]{biblatex}
 
-\let\DTK@orig@bibsetup=\bibsetup
-\def\bibsetup{\DTK@orig@bibsetup\raggedright}
+\g@addto@macro\bibsetup{\raggedright}
 
 %\RequirePackage{etex} % ???
 \RequirePackage{ragged2e,dantelogo,hologo,dtklogos}
