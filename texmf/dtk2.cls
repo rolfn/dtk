@@ -166,6 +166,7 @@
 ,sorting=nyt
 ,sortlocale=auto
 ,backend=biber
+,block=ragged
 ]{biblatex}
 
 %\RequirePackage{etex} % ???
