@@ -7,11 +7,11 @@
 % -------------------------------------
 \ProvidesPackage{deLogos}[2015/10/08 Dante Edition: Logos (hv)]
 %
-\RequirePackage{hologo}
+\RequirePackage{hologo,dantelogo}
 %
 \def\HoLogo@La#1{%
   L%
-  \ifx\f@family\sfdefault\kern-.2em\else\kern-.23em\fi
+  \ifx\f@family\sfdefault\kern-.15em\else\kern-.23em\fi
   \begingroup
     \setbox\ltx@zero\hbox{T}%
     \vbox to\ht\ltx@zero{%
@@ -88,6 +88,18 @@
 \def\pgf/tikz{\textsf{pgf/Ti\textit{k}Z}}
 \def\ALEPH{\ensuremath{\aleph}}
 \let\TikZ\tikz
+
+\providecommand\eV{e.V\kern-0.18em\@ifnextchar.{}{.}\kern0.18em}
+\providecommand\dante{\mbox{DANTE~\eV}}
+\providecommand\Dante{DANTE,
+  Deutschsprachige Anwendervereinigung \TeX~\eV}
+\providecommand\DTK{Die \TeX\-ni\-sche Ko\-m{\"o}\-die}
+\providecommand\PS{Post\-Script}
+\providecommand\TUG{\TeX{} Users Group}
+\providecommand\TUGboat{\textsl{TUGboat}}
+\let\DANTE\dantelogo
+\def\pgf/tikz{\textsf{pgf/Ti\textit{k}Z}}
+\def\TeXLive{\TeX{}Live}
 
 
 \endinput

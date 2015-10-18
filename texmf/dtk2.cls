@@ -186,7 +186,7 @@
 \g@addto@macro\bibsetup{\raggedright}
 
 %\RequirePackage{etex} % ???
-\RequirePackage{ragged2e,dantelogo,hologo,dtklogos}
+\RequirePackage{ragged2e,dantelogo,hologo,dtk-logos}
 
 \renewcommand\title[2][]{%
   \gdef\@title{#2}%
