@@ -8,7 +8,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \ProvidesClass{dtk2}%
-  [2015/10/15 v0.1h dtk document class (RN)]
+  [2015/10/21 v0.1i dtk document class (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
@@ -201,14 +201,19 @@
       \newpage
     \fi
   \endgroup
+  \def\and{\end{tabular}, \begin{tabular}[t]{@{}c@{}}}%
   \chapter[\@@title]{\@title}%
-  \ifx\@author\@empty\else\addsec*{\@author}\fi
+  %%%\ifx\@author\@empty\else\addsec*{\@author}\fi
+  \begingroup
+    \usekomafont{author}\lineskip 0.75em %
+    \begin{tabular}[t]{@{}c@{}}\@author\end{tabular}\par
+  \endgroup
   \@thanks
-  \let\thanks\@gobble
-  \let\@thanks=\@empty
-  \let\@title=\@empty
-  \let\@author=\@empty
-  \let\@thanks=\@empty
+  \global\let\@thanks=\@empty
+  \global\let\@title=\@empty
+  \global\let\@author=\@empty
+  \global\let\@thanks=\@empty
+  \global\let\and\relax
 }
 
 \renewcaptionname{ngerman}{\bibname}{Literatur und Software}
@@ -297,6 +302,7 @@
 \setkomafont{pagenumber}{\normalfont\sffamily}
 \setkomafont{pagehead}{\sffamily\slshape}% \itshape?
 \setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
+\setkomafont{author}{\usekomafont{section}}
 
 %\addtokomafont{footnote}{\RaggedRight}
 \deffootnote[1.2em]{1.2em}{1.2em}{\textsuperscript{\thefootnotemark}\,}
