@@ -9,7 +9,7 @@
     Abbruch}{}%
 }
 
-\RequirePackage{xcolor,multicol,graphicx,tabularx,dtk-url}
+\RequirePackage{xcolor,multicol,graphicx,tabularx}
 \RequirePackage[showzone=false]{datetime2}
 
 \newcommand*\addressesname{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
