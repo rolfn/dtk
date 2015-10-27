@@ -408,7 +408,7 @@
 ,xleftmargin=\fboxsep % ???
 }
 
-\lstset{style=number}
+\lstset{style=noNumber}
 
 % noHilit, latex ???
 
