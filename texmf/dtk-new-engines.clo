@@ -14,11 +14,11 @@
   \RequirePackage[lining=true]{libertine}%
     \def\DTKrmFontName{Linux Libertine}%
     \def\DTKsfFontName{Linux Biolinum}%
-  \setmathfont[Scale=0.9,math-style=TeX,bold-style=TeX]{XITSMath}%
+  \setmathfont{XITSMath}[Scale=0.9,math-style=TeX,bold-style=TeX]%
     \def\DTKmathFontName{XITS Math}%
-  \setmonofont[Scale=0.955,FakeStretch=0.87]{AnonymousPro}
-    \def\DTKttFontName{Anonymous Pro}
-  %\setmonofont[Scale=0.81,FakeStretch=0.9]{DejaVuSansMono}%
+  \setmonofont{AnonymousPro}[Scale=0.955,FakeStretch=0.87]%
+    \def\DTKttFontName{Anonymous Pro}%
+  %\setmonofont{DejaVuSansMono}[Scale=0.81,FakeStretch=0.9]%
     %\def\DTKttFontName{DejaVu Mono}%
 }
 

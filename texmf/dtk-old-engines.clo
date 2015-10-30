@@ -15,8 +15,8 @@
   \RequirePackage[lining=true]{libertine}%
     \def\DTKrmFontName{Linux Libertine}%
     \def\DTKsfFontName{Linux Biolinum}%
-  \RequirePackage[scale=0.833,ttdefault=true]{AnonymousPro}
-    \def\DTKttFontName{Anonymous Pro}
+  \RequirePackage[scale=0.833,ttdefault=true]{AnonymousPro}%
+    \def\DTKttFontName{Anonymous Pro}%
   %\RequirePackage[scaled=0.83]{DejaVuSansMono}%
     %\def\DTKttFontName{DejaVu Mono}%
     %
