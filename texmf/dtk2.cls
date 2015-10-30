@@ -164,7 +164,6 @@
 
 \ifxetex\else
 \RequirePackage[%
-,factor=1500
 ,protrusion=true
 ,expansion=true
 ,verbose=true
@@ -181,7 +180,6 @@
 ,sorting=nyt
 ,sortlocale=auto
 ,backend=biber
-%,block=ragged
 ]{biblatex}
 
 \g@addto@macro\bibsetup{\raggedright}
