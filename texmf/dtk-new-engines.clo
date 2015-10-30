@@ -1,5 +1,5 @@
 \ProvidesFile{dtk-new-engines.clo}%
-  [2015/10/17 v0.1e dtk class options for LuaTeX and XeTeX (RN)]
+  [2015/10/30 v0.1f dtk class options for LuaTeX and XeTeX (RN)]
 
 \typeout{NEW-ENGINE}
 
@@ -16,8 +16,10 @@
     \def\DTKsfFontName{Linux Biolinum}%
   \setmathfont[Scale=0.9,math-style=TeX,bold-style=TeX]{XITSMath}%
     \def\DTKmathFontName{XITS Math}%
-  \setmonofont[Scale=0.81,FakeStretch=0.9]{DejaVuSansMono}%
-    \def\DTKttFontName{DejaVu Mono}%
+  \setmonofont[Scale=0.955,FakeStretch=0.87]{AnonymousPro}
+    \def\DTKttFontName{Anonymous Pro}
+  %\setmonofont[Scale=0.81,FakeStretch=0.9]{DejaVuSansMono}%
+    %\def\DTKttFontName{DejaVu Mono}%
 }
 
 \ifluatex
