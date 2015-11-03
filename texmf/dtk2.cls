@@ -268,7 +268,7 @@
 %%%\ifDTKrecord \expandafter \endinput \fi % lohnt es?
 
 \addtokomafont{caption}{\RaggedRight\small}
-\addtokomafont{captionlabel}{\bfseries\sffamily}
+\setkomafont{captionlabel}{\sffamily}
 \setcapindent{0pt}
 \setcapwidth[c]{.8\textwidth}
 \renewcaptionname{ngerman}{\figurename}{Abb.}
