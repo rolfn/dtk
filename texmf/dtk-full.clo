@@ -240,9 +240,7 @@
 
 \RequirePackage{picture}
 
-\DeclareNewLayer[%
-  page,background,mode=picture,%
-  contents={%
+\DeclareNewLayer[page,background,mode=picture,contents={%
     \put(24mm,0.5\dimexpr\layerheight\relax){%
       \makebox(0,0)[c]{\rotatebox[origin=c]{90}{%
         \resizebox{14cm}{!}{\Huge\DTK@fancyJournalname}}}%
