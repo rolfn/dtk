@@ -10,7 +10,7 @@
 %% 
 \ProvidesFile{dtk.bbx}[\abx@bbxid]
 %
-%%[2015/11/01 v0.05 biblatex bibliography style]
+%%[2015/11/03 v0.06 biblatex bibliography style]
 
 % Load the standard style to avoid copy-pasting unnecessary material
 \RequireBibliographyStyle{chem-angew}
@@ -98,7 +98,7 @@
   \usebibmacro{name:andothers}}
 
 \newbibmacro*{bbx:dashcheck}[2]{%
-  \ifboolexpr{
+  \ifboolexpr{%
     test {\iffieldequals{fullhash}{\bbx@lasthash}}
     and
     not test \iffirstonpage
@@ -107,10 +107,8 @@
        not bool {bbx@inset}
        or
        test {\iffieldequalstr{entrysetcount}{1}}
-    )
-  }
-    {#1}
-    {#2}}
+    )%
+  }{#1}{#2}}
 
 \renewbibmacro*{author}{%
   \ifboolexpr{
@@ -133,6 +131,15 @@
      \usebibmacro{labeltitle}%
      \setunit*{\addspace}}%
   \usebibmacro{date+extrayear}}
+
+\renewcommand*\bibnamedash{\textemdash\hspace{1em}}%
+%  \ifdimless{\leftmargin}{0.75em}
+%    {\mbox{\textemdash\space}}
+%    {\makebox[\leftmargin][l]{%
+%       \ifdimless{\leftmargin}{1.25em}
+%         {\textendash}
+%         {\textemdash}}}}
+
 
 
 \DeclareBibliographyDriver{ctan}{%
