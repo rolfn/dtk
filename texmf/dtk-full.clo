@@ -277,34 +277,36 @@
   {}{\DTK@toc@head}{}%
   {}{\hfill\normalsize\DTKcorrVersion\hfill\null}{}
 
-\renewcommand*\l@part[2]{%
-  \begingroup
-    \addpenalty{-\@highpenalty}%
-    \usekomafont{partentry}%
-    \addvspace{0.5em plus 0pt}% space above part line
-    \@tempdima=1.5em %
-    \advance\leftskip\@tempdima
-    \hskip -\leftskip
-    #1\par
-    \penalty\@highpenalty
-  \endgroup
-  \addvspace{0.2em}%
-}
-\renewcommand*\l@chapter[2]{%    TODO: Abstände richtig? "LaTeXifizieren?
-  \begingroup
-    \usekomafont{chapterentry}%
-    \vskip \z@ \@plus.2\p@
-    \@afterindenttrue
-    \interlinepenalty\@M
-    \@tempdimb 2.5em\relax % indent
-    \advance\leftskip \@tempdimb
-    \advance\rightskip \@tempdimb
-    \noindent\hskip -\leftskip
-    \settowidth\@tempdima{\the\c@page}%
-    \hbox to\@tempdimb{\usekomafont{chapterentrypagenumber}%
-      \makebox[\@tempdima][r]{#2}\hss}%
-    #1\par
-  \endgroup
+\AtEndOfClass{%
+  \renewcommand*\l@part[2]{%
+    \begingroup
+      \addpenalty{-\@highpenalty}%
+      \usekomafont{partentry}%
+      \addvspace{0.5em plus 0pt}% space above part line
+      \@tempdima=1.5em %
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\par
+      \penalty\@highpenalty
+    \endgroup
+    \addvspace{0.2em}%
+  }
+  \renewcommand*\l@chapter[2]{%    TODO: Abstände richtig? "LaTeXifizieren?
+    \begingroup
+      \usekomafont{chapterentry}%
+      \vskip \z@ \@plus.2\p@
+      \@afterindenttrue
+      \interlinepenalty\@M
+      \@tempdimb 2.5em\relax % indent
+      \advance\leftskip \@tempdimb
+      \advance\rightskip \@tempdimb
+      \noindent\hskip -\leftskip
+      \settowidth\@tempdima{\the\c@page}%
+      \hbox to\@tempdimb{\usekomafont{chapterentrypagenumber}%
+        \makebox[\@tempdima][r]{#2}\hss}%
+      #1\par
+    \endgroup
+  }
 }
 
 \setkomafont{chapterentry}{\normalfont\small}
