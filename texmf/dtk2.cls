@@ -182,7 +182,7 @@
 ,backend=biber
 ]{biblatex}
 
-\g@addto@macro\bibsetup{\raggedright}
+\g@addto@macro\bibsetup{\RaggedRight}
 
 %\RequirePackage{etex} % ???
 \RequirePackage{ragged2e,dtk-logos}
