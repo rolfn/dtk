@@ -241,34 +241,32 @@
 \RequirePackage{picture}
 
 \DeclareNewLayer[page,background,mode=picture,contents={%
-    \put(24mm,0.5\dimexpr\layerheight\relax){%
-      \makebox(0,0)[c]{\rotatebox[origin=c]{90}{%
-        \resizebox{14cm}{!}{\Huge\DTK@fancyJournalname}}}%
-      \put(8mm,0){%
-        \makebox(0,0)[c]{\rule{0.85mm}{\textheight}}}%
-    }%
-    \put(52mm,145mm){%
-      \parbox[t]{78mm}{%
-        \raggedleft
-        \Huge\dantelogo \\
-        \Large Deutschsprachige \\
-        Anwendervereinigung \TeX\ \eV \\
-        \addvspace{4mm}%
-        \begingroup
-          \raggedright\footnotesize
-          \DTKfullIssue \\
-        \endgroup
-        \addvspace{40mm}%
-        \makebox(0,0)[r]{\Large\DTKcorrVersion}
-      }%
-    }%
-    \put(86mm,27mm){%
+  \put(24mm,0.5\dimexpr\layerheight\relax){%
+    \makebox(0,0)[c]{\rotatebox[origin=c]{90}{%
+      \resizebox{14cm}{!}{\Huge\DTK@fancyJournalname}}}%
+    \put(8mm,0){\makebox(0,0)[c]{\rule{0.85mm}{\textheight}}}%
+  }%
+  \put(52mm,145mm){%
+    \parbox[t]{78mm}{%
+      \raggedleft
+      \Huge\dantelogo \\
+      \Large Deutschsprachige \\
+      Anwendervereinigung \TeX\ \eV \\
+      \addvspace{4mm}%
       \begingroup
-        \color[gray]{.8}\resizebox{47mm}{!}{\Huge\DTKdate}%
+        \raggedright\footnotesize
+        \DTKfullIssue \\
       \endgroup
+      \addvspace{40mm}%
+      \makebox(0,0)[r]{\Large\DTKcorrVersion}
     }%
   }%
-]{dtk-title-content}
+  \put(86mm,27mm){%
+    \begingroup
+      \color[gray]{.8}\resizebox{47mm}{!}{\Huge\DTKdate}%
+    \endgroup
+  }%
+}]{dtk-title-content}
 \DeclareNewPageStyleByLayers{dtk-title}{dtk-title-content}
 
 \deftriplepagestyle{dtk-toc}%
