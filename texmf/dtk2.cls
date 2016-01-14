@@ -308,10 +308,8 @@
 \newcommand*\DTK@footnote{}
 \let\DTK@footnote=\footnote
 \newcommand*\DTK@@footnote[2][]{%
-  \protected@edef\DTK@tempa{%
-    \noexpand\DTK@footnote\ifx\relax#1\relax\else[#1]\fi
-      {\noexpand\RaggedRight #2}}%
-  \DTK@tempa
+  \edef\DTK@tempa{\ifx\relax#1\relax\else[#1]\fi}%
+  \expandafter\DTK@footnote\DTK@tempa{\RaggedRight #2}%
 }
 \def\footnote{%
   \@ifstar\DTK@@footnote\DTK@footnote
