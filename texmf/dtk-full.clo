@@ -393,7 +393,7 @@
 \newcommand*\ErzeugeMitarbeiterListe{%
   \begingroup
     \@temptokena{\begin{tabular}[t]{@{}lll@{}}}%
-    \IfFileExists{mitarbeiter.txt}{%
+    \IfFileExists{komoedie-mitarbeiter.tex}{%
         \openin\@inputcheck komoedie.mitarbeiter\relax
         \endlinechar=\m@ne
         \@tempcnta=\@ne
