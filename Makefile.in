@@ -37,7 +37,7 @@ MAX_LTX_RUNS = 3
 
 ADDINPUTS += $(addprefix $(LOCAL_PATH), dtk2.cls dtk.bbx dtk.cbx dtk-full.clo \
   dtk-new-engines.clo dtk-old-engines.clo komoedie0.tex ruecken.tex dtk.nolig \
-  dtk-logos.sty impressum.tex) $(IDX_STYLE) mitarbeiter.txt
+  dtk-logos.sty impressum.tex) $(IDX_STYLE) komoedie.mitarbeiter
 
 all : $(MAIN).pdf
 

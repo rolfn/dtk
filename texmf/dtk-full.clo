@@ -394,7 +394,7 @@
   \begingroup
     \@temptokena{\begin{tabular}[t]{@{}lll@{}}}%
     \IfFileExists{mitarbeiter.txt}{%
-        \openin\@inputcheck mitarbeiter.txt\relax
+        \openin\@inputcheck komoedie.mitarbeiter\relax
         \endlinechar=\m@ne
         \@tempcnta=\@ne
         \loop%
