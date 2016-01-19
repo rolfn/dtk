@@ -1,7 +1,7 @@
 # Aktuelle Definitionen zum make-Prozess für "Die TeXnische Komödie"
 # -- anzupassen für die aktuelle Ausgabe --
 
-MAIN = komoedie
+MAIN = dtk
 
 ARTICLES += artikel1.tex
 #ADDINPUTS += artikel1-foo.tex abbildung17.png

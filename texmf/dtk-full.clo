@@ -54,7 +54,7 @@
   \begingroup
     \chardef\backside15 %
     \ch@ck7\backside\write
-    \immediate\openout\backside ruecken.dat\relax
+    \immediate\openout\backside dtk-ruecken.dat\relax
     \let\protect=\noexpand
     \immediate\write\backside{\journalname\space\DTKdate}%
     \immediate\closeout\backside\relax%
@@ -83,7 +83,7 @@
   % Testlauf zum Aufsammeln von Paket- und bib-Dateinamen
   \@ifdefinable\user@packages{%
     \newwrite\user@packages
-    \immediate\openout\user@packages userpackages.tex\relax
+    \immediate\openout\user@packages dtk-userpackages.tex\relax
     \immediate\write\user@packages{\@percentchar\space *** \DTMnow\space ***}%
     \AtEndDocument{\immediate\closeout\user@packages\relax}%
   }
@@ -113,9 +113,9 @@
   \renewcommand\maketitle[1][]{}%
 \else
   \AtEndOfClass{%
-    \InputIfFileExists{userpackages.tex}{%
+    \InputIfFileExists{dtk-userpackages.tex}{%
       \typeout{*************************************^^J%
-               * File `userpackages.tex' used.^^J%
+               * File `dtk-userpackages.tex' used.^^J%
                *************************************}%
     }{}%
     \shorthandon{"}%
@@ -393,8 +393,8 @@
 \newcommand*\ErzeugeMitarbeiterListe{%
   \begingroup
     \@temptokena{\begin{tabular}[t]{@{}lll@{}}}%
-    \IfFileExists{komoedie-mitarbeiter.tex}{%
-        \openin\@inputcheck komoedie.mitarbeiter\relax
+    \IfFileExists{dtk-mitarbeiter.tex}{%
+        \openin\@inputcheck dtk-mitarbeiter.tex\relax
         \endlinechar=\m@ne
         \@tempcnta=\@ne
         \loop%
