@@ -54,22 +54,23 @@ $(MAIN).pdf : $(MAIN).tex $(MAIN)-userpackages.tex $(ARTICLES) $(ADDINPUTS)
 	  then cp $(MAIN)-ruecken.dat $(MAIN)-ruecken.dat.old; \
 	  else touch $(MAIN)-ruecken.dat.old; fi;
 	$(LATEX) $(LATEX_OPTS) "\input{$<}"
-	if ! diff $(basename $<)-addresses.idx $(basename $<)-addresses.idx.old \
-	  > /dev/null; then $(XINDY) $(basename $<)-addresses.idx \
-	  -o $(basename $<)-addresses.ind; fi;
-	if ! diff $(MAIN)-ruecken.dat $(MAIN)-ruecken.dat.old > /dev/null; \
-	  then TEXINPUTS=$(LOCAL_PATH): pdflatex $(MAIN)-ruecken.tex; fi;
-	if $(EGREP) '$(BIBTEX_WARN)' $(basename $<).log > /dev/null; \
-	  then $(BIBTEX) $(basename $<); fi;
 	for (( i=0; i < $(MAX_LTX_RUNS); i++ )) do \
 	  if $(EGREP) '$(RERUN_WARNINGS)' $(basename $<).log > /dev/null; \
-	  then $(LATEX) $(LATEX_OPTS) "\input{$<}"; fi; \
+			then $(LATEX) $(LATEX_OPTS) "\input{$<}"; fi; \
+		if ! diff $(basename $<)-addresses.idx $(basename $<)-addresses.idx.old \
+			> /dev/null; then $(XINDY) $(basename $<)-addresses.idx \
+			-o $(basename $<)-addresses.ind; fi; \
+		if ! diff $(MAIN)-ruecken.dat $(MAIN)-ruecken.dat.old > /dev/null; \
+			then TEXINPUTS=$(LOCAL_PATH): pdflatex $(MAIN)-ruecken.tex; fi; \
+		if $(EGREP) '$(BIBTEX_WARN)' $(basename $<).log > /dev/null; \
+			then $(BIBTEX) $(basename $<); fi; \
 	done
 
 clean :
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), $(TEMP_EXT)))
 	$(RM) $(MAIN)-addresses.idx $(MAIN)-addresses.idx.old $(MAIN)-addresses.ind \
-	  $(MAIN)-ruecken.dat $(MAIN)-ruecken.dat.old $(MAIN)-ruecken.log $(MAIN)-ruecken.aux $(MAIN)-userpackages.tex \
+	  $(MAIN)-ruecken.dat $(MAIN)-ruecken.dat.old $(MAIN)-ruecken.log \
+	  $(MAIN)-ruecken.aux $(MAIN)-userpackages.tex \
 	  $(MAIN)0.log $(MAIN)0.run.xml engine.txt
 
 veryclean : clean
