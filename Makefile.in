@@ -44,7 +44,7 @@ all : $(MAIN).pdf
 x : $(XTARGET)
 
 userpackages $(MAIN)-userpackages.tex :
-	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex
+	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex ; :
 
 $(MAIN).pdf : $(MAIN).tex $(MAIN)-userpackages.tex $(ARTICLES) $(ADDINPUTS)
 	if test -f $(basename $<)-addresses.idx; \
