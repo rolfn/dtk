@@ -4,15 +4,15 @@
 MAIN = dtk
 
 ARTICLES += artikel1.tex
-#ADDINPUTS += artikel1-foo.tex abbildung17.png
+ADDINPUTS += artikel1.bib
 
 ARTICLES += artikel2.tex
-#ADDINPUTS += artikel2-bar.tex
+ADDINPUTS += artikel2.bib
 
 ARTICLES += artikel3.tex
-#ADDINPUTS += artikel3-baz.tex
 
 ARTICLES += artikel4.tex
+ADDINPUTS += artikel4.bib
 
 include Makefile.in
 

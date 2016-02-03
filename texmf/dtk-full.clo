@@ -90,7 +90,7 @@
   \renewcommand*\printbibliography[1][]{}%
   \newcommand*\DTK@addbibresource[2][]{%
     \immediate\write\user@packages{%
-      \string\addbibresource[datatype=bibtex,label=\the\c@refsection]{#2}%
+      \string\addbibresource[datatype=bibtex,label=DTK\the\c@refsection]{#2}%
         \@percentchar\space \DTK@local@inputname
     }%
   }%
@@ -187,7 +187,7 @@
       \ifDTK@bib@\ORIG@printbibliography[heading=dtk]\fi
       \DTK@embedded@enddocumenthook\endinput
     }%
-    \refsection[\the\c@refsection]%
+    \refsection[DTK\the\c@refsection]%
       \input{\DTK@local@inputname}%
     \endrefsection
   \endgroup
