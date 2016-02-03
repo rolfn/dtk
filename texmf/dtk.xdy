@@ -36,5 +36,5 @@
 (markup-indexentry :open "    \subitem " :depth 1)
 
 (markup-locclass-list :open "\relax" :close "\@nil")
-
+(markup-locref-list   :sep ",")
 

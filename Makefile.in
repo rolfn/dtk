@@ -46,6 +46,11 @@ x : $(XTARGET)
 userpackages $(MAIN)-userpackages.tex :
 	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex ; :
 
+$(MAIN)-ruecken.pdf : $(MAIN)-ruecken.tex $(MAIN)-ruecken.dat
+	TEXINPUTS=$(LOCAL_PATH): pdflatex $(MAIN)-ruecken.tex
+
+$(MAIN)-addresses.ind : $(MAIN)-addresses.idx
+	$(XINDY) $< -o $@
 
 $(MAIN).pdf : $(MAIN).tex $(MAIN)-userpackages.tex $(ARTICLES) $(ADDINPUTS)
 	if test -f $(basename $<)-addresses.idx; \
@@ -65,27 +70,6 @@ $(MAIN).pdf : $(MAIN).tex $(MAIN)-userpackages.tex $(ARTICLES) $(ADDINPUTS)
 			then $(BIBTEX) $(basename $<); fi; \
 	  if $(EGREP) '$(RERUN_WARNINGS)' $(basename $<).log > /dev/null; \
 	  then $(LATEX) $(LATEX_OPTS) "\input{$<}"; fi; \
-	done
-
-
-$(MAIN)XXX.pdf : $(MAIN).tex $(MAIN)-userpackages.tex $(ARTICLES) $(ADDINPUTS)
-	if test -f $(basename $<)-addresses.idx; \
-	  then cp $(basename $<)-addresses.idx $(basename $<)-addresses.idx.old; \
-	  else touch $(basename $<)-addresses.idx.old; fi;
-	if test -f $(MAIN)-ruecken.dat; \
-	  then cp $(MAIN)-ruecken.dat $(MAIN)-ruecken.dat.old; \
-	  else touch $(MAIN)-ruecken.dat.old; fi;
-	$(LATEX) $(LATEX_OPTS) "\input{$<}"
-	for (( i=0; i < $(MAX_LTX_RUNS); i++ )) do \
-	  if $(EGREP) '$(RERUN_WARNINGS)' $(basename $<).log > /dev/null; \
-			then $(LATEX) $(LATEX_OPTS) "\input{$<}"; fi; \
-		if ! diff $(basename $<)-addresses.idx $(basename $<)-addresses.idx.old \
-			> /dev/null; then $(XINDY) $(basename $<)-addresses.idx \
-			-o $(basename $<)-addresses.ind; fi; \
-		if ! diff $(MAIN)-ruecken.dat $(MAIN)-ruecken.dat.old > /dev/null; \
-			then TEXINPUTS=$(LOCAL_PATH): pdflatex $(MAIN)-ruecken.tex; fi; \
-		if $(EGREP) '$(BIBTEX_WARN)' $(basename $<).log > /dev/null; \
-			then $(BIBTEX) $(basename $<); fi; \
 	done
 
 clean :
