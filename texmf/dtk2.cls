@@ -250,6 +250,17 @@
 
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 
+\newcommand*\address[3]{%
+  \ClassError{dtk2}{%
+    Das Makro \string\address\space existiert nicht mehr!\MessageBreak
+    Nimm stattdessen \string\Author}{}%
+}%
+\def\author#1{%
+  \ClassError{dtk2}{%
+    Das Makro \string\author\space existiert nicht mehr!\MessageBreak
+    Nimm stattdessen \string\Author}{}%
+}%
+
 % Sternform: Autor-Eintrag im Verzeichnis, aber nicht im Artikel
 \newcommand*\Author{% #1=Vorname, #2=Nachname, #3=Adresse
   \@ifstar\DTK@Author\DTK@@Author
