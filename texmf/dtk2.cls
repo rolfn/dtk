@@ -252,8 +252,17 @@
 
 % Sternform: Autor-Eintrag im Verzeichnis, aber nicht im Artikel
 \newcommand*\Author{% #1=Vorname, #2=Nachname, #3=Adresse
-  \@ifstar{\@tempswafalse\DTK@Author}{\@tempswatrue\DTK@Author}%
+  \@ifstar\DTK@Author\DTK@@Author
 }
+
+\newcommand\DTK@Author@article[3]{%
+  \begingroup
+    \ifx\@author\@empty\let\x=\@empty\else\def\x{\and}\fi
+    \expandafter\g@addto@macro\expandafter\@author\expandafter{\x #1 #2}%
+  \endgroup
+}%
+
+\let\@author=\@empty
 
 \ifDTK@Author@
   \input{dtk-author.clo}

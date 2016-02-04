@@ -109,6 +109,7 @@
   }%
   \newcommand\address[3]{}%
   \newcommand\DTK@Author[3]{}%
+  \let\DTK@@Author=\DTK@Author
   \newcommand*\listofaddresses{}%
   \let\tableofcontents=\relax
   \renewcommand\maketitle[1][]{}%
@@ -148,12 +149,8 @@
         \noexpand\sindex[addresses]{#2#1@#1 #2!#3}}}\x
     \endgroup
   }%
-  \newcommand\DTK@Author[3]{% TODO: Auch "!" und "|" maskieren?
+  \newcommand\DTK@Author@list[3]{% TODO: Auch "!" und "|" maskieren?
     \begingroup
-      \if@tempswa
-        \ifx\@author\@empty\let\x=\@empty\else\def\x{\and}\fi
-        \expandafter\g@addto@macro\expandafter\@author\expandafter{\x #1 #2}%
-      \fi
       \def\Email##1{\escape@atsign##1\relax}% herausziehen?!
       \def\escape@atsign##1@##2\relax{%
         \noexpand\Email\string{##1\string"@##2\string}%
@@ -164,6 +161,11 @@
       \x
     \endgroup
   }%
+  \let\DTK@Author=\DTK@Author@list
+  \newcommand\DTK@@Author[3]{%
+    \DTK@Author@article{#1}{#2}{#3}%
+    \DTK@Author@list{#1}{#2}{#3}%
+  }
   \renewcommand\maketitle[1][]{%
     \thispagestyle{dtk-title}%
     \global\let\maketitle=\DTK@maketitle
