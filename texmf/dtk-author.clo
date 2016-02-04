@@ -7,6 +7,15 @@
 \let\maketitle=\DTK@maketitle
 \let\tableofcontents=\relax
 
+\newcommand\DTK@Author[3]{%
+  \begingroup
+    \if@tempswa
+      \ifx\@author\@empty\let\x=\@empty\else\def\x{\and}\fi
+      \expandafter\g@addto@macro\expandafter\@author\expandafter{\x #1 #2}%
+    \fi
+  \endgroup
+}%
+
 % Falls \bibliography{...} in traditioneller Weise nach \begin{document}.
 % (2xLaTeX-Lauf + biber + 1xLaTeX-Lauf)
 \AfterEndPreamble{%

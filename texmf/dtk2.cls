@@ -249,6 +249,12 @@
 \RequirePackage{lstautogobble}
 
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
+
+% Sternform: Autor-Eintrag im Verzeichnis, aber nicht im Artikel
+\newcommand*\Author{% #1=Vorname, #2=Nachname, #3=Adresse
+  \@ifstar{\@tempswafalse\DTK@Author}{\@tempswatrue\DTK@Author}%
+}
+
 \ifDTK@Author@
   \input{dtk-author.clo}
 \else
