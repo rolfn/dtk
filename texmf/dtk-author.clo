@@ -7,7 +7,6 @@
 \let\maketitle=\DTK@maketitle
 \let\tableofcontents=\relax
 
-\newcommand\DTK@Author[3]{}%
 \let\DTK@@Author=\DTK@Author@article
 
 % Falls \bibliography{...} in traditioneller Weise nach \begin{document}.

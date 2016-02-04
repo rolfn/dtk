@@ -108,7 +108,6 @@
     \ignorespaces
   }%
   \newcommand\address[3]{}%
-  \newcommand\DTK@Author[3]{}%
   \let\DTK@@Author=\DTK@Author
   \newcommand*\listofaddresses{}%
   \let\tableofcontents=\relax

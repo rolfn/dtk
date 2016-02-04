@@ -255,6 +255,8 @@
   \@ifstar\DTK@Author\DTK@@Author
 }
 
+\newcommand\DTK@Author[3]{}%
+
 \newcommand\DTK@Author@article[3]{%
   \begingroup
     \ifx\@author\@empty\let\x=\@empty\else\def\x{\and}\fi
