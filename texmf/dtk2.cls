@@ -253,12 +253,14 @@
 \newcommand*\address[3]{%
   \ClassError{dtk2}{%
     Das Makro \string\address\space existiert nicht mehr!\MessageBreak
-    Nimm stattdessen \string\Author}{}%
+    Nimm stattdessen \string\Author%
+    \string{Vorn.\string}\string{Nachn.\string}\string{Adr.\string}}{}%
 }%
 \def\author#1{%
   \ClassError{dtk2}{%
     Das Makro \string\author\space existiert nicht mehr!\MessageBreak
-    Nimm stattdessen \string\Author}{}%
+    Nimm stattdessen \string\Author%
+    \string{Vorn.\string}\string{Nachn.\string}\string{Adr.\string}}{}%
 }%
 
 % Sternform: Autor-Eintrag im Verzeichnis, aber nicht im Artikel
