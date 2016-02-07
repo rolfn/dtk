@@ -12,7 +12,7 @@
 \RequirePackage{xcolor,multicol,graphicx,tabularx}
 \RequirePackage[showzone=false]{datetime2}
 
-\newcommand*\addressesname{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
+\newcommand*\AutorenListenName{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
 \newcommand*\DTK@fancyJournalname{%
   \color{DTK@fancy}Die \color{black}\TeX\color{DTK@fancy}nische Kom\"odie}
 \newcommand*\DTK@keywords{}
@@ -108,7 +108,7 @@
     \ignorespaces
   }%
   \let\DTK@@Author=\DTK@Author
-  \newcommand*\listofaddresses{}%
+  \newcommand*\AutorenListe{}%
   \let\tableofcontents=\relax
   \renewcommand\maketitle[1][]{}%
 \else
@@ -127,13 +127,13 @@
   \let\ORIG@printbibliography=\printbibliography
   \renewcommand*\printbibliography[1][]{\DTK@bib@true}%
   \RequirePackage[split,protected]{splitidx} \makeindex
-  \newindex[\addressesname]{addresses}%
-  \newcommand*\listofaddresses{%
+  \newindex[\AutorenListenName]{autoren}%
+  \newcommand*\AutorenListe{%
     \clearpage
     \begingroup
       %\language\langwohyphens
-      \renewenvironment{theindex}{\theaddresses}{\endtheaddresses}%
-      \printindex[addresses]%
+      \renewenvironment{theindex}{\theAutoren}{\endtheAutoren}%
+      \printindex[autoren]%
     \endgroup
   }%
   \newcommand\DTK@Author@list[3]{% TODO: Auch "!" und "|" maskieren?
@@ -144,7 +144,7 @@
       }
       \makeatletter
       \scantokens{\protected@edef\x{%
-        \noexpand\sindex[addresses]{#2#1@#1 #2!#3}}}%
+        \noexpand\sindex[autoren]{#2#1@#1 #2!#3}}}%
       \x
     \endgroup
   }%
@@ -208,7 +208,7 @@
 \def\DTK@scan@item#1\subitem#2\relax#3\@nil{%
   \def\DTK@tempa{#1}\def\DTK@tempb{#2}\def\DTK@tempc{#3}%
 }
-\newenvironment{theaddresses}{%
+\newenvironment{theAutoren}{%
   \columnseprule=\z@ \columnsep=10\p@
   \begin{multicols}{2}[\idx@heading]%
     \makeatletter

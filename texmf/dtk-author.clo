@@ -3,7 +3,7 @@
 
 \newcommand\address[3]{}
 \newcommand*\keywords[1]{}
-\newcommand*\listofaddresses{}
+\newcommand*\AutorenListe{}
 \let\maketitle=\DTK@maketitle
 \let\tableofcontents=\relax
 
