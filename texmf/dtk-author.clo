@@ -1,7 +1,6 @@
 \ProvidesFile{dtk-author.clo}%
-  [2015/07/30 v0.1a dtk class options for author mode (RN)]
+  [2016/02/15 v0.1b dtk class options for author mode (RN)]
 
-\newcommand\address[3]{}
 \newcommand*\keywords[1]{}
 \newcommand*\AutorenListe{}
 \let\maketitle=\DTK@maketitle
