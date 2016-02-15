@@ -39,6 +39,15 @@ ADDINPUTS += $(addprefix $(LOCAL_PATH), dtk.cls dtk.bbx dtk.cbx dtk-full.clo \
   dtk-new-engines.clo dtk-old-engines.clo $(MAIN)0.tex $(MAIN)-ruecken.tex dtk.nolig \
   dtk-logos.sty) $(IDX_STYLE) $(MAIN)-mitarbeiter.tex
 
+VERSION = $(shell awk '/ProvidesClass/{print$$2}' $(LOCAL_PATH)/dtk.cls)#
+ARCHNAME = dtk-$(VERSION).zip
+DIST_FILES_0 = dtk0.tex dtk.cbx dtk.nolig dtk-url.sty dtk-author.clo dtk.cls \
+  dtk-logos.sty dtk-old-engines.clo dtk.xdy dtk.bbx dtk-full.clo \
+  dtk-new-engines.clo dtk-ruecken.tex  
+DIST_FILES_0 := $(addprefix $(LOCAL_PATH),$(DIST_FILES_0))
+DIST_FILES_1 = README.md beispiel.tex beispiel.bib
+DIST_DIR = $(MAIN)
+
 all : $(MAIN).pdf
 
 x : $(XTARGET)
@@ -81,4 +90,24 @@ clean :
 
 veryclean : clean
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), .pdf)) \
-	  $(MAIN)-ruecken.pdf
+	  $(MAIN)-ruecken.pdfdist : $(DIST_FILES) $(ARCHNAME)
+	mkdir -p $(DIST_DIR)
+	cp -p $+ $(DIST_DIR)
+	zip $(ARCHNAME) -r $(DIST_DIR)
+	rm -rf $(DIST_DIR)
+
+debug :
+	@echo »$(VERSION)«
+	@echo »$(ARCHNAME)« 
+	@echo »$(DIST_FILES_0)« 
+
+dist :
+	mkdir -p $(DIST_DIR)/doc
+	cp -p $(DIST_FILES_0) $(DIST_DIR)
+	cp -p $(DIST_FILES_1) $(DIST_DIR)/doc
+	rm -f $(ARCHNAME)
+	zip $(ARCHNAME) -r $(DIST_DIR)
+	rm -rf $(DIST_DIR)
+
+
+
