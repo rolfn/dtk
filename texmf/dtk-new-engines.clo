@@ -31,4 +31,9 @@
   }{}
 \fi
 
+\RequirePackage{newunicodechar}
+\newunicodechar{^^^^202f}{\,}% 'NARROW NO-BREAK SPACE'
+\newunicodechar{^^^^2009}{\,\hspace{0pt}}% 'THIN SPACE'
+\newunicodechar{^^^^00ad}{\-}% 'SOFT HYPHEN'
+
 \endinput
