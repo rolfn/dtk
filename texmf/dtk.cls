@@ -299,7 +299,7 @@
 \addtokomafont{caption}{\RaggedRight\small}
 \setkomafont{captionlabel}{\sffamily}
 \setcapindent{0pt}
-\setcapwidth[c]{.8\textwidth}
+\setcapwidth[c]{\textwidth}
 \renewcaptionname{ngerman}{\figurename}{Abb.}
 \renewcaptionname{ngerman}{\tablename}{Tab.}
 \def\thefigure{\@arabic\c@figure}
@@ -454,6 +454,19 @@
 
 \newenvironment{abstract}
   {\quote\small}{\endquote\medskip\par}
+
+\providecommand*\Macro[1]{\texttt{\textbackslash#1}}
+\providecommand*\Code[1]{\texttt{#1}}
+\let\Command\texttt
+\let\Environment\texttt
+\def\biblatex{\texttt{biblatex}\xspace}
+\def\tex4ht{\hologo{TeX4ht}}  
+\let\Paket\textsf
+\let\Package\textsf
+\let\Programm\textsf
+\let\Program\textsf
+\let\Env\texttt
+\let\Class\texttt
 
 \endinput
 
