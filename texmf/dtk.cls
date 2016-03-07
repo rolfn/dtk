@@ -461,10 +461,10 @@
 \let\Environment\texttt
 \def\biblatex{\texttt{biblatex}\xspace}
 \def\tex4ht{\hologo{TeX4ht}}  
-\let\Paket\textsf
-\let\Package\textsf
-\let\Programm\textsf
-\let\Program\textsf
+\let\Paket\texttt
+\let\Package\texttt
+\let\Programm\texttt
+\let\Program\texttt
 \let\Env\texttt
 \let\Class\texttt
 
