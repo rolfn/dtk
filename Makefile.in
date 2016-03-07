@@ -1,4 +1,4 @@
-# Rolf Niepraschk, 2015/10/13, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2016/03/07, Rolf.Niepraschk@gmx.de
 #
 # Hilfsdefinitionen zum make-Prozess für "Die TeXnische Komödie"
 #
@@ -102,6 +102,11 @@ debug :
 	@echo »$(DIST_FILES_0)« 
 
 dist :
+	$(LATEX) beispiel
+	$(BIBTEX) beispiel
+	$(LATEX) beispiel
+	$(LATEX) beispiel
+	make clean
 	mkdir -p $(DIST_DIR)/doc
 	cp -p $(DIST_FILES_0) $(DIST_DIR)
 	cp -p $(DIST_FILES_1) $(DIST_DIR)/doc
