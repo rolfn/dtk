@@ -1,6 +1,6 @@
 %%   $Id: beispiel.tex 42 2014-07-08 17:34:44Z herbert $
 %
-\documentclass[ngerman]{dtk2}
+\documentclass[ngerman]{dtk}
 \ifluatex\else
   \usepackage[utf8]{inputenc}
   %\usepackage[latin9]{inputenc}
@@ -8,13 +8,11 @@
 
 \addbibresource{beispiel.bib}
 
-\def\DTKversion{1.0}
-\def\DTKdate{2015-02-14}
 \let\File\texttt
 \let\Package\texttt
 
 \begin{document}
-\title{Die \texttt{dtk}-Klasse, Version \DTKversion -- \DTKdate}
+\title{Die \texttt{dtk}-Klasse, Version \DTKversion -- \DTKversiondate}
 \Author{Herbert}{Voß}
     {Wasgenstraße~21\\
      14129 Berlin\\
@@ -117,7 +115,7 @@ Demonstrationscharakter.
 
 \section{Quelltext}
 Zm Schluss folgt der Quelltext dieses Beispieldokumentes:
-\lstinputlisting[style=number,language={[AlLaTeX]{TeX}}]{\jobname.tex}
+\lstinputlisting[style=number,firstline=3,language={[AlLaTeX]{TeX}}]{\jobname.tex}
 
 
 \end{document}

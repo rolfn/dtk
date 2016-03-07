@@ -7,7 +7,9 @@
 \HyphSubstIfExists{german-x-latest}{%
   \HyphSubstLet{german}{german-x-latest}}{}
 
-\ProvidesClass{dtk}[2016/02/15 v2.0a dtk documentclass (RN)]
+\def\DTKversion{2.0a}
+\def\DTKversiondate{2016/02/15}
+\ProvidesClass{dtk}[\DTKversiondate\ v\DTKversion\ dtk documentclass (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
 \newcommand*\DTK@engine{}
