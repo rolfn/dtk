@@ -3,7 +3,7 @@
 \documentclass[ngerman]{dtk}
 \ifluatex\else
   \usepackage[utf8]{inputenc}
-  %\usepackage[latin9]{inputenc}
+  %\usepackage[latin9]{inputenc}%% Nur, wenn es nicht anders geht
 \fi
 
 \addbibresource{beispiel.bib}
@@ -38,7 +38,7 @@
 Die Dateien \File{*.clo} beinhalten die Klassenoptionen und
 werden nur fortgeschrieben, wenn etwas Neues einzufügen ist. Das Paket
 \Package{dtk} sollte nur um wichtige Pakete ergänzt werden, die für den Inhalt
-des Manuskripts wichtig sind. Das Programm \Program{pdflatex} sollte bevorzugt
+des Manuskripts wichtig sind. Das Programm \Program{lualatex} sollte bevorzugt
 zum Übersetzen eingesetzt werden. Macros wie \Macro{texttt} müssen nicht mit
 dem Backslash angegeben werden, der wird automatisch gesetzt. Es folgen
 Beispiele mit Listings in nummerierter und in nichtnummerierter Art:
@@ -81,8 +81,7 @@ die Elemente mit Ziffern oder Buchstaben numeriert.
 \item Listen kann man auch
 verschachteln:
   \begin{enumerate}
-  \item Die maximale Schachtelungstiefe
-  ist~4.
+  \item Die maximale Schachtelungstiefe ist~4.
   \item Bezeichnung und Ein\-rückung der Elemente
   wechseln automatisch.
   \end{enumerate}
@@ -96,7 +95,7 @@ verschachteln:
 \item[Gemse:]
    ein großes Tier, das
    westlich des Semmering von Touristen verjagt wird.
-\item[G"urteltier:]
+\item[Gürteltier:]
    ein mittelgroßes Tier, das
    hier nur wegen der Länge seines Namens vorkommt.
 \end{description}

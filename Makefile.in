@@ -39,7 +39,7 @@ ADDINPUTS += $(addprefix $(LOCAL_PATH), dtk.cls dtk.bbx dtk.cbx dtk-full.clo \
   dtk-new-engines.clo dtk-old-engines.clo $(MAIN)0.tex $(MAIN)-ruecken.tex dtk.nolig \
   dtk-logos.sty) $(IDX_STYLE) $(MAIN)-mitarbeiter.tex
 
-VERSION = $(shell awk '/ProvidesClass/{print$$2}' $(LOCAL_PATH)/dtk.cls)#
+VERSION = $(shell awk -F"[{}]" '/\\def\\DTKversion\{/{print$$2}' $(LOCAL_PATH)/dtk.cls)#
 ARCHNAME = dtk-$(VERSION).zip
 DIST_FILES_0 = dtk0.tex dtk.cbx dtk.nolig dtk-url.sty dtk-author.clo dtk.cls \
   dtk-logos.sty dtk-old-engines.clo dtk.xdy dtk.bbx dtk-full.clo \
@@ -90,11 +90,7 @@ clean :
 
 veryclean : clean
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), .pdf)) \
-	  $(MAIN)-ruecken.pdfdist : $(DIST_FILES) $(ARCHNAME)
-	mkdir -p $(DIST_DIR)
-	cp -p $+ $(DIST_DIR)
-	zip $(ARCHNAME) -r $(DIST_DIR)
-	rm -rf $(DIST_DIR)
+	  $(MAIN)-ruecken.pdf
 
 debug :
 	@echo »$(VERSION)«
@@ -106,7 +102,6 @@ dist :
 	$(BIBTEX) beispiel
 	$(LATEX) beispiel
 	$(LATEX) beispiel
-	make clean
 	mkdir -p $(DIST_DIR)/doc
 	cp -p $(DIST_FILES_0) $(DIST_DIR)
 	cp -p $(DIST_FILES_1) $(DIST_DIR)/doc
