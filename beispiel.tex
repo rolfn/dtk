@@ -1,9 +1,7 @@
-%%   $Id: beispiel.tex 42 2014-07-08 17:34:44Z herbert $
-%
 \documentclass[ngerman]{dtk}
 \ifluatex\else
   \usepackage[utf8]{inputenc}
-  %\usepackage[latin9]{inputenc}%% Nur, wenn es nicht anders geht
+  %\usepackage[latin9]{inputenc}
 \fi
 
 \addbibresource{beispiel.bib}
@@ -81,7 +79,8 @@ die Elemente mit Ziffern oder Buchstaben numeriert.
 \item Listen kann man auch
 verschachteln:
   \begin{enumerate}
-  \item Die maximale Schachtelungstiefe ist~4.
+  \item Die maximale Schachtelungstiefe
+  ist~4.
   \item Bezeichnung und Ein\-rückung der Elemente
   wechseln automatisch.
   \end{enumerate}
@@ -95,7 +94,7 @@ verschachteln:
 \item[Gemse:]
    ein großes Tier, das
    westlich des Semmering von Touristen verjagt wird.
-\item[Gürteltier:]
+\item[G"urteltier:]
    ein mittelgroßes Tier, das
    hier nur wegen der Länge seines Namens vorkommt.
 \end{description}
@@ -114,7 +113,7 @@ Demonstrationscharakter.
 
 \section{Quelltext}
 Zm Schluss folgt der Quelltext dieses Beispieldokumentes:
-\lstinputlisting[style=number,firstline=3,language={[AlLaTeX]{TeX}}]{\jobname.tex}
+\lstinputlisting[style=number,language={[AlLaTeX]{TeX}}]{\jobname.tex}
 
 
 \end{document}
