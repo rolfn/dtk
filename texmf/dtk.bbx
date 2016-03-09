@@ -13,8 +13,8 @@
 %%[2015/11/03 v0.06 biblatex bibliography style]
 
 % Load the standard style to avoid copy-pasting unnecessary material
-\RequireBibliographyStyle{chem-angew}
-%\RequireBibliographyStyle{numeric}
+%\RequireBibliographyStyle{chem-angew}
+\RequireBibliographyStyle{numeric}
 %\RequireBibliographyStyle{authoryear}
 
 \DeclareBibliographyOption{dashed}[true]{%
@@ -27,15 +27,15 @@
   {
     doi          = true ,
     eprint       = true , 
-    firstinits   = false,
+    giveninits   = false,
     isbn         = true ,
     maxnames     = 3   ,
     minnames     = 1   ,
 %    maxcitenames= 2     ,
 %    pageranges  = true  ,
     url          = true,
-    articletitle = true,
-    chaptertitle = true,
+%    articletitle = true,
+%    chaptertitle = true,
 %    biblabel    = parens,
      sorting     = nyvt,  
      dashed      = true,
@@ -92,10 +92,10 @@
 
 \renewcommand*\labelnamepunct{\addcolon\addspace}
 
-\DeclareNameFormat{default}{%
-  \usebibmacro{name:first-last}{#1}{#3}{#5}{#7}%
-%  \usebibmacro{name:first-last}{#1}{#4}{#5}{#7}%
-  \usebibmacro{name:andothers}}
+%\DeclareNameFormat{default}{%
+%  \usebibmacro{name:first-last}{#1}{#3}{#5}{#7}%
+%%  \usebibmacro{name:first-last}{#1}{#4}{#5}{#7}%
+%  \usebibmacro{name:andothers}}
 
 \newbibmacro*{bbx:dashcheck}[2]{%
   \ifboolexpr{%

@@ -1,3 +1,12 @@
+;; ---------------------------------------------------------------
+;; dtk.xdy --- A set of biblatex implementations of
+;;   dtk index style for DANTE journal 
+;;   "Die TeXnische Komödie"
+;; Maintained by Rolf Niepraschk
+;; (C) Rolf.Niepraschk@gmx.de
+;; Released under the LaTeX Project Public License v1.3c or later
+;; See http://www.latex-project.org/lppl.txt
+;; ---------------------------------------------------------------
 
 ;; 2015/07/16 v0.1d, Rolf Niepraschk
 
