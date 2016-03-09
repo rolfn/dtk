@@ -44,8 +44,8 @@ ARCHNAME = dtk-$(VERSION).zip
 DIST_FILES_0 = dtk0.tex dtk.cbx dtk.nolig dtk-url.sty dtk-author.clo dtk.cls \
   dtk-logos.sty dtk-old-engines.clo dtk.xdy dtk.bbx dtk-full.clo \
   dtk-new-engines.clo dtk-ruecken.tex  
-DIST_FILES_0 := $(addprefix $(LOCAL_PATH),$(DIST_FILES_0))
-DIST_FILES_1 = README.md beispiel.tex beispiel.bib beispiel.pdf
+DIST_FILES_0 := README.md $(addprefix $(LOCAL_PATH),$(DIST_FILES_0))
+DIST_FILES_1 = beispiel.tex beispiel.bib beispiel.pdf
 DIST_DIR = $(MAIN)
 
 all : $(MAIN).pdf
