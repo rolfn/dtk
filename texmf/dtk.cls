@@ -2,7 +2,7 @@
 %%
 %% LaTeX Class for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2015- 
+%% Copyright (C) 2015-
 %% Rolf Niepraschk, Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -21,7 +21,7 @@
 \HyphSubstIfExists{german-x-latest}{%
   \HyphSubstLet{german}{german-x-latest}}{}
 
-\def\DTKversion{2.0b}
+\def\DTKversion{2.02}
 \def\DTKversiondate{2016/02/15}
 \ProvidesClass{dtk}[\DTKversiondate\ v\DTKversion\ dtk documentclass (RN)]
 
@@ -476,7 +476,7 @@
 \let\Command\texttt
 \let\Environment\texttt
 \def\biblatex{\texttt{biblatex}\xspace}
-\def\tex4ht{\hologo{TeX4ht}}  
+\def\tex4ht{\hologo{TeX4ht}}
 \let\Paket\texttt
 \let\Package\texttt
 \let\Programm\texttt
