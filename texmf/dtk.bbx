@@ -8,7 +8,7 @@
 %% See http://www.latex-project.org/lppl.txt
 %% ---------------------------------------------------------------
 %% 
-\ProvidesFile{dtk.bbx}[2016/04/02 v0.10 biblatex bibliography style for DTK]
+\ProvidesFile{dtk.bbx}[2016/04/04 v0.11 biblatex bibliography style for DTK]
 
 % Load the standard style to avoid copy-pasting unnecessary material
 \RequireBibliographyStyle{chem-angew}
@@ -25,7 +25,7 @@
   {
     doi          = true ,
     eprint       = true , 
-    firstinits   = false,
+    giveninits   = false,
     isbn         = true ,
     maxnames     = 3   ,
     minnames     = 1   ,
@@ -92,8 +92,8 @@
 
 \DeclareNameFormat{default}{%
   \nameparts{#1}%
-  \usebibmacro{name:first-last}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}%
-%  \usebibmacro{name:first-last}\namepartfamily}{\namepartgiveni}{\namepartprefix}{\namepartsuffix}
+  \usebibmacro{name:given-family}{\namepartfamily}{\namepartgiven}{\namepartprefix}{\namepartsuffix}%
+%  \usebibmacro{name:given-family}\namepartfamily}{\namepartgiveni}{\namepartprefix}{\namepartsuffix}
   \usebibmacro{name:andothers}}
 
 \newbibmacro*{bbx:dashcheck}[2]{%
