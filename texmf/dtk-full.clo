@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2015/10/14 v0.1e dtk class options for full mode (RN)]
+  [2016/04/11 v0.1f dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -404,7 +404,7 @@
   \@nameuse{filecontents*}{#3.tex}}
 \def\endErstelleGrafik{%
   \@nameuse{endfilecontents*}
-  \immediate\write18{\dtk@compiler\space\dtk@dateiname}%
+  \DTK@exec{\dtk@compiler\space\dtk@dateiname}%
   \expandafter\includegraphics\expandafter[\dtk@grafikOptionen]{\dtk@dateiname}%
 }
 

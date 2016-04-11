@@ -21,8 +21,8 @@
 \HyphSubstIfExists{german-x-latest}{%
   \HyphSubstLet{german}{german-x-latest}}{}
 
-\def\DTKversion{2.02}
-\def\DTKversiondate{2016/02/15}
+\def\DTKversion{2.03}
+\def\DTKversiondate{2016/04/11}
 \ProvidesClass{dtk}[\DTKversiondate\ v\DTKversion\ dtk documentclass (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
@@ -170,6 +170,12 @@
   \input{dtk-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
 \else
   \input{dtk-new-engines.clo}% LuaTeX oder XeTeX
+\fi
+
+\ifnum\DTK@engine = 4 %
+  \newcommand*\DTK@exec[1]{\directlua{os.execute("\luaescapestring{#1}")}}
+\else
+  \newcommand*\DTK@exec[1]{\immediate\write18{#1}}
 \fi
 
 \RequirePackage[autostyle=true,babel=once,german=guillemets,maxlevel=3]{csquotes}%
