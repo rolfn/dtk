@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2016/04/11 v0.1f dtk class options for full mode (RN)]
+  [2016/04/12 v0.1f dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -391,21 +391,21 @@
   }
 \newcommand\rolllabel[1]{\hspace\labelsep \textbf{#1}\hfill}
 
-\RequirePackage{filecontents}
+\RequirePackage{shellesc,filecontents}
 %% [#1]: Optionen für \includegraphics  [#2]: Compiler  #3: Dateiname
 %%
 \def\ErstelleGrafik{\@ifnextchar[{\ErstelleGrafik@i}{\ErstelleGrafik@i[]}}
 \def\ErstelleGrafik@i[#1]{\@ifnextchar[{\ErstelleGrafik@ii[#1]}{%
   \ErstelleGrafik@ii[#1][xelatex]}}%
 \def\ErstelleGrafik@ii[#1][#2]#3{%
-  \gdef\dtk@dateiname{#3}%
-  \gdef\dtk@grafikOptionen{#1}%
-  \ifx\relax#2\relax\gdef\dtk@compiler{xelatex}\else\gdef\dtk@compiler{#2}\fi
-  \@nameuse{filecontents*}{#3.tex}}
+  \gdef\DTK@dateiname{#3}%
+  \gdef\DTK@grafikOptionen{#1}%
+  \ifx\relax#2\relax\gdef\DTK@compiler{xelatex}\else\gdef\DTK@compiler{#2}\fi
+  \@nameuse{filecontents*}{#3.tex}}%
 \def\endErstelleGrafik{%
-  \@nameuse{endfilecontents*}
-  \DTK@exec{\dtk@compiler\space\dtk@dateiname}%
-  \expandafter\includegraphics\expandafter[\dtk@grafikOptionen]{\dtk@dateiname}%
+  \@nameuse{endfilecontents*}%
+  \ShellEscape{\DTK@compiler\space\DTK@dateiname}%
+  \expandafter\includegraphics\expandafter[\DTK@grafikOptionen]{\DTK@dateiname}%
 }
 
 \providecommand*\InfoTeX{???}

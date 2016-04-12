@@ -172,12 +172,6 @@
   \input{dtk-new-engines.clo}% LuaTeX oder XeTeX
 \fi
 
-\ifnum\DTK@engine = 4 %
-  \newcommand*\DTK@exec[1]{\directlua{os.execute("\luaescapestring{#1}")}}
-\else
-  \newcommand*\DTK@exec[1]{\immediate\write18{#1}}
-\fi
-
 \RequirePackage[autostyle=true,babel=once,german=guillemets,maxlevel=3]{csquotes}%
 \MakeAutoQuote{»}{«}
 \defineshorthand{"`}{\openautoquote}%
