@@ -2,7 +2,7 @@
 %%
 %% LaTeX Class for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2015- 
+%% Copyright (C) 2015-
 %% Rolf Niepraschk, Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -25,7 +25,15 @@
 }
 
 \RequirePackage{xcolor,multicol,graphicx,tabularx}
-\RequirePackage[showzone=false]{datetime2}
+\ifx\pdfvariable\undefined % altes LuaTeX oder kein LuaTeX
+  \usepackage[showzone=false]{datetime2}
+\else
+  \let\SAVE@pdfcreationdate=\pdfcreationdate
+  \edef\pdfcreationdate{\pdffeedback creationdate}
+  % v1.4 ist inkompatibel mit LuaTeX 0.95/luatex85
+  \usepackage[showzone=false]{datetime2}
+  \let\pdfcreationdate=\SAVE@pdfcreationdate
+\fi
 
 \newcommand*\AutorenListenName{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
 \newcommand*\DTK@fancyJournalname{%
