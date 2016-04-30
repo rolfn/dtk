@@ -29,7 +29,7 @@
   \usepackage[showzone=false]{datetime2}
 \else
   \let\SAVE@pdfcreationdate=\pdfcreationdate
-  \edef\pdfcreationdate{\pdffeedback creationdate}
+  \edef\pdfcreationdate{\pdfcreationdate}
   % v1.4 ist inkompatibel mit LuaTeX 0.95/luatex85
   \usepackage[showzone=false]{datetime2}
   \let\pdfcreationdate=\SAVE@pdfcreationdate
