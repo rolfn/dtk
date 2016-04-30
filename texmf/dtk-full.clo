@@ -28,6 +28,7 @@
 \ifx\pdfvariable\undefined % altes LuaTeX oder kein LuaTeX
   \usepackage[showzone=false]{datetime2}
 \else
+  \RequirePackage{luatex85}
   \let\SAVE@pdfcreationdate=\pdfcreationdate
   \edef\pdfcreationdate{\pdfcreationdate}
   % v1.4 ist inkompatibel mit LuaTeX 0.95/luatex85
