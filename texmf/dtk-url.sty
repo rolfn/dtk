@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{dtk-url}[2015/09/25 v1.1 Urls for DTK (HO)]
+\ProvidesPackage{dtk-url}[2016/04/23 v1.2 Urls for DTK (HO,hv)]
 %% 1.1 hv
 
 \RequirePackage{url}[2006/04/12]
@@ -76,10 +76,11 @@
 \fi
 
 % Ensure that the needed primitives are enabled in LuaTeX
-\RequirePackage{ifluatex}
-\ifluatex
-  \directlua{tex.enableprimitives('',{'pdfstartlink','pdfendlink'})}%
-\fi
+%% No more needed, we use the new macros hv 2016-04-23
+%\RequirePackage{ifluatex}
+%\ifluatex
+%  \directlua{tex.enableprimitives('',{'pdfstartlink','pdfendlink'})}%
+%\fi
 
 \let\DTK@UrlLinkPrefix\@empty
 \ifDTK@Url@
@@ -97,7 +98,7 @@
       }%
     \x
     \DTK@UrlWrite{\DTK@UrlType}{\DTK@Raw}%
-    \pdfstartlink attr{%
+    \pdfextension startlink attr{%
       /H/I%
       /C[1 0 0]% red
       /Border[1 0 0]%
@@ -112,7 +113,7 @@
       >>%
     }%
     #1%
-    \pdfendlink
+    \pdfextension endlink
   }%
 
   % Implement writing of file \DTK@UrlFile
