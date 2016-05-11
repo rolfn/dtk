@@ -166,11 +166,15 @@
 \newcommand*\DTKttFontName{}   \let\DTKttFontName=\DTK@FontNameMissing
 \newcommand*\DTKmathFontName{} \let\DTKmathFontName=\DTK@FontNameMissing
 
+\RequirePackage[right]{eurosym}
+
 \ifnum\DTK@engine < 3 %
   \input{dtk-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
 \else
   \input{dtk-new-engines.clo}% LuaTeX oder XeTeX
 \fi
+
+\let\texteuro=\officialeuro
 
 \RequirePackage[autostyle=true,babel=once,german=guillemets,maxlevel=3]{csquotes}%
 \MakeAutoQuote{»}{«}

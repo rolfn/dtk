@@ -15,13 +15,14 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-old-engines.clo}%
-  [2015/10/30 v0.1d dtk class options for pdfTeX/TeX+dvips (RN)]
+  [2016/05/11 v0.1e dtk class options for pdfTeX/TeX+dvips (RN)]
 
 \typeout{OLD-ENGINE}
 
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{textcomp}
+\DeclareUnicodeCharacter{20AC}{\officialeuro}
 
 \InputIfFileExists{dtk-fonts.cfg}{%
   \typeout{*************************************^^J%
