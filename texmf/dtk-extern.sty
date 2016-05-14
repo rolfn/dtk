@@ -42,7 +42,7 @@
 %% [#1]: Optionen  #2: Dateiname
 %%
 \newenvironment{ErstelleGrafik}[2][]
-  {\setkeys{dtk}{#1}%                   \begin
+  {\global\setkeys{dtk}{#1}%                   \begin
      \gdef\dtk@extern@dateiname{#2}%
      \@nameuse{filecontents*}{#2.tex}}
   {\@nameuse{endfilecontents*}%         \end
