@@ -400,23 +400,6 @@
   }
 \newcommand\rolllabel[1]{\hspace\labelsep \textbf{#1}\hfill}
 
-\RequirePackage{shellesc,filecontents}
-%% [#1]: Optionen für \includegraphics  [#2]: Compiler  #3: Dateiname
-%%
-\def\ErstelleGrafik{\@ifnextchar[{\ErstelleGrafik@i}{\ErstelleGrafik@i[]}}
-\def\ErstelleGrafik@i[#1]{\@ifnextchar[{\ErstelleGrafik@ii[#1]}{%
-  \ErstelleGrafik@ii[#1][xelatex]}}%
-\def\ErstelleGrafik@ii[#1][#2]#3{%
-  \gdef\DTK@dateiname{#3}%
-  \gdef\DTK@grafikOptionen{#1}%
-  \ifx\relax#2\relax\gdef\DTK@compiler{xelatex}\else\gdef\DTK@compiler{#2}\fi
-  \@nameuse{filecontents*}{#3.tex}}%
-\def\endErstelleGrafik{%
-  \@nameuse{endfilecontents*}%
-  \ShellEscape{\DTK@compiler\space\DTK@dateiname}%
-  \expandafter\includegraphics\expandafter[\DTK@grafikOptionen]{\DTK@dateiname}%
-}
-
 \providecommand*\InfoTeX{???}
 
 \newcommand*\MitarbeiterListe{}
