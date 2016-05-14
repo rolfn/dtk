@@ -101,6 +101,8 @@
 
 \RequirePackage{scrhack}% Andere Pakete KOMA-Script-freundlich machen
 
+\RequirePackage{dtk-extern}
+
 % http://www.komascript.de/release3.18
 \ifstr{\KOMAScriptVersion}{2015/07/02 v3.18 KOMA-Script}{%
   \ifx\par@update\default@par@update\else
