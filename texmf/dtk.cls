@@ -201,6 +201,7 @@
 ,backend=biber
 ]{biblatex}
 
+\let\ORIGprintbibliography\printbibliography
 \g@addto@macro\bibsetup{\RaggedRight}
 
 %\RequirePackage{etex} % ???
