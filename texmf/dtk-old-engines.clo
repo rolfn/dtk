@@ -44,6 +44,6 @@
 % 'RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK'
 % 'LEFT-POINTING DOUBLE ANGLE QUOTATION MARK'
 
-\DeclareUnicodeCharacter{20AC}{\officialeuro}
+\DeclareUnicodeCharacter{€}{\DTK@euro}
 
 \endinput

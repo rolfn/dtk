@@ -174,13 +174,15 @@
 
 \RequirePackage[right]{eurosym}
 
+\DeclareRobustCommand\DTK@euro{\scalebox{0.9}{\officialeuro}}
+
 \ifnum\DTK@engine < 3 %
   \input{dtk-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
 \else
   \input{dtk-new-engines.clo}% LuaTeX oder XeTeX
 \fi
 
-\let\texteuro=\officialeuro
+\let\texteuro=\DTK@euro
 
 \ifxetex\else
 \RequirePackage[%

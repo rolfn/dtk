@@ -46,7 +46,7 @@
   }{}
 \fi
 
-\MakeAutoQuote{^^^^00bb}{^^^^00ab}
+\MakeAutoQuote{»}{«}
 % 'RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK'
 % 'LEFT-POINTING DOUBLE ANGLE QUOTATION MARK'
 
@@ -54,6 +54,6 @@
 \newunicodechar{^^^^202f}{\,}% 'NARROW NO-BREAK SPACE'
 \newunicodechar{^^^^2009}{\,\hspace{0pt}}% 'THIN SPACE'
 \newunicodechar{^^^^00ad}{\-}% 'SOFT HYPHEN'
-\newunicodechar{^^^^20ac}{\officialeuro}% 'EURO SIGN'
+\newunicodechar{€}{\DTK@euro}% 'EURO SIGN'
 
 \endinput
