@@ -22,7 +22,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \def\DTKversion{2.04}
-\def\DTKversiondate{2016/05/08}
+\def\DTKversiondate{2016/05/16}
 \ProvidesClass{dtk}[\DTKversiondate\ v\DTKversion\ dtk documentclass (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
@@ -168,6 +168,10 @@
 \newcommand*\DTKttFontName{}   \let\DTKttFontName=\DTK@FontNameMissing
 \newcommand*\DTKmathFontName{} \let\DTKmathFontName=\DTK@FontNameMissing
 
+\RequirePackage[autostyle=true,german=guillemets,maxlevel=3]{csquotes}%
+\defineshorthand{"`}{\openautoquote}%
+\defineshorthand{"'}{\closeautoquote}%
+
 \RequirePackage[right]{eurosym}
 
 \ifnum\DTK@engine < 3 %
@@ -177,11 +181,6 @@
 \fi
 
 \let\texteuro=\officialeuro
-
-\RequirePackage[autostyle=true,babel=once,german=guillemets,maxlevel=3]{csquotes}%
-\MakeAutoQuote{»}{«}
-\defineshorthand{"`}{\openautoquote}%
-\defineshorthand{"'}{\closeautoquote}%
 
 \ifxetex\else
 \RequirePackage[%

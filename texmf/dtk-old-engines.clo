@@ -3,7 +3,7 @@
 %%
 %% LaTeX Class for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2015- 
+%% Copyright (C) 2015-
 %% Rolf Niepraschk, Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -15,14 +15,13 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-old-engines.clo}%
-  [2016/05/11 v0.1e dtk class options for pdfTeX/TeX+dvips (RN)]
+  [2016/05/15 v0.1e dtk class options for pdfTeX/TeX+dvips (RN)]
 
 \typeout{OLD-ENGINE}
 
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{textcomp}
-\DeclareUnicodeCharacter{20AC}{\officialeuro}
 
 \InputIfFileExists{dtk-fonts.cfg}{%
   \typeout{*************************************^^J%
@@ -39,5 +38,12 @@
     %
     \def\DTKmathFontName{Computer Modern Math}% ???
 }
+
+\MakeAutoQuote{»}{«}
+%\MakeAutoQuote{^^bb}{^^ab}
+% 'RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK'
+% 'LEFT-POINTING DOUBLE ANGLE QUOTATION MARK'
+
+\DeclareUnicodeCharacter{20AC}{\officialeuro}
 
 \endinput
