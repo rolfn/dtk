@@ -168,8 +168,6 @@
 \newcommand*\DTKttFontName{}   \let\DTKttFontName=\DTK@FontNameMissing
 \newcommand*\DTKmathFontName{} \let\DTKmathFontName=\DTK@FontNameMissing
 
-\RequirePackage[right]{eurosym}
-
 \ifnum\DTK@engine < 3 %
   \input{dtk-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
 \else
@@ -193,7 +191,7 @@
     \endgroup
   }
   \EURO@scale@to@rm{\setbox0\hbox{XWYZH}\@tempdima=\ht0}{7.31999}% matchuppercase
-  % Extrakt aus "eurosym.sty" 
+  % Extrakt aus "eurosym.sty"
   \DeclareFontFamily{U}{eurosym}{}
   \DeclareFontShape{U}{eurosym}{m}{n}{   <-> s*[\eurosym@@Scale] feymr10 }{}
   \DeclareFontShape{U}{eurosym}{m}{sc}{  <-> s*[\eurosym@@Scale] ssub*eurosym/m/n }{}
@@ -210,7 +208,7 @@
   \DeclareFontShape{U}{eurosym}{b}{it}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/sl }{}
   \DeclareFontShape{U}{eurosym}{b}{sc}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/n }{}
   \DeclareFontShape{U}{eurosym}{b}{ol}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/ol }{}
-  \DeclareRobustCommand\DTK@euro{{\fontencoding{U}\fontfamily{eurosym}\selectfont{}e}}  
+  \DeclareRobustCommand\DTK@euro{{\fontencoding{U}\fontfamily{eurosym}\selectfont{}e}}
 \else
   % Sobald das Paket Skalierung unterstützt
   \RequirePackage[right,scaled]{eurosym}
