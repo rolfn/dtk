@@ -190,7 +190,7 @@
     \ClassInfo{dtk}{The eurosym family is scaled by \eurosym@@Scale}%
     \endgroup
   }
-  \EURO@scale@to@rm{\setbox0\hbox{XWYZH}\@tempdima=\ht0}{7.31999}% matchuppercase
+  \EURO@scale@to@rm{\setbox0\hbox{XWYZH}\@tempdima=\ht0}{6.9}% matchuppercase
   % Extrakt aus "eurosym.sty"
   \DeclareFontFamily{U}{DTK@eurosym}{}
   \DeclareFontShape{U}{DTK@eurosym}{m}{n}{ <-> s*[\eurosym@@Scale] feymr10 }{}
