@@ -168,7 +168,16 @@
 \newcommand*\DTKttFontName{}   \let\DTKttFontName=\DTK@FontNameMissing
 \newcommand*\DTKmathFontName{} \let\DTKmathFontName=\DTK@FontNameMissing
 
+\RequirePackage[right]{eurosym}
+
+\ifnum\DTK@engine < 3 %
+  \input{dtk-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
+\else
+  \input{dtk-new-engines.clo}% LuaTeX oder XeTeX
+\fi
+
 \RequirePackage[autostyle=true,german=guillemets,maxlevel=3]{csquotes}%
+\MakeAutoQuote{»}{«}
 \defineshorthand{"`}{\openautoquote}%
 \defineshorthand{"'}{\closeautoquote}%
 
@@ -206,12 +215,6 @@
   % Sobald das Paket Skalierung unterstützt
   \RequirePackage[right,scaled]{eurosym}
 %%%\DeclareRobustCommand\DTK@euro{\scalebox{0.9}{\officialeuro}}
-\fi
-
-\ifnum\DTK@engine < 3 %
-  \input{dtk-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
-\else
-  \input{dtk-new-engines.clo}% LuaTeX oder XeTeX
 \fi
 
 \let\texteuro=\DTK@euro
