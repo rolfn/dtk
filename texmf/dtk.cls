@@ -22,7 +22,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \def\DTKversion{2.04}
-\def\DTKversiondate{2016/05/16}
+\def\DTKversiondate{2016/05/17}
 \ProvidesClass{dtk}[\DTKversiondate\ v\DTKversion\ dtk documentclass (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
@@ -172,9 +172,41 @@
 \defineshorthand{"`}{\openautoquote}%
 \defineshorthand{"'}{\closeautoquote}%
 
-\RequirePackage[right]{eurosym}
-
-\DeclareRobustCommand\DTK@euro{\scalebox{0.9}{\officialeuro}}
+\iftrue
+  \newcommand*\EURO@scale@to@rm[2]{%
+    \begingroup
+    \fontsize{10}{0}\usefont{\encodingdefault}{\rmdefault}{m}{n}%
+    #1%
+    \xdef\eurosym@@Scale{%
+      \strip@pt
+      \dimexpr  1pt * \@tempdima / \dimexpr#2pt\relax }%
+    \ClassInfo{dtk}{The eurosym family is scaled by \eurosym@@Scale}%
+    \endgroup
+  }
+  \EURO@scale@to@rm{\setbox0\hbox{XWYZH}\@tempdima=\ht0}{7.31999}% matchuppercase
+  % Extrakt aus "eurosym.sty" 
+  \DeclareFontFamily{U}{eurosym}{}
+  \DeclareFontShape{U}{eurosym}{m}{n}{   <-> s*[\eurosym@@Scale] feymr10 }{}
+  \DeclareFontShape{U}{eurosym}{m}{sc}{  <-> s*[\eurosym@@Scale] ssub*eurosym/m/n }{}
+  \DeclareFontShape{U}{eurosym}{m}{sl}{  <-> s*[\eurosym@@Scale] feymo10 }{}
+  \DeclareFontShape{U}{eurosym}{m}{it}{  <-> s*[\eurosym@@Scale] ssub*eurosym/m/sl }{}
+  \DeclareFontShape{U}{eurosym}{m}{ol}{  <-> s*[\eurosym@@Scale] feyml10 }{}
+  \DeclareFontShape{U}{eurosym}{bx}{n}{   <-> s*[\eurosym@@Scale] feybr10 }{}
+  \DeclareFontShape{U}{eurosym}{bx}{sc}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/n }{}
+  \DeclareFontShape{U}{eurosym}{bx}{sl}{  <-> s*[\eurosym@@Scale] feybo10 }{}
+  \DeclareFontShape{U}{eurosym}{bx}{it}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/sl }{}
+  \DeclareFontShape{U}{eurosym}{bx}{ol}{  <-> s*[\eurosym@@Scale] feybl10 }{}
+  \DeclareFontShape{U}{eurosym}{b}{n}{   <-> s*[\eurosym@@Scale] ssub*eurosym/bx/n }{}
+  \DeclareFontShape{U}{eurosym}{b}{sl}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/sl }{}
+  \DeclareFontShape{U}{eurosym}{b}{it}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/sl }{}
+  \DeclareFontShape{U}{eurosym}{b}{sc}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/n }{}
+  \DeclareFontShape{U}{eurosym}{b}{ol}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/ol }{}
+  \DeclareRobustCommand\DTK@euro{{\fontencoding{U}\fontfamily{eurosym}\selectfont{}e}}  
+\else
+  % Sobald das Paket Skalierung unterstützt
+  \RequirePackage[right,scaled]{eurosym}
+%%%\DeclareRobustCommand\DTK@euro{\scalebox{0.9}{\officialeuro}}
+\fi
 
 \ifnum\DTK@engine < 3 %
   \input{dtk-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
