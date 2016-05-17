@@ -3,7 +3,7 @@
 %%
 %% LaTeX Class for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2015- 
+%% Copyright (C) 2015-
 %% Rolf Niepraschk, Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -22,7 +22,7 @@
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
 \RequirePackage{textcomp}
-\DeclareUnicodeCharacter{20AC}{\officialeuro}
+\DeclareUnicodeCharacter{20AC}{\DTK@euro}
 
 \InputIfFileExists{dtk-fonts.cfg}{%
   \typeout{*************************************^^J%

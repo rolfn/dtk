@@ -192,23 +192,23 @@
   }
   \EURO@scale@to@rm{\setbox0\hbox{XWYZH}\@tempdima=\ht0}{7.31999}% matchuppercase
   % Extrakt aus "eurosym.sty"
-  \DeclareFontFamily{U}{eurosym}{}
-  \DeclareFontShape{U}{eurosym}{m}{n}{   <-> s*[\eurosym@@Scale] feymr10 }{}
-  \DeclareFontShape{U}{eurosym}{m}{sc}{  <-> s*[\eurosym@@Scale] ssub*eurosym/m/n }{}
-  \DeclareFontShape{U}{eurosym}{m}{sl}{  <-> s*[\eurosym@@Scale] feymo10 }{}
-  \DeclareFontShape{U}{eurosym}{m}{it}{  <-> s*[\eurosym@@Scale] ssub*eurosym/m/sl }{}
-  \DeclareFontShape{U}{eurosym}{m}{ol}{  <-> s*[\eurosym@@Scale] feyml10 }{}
-  \DeclareFontShape{U}{eurosym}{bx}{n}{   <-> s*[\eurosym@@Scale] feybr10 }{}
-  \DeclareFontShape{U}{eurosym}{bx}{sc}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/n }{}
-  \DeclareFontShape{U}{eurosym}{bx}{sl}{  <-> s*[\eurosym@@Scale] feybo10 }{}
-  \DeclareFontShape{U}{eurosym}{bx}{it}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/sl }{}
-  \DeclareFontShape{U}{eurosym}{bx}{ol}{  <-> s*[\eurosym@@Scale] feybl10 }{}
-  \DeclareFontShape{U}{eurosym}{b}{n}{   <-> s*[\eurosym@@Scale] ssub*eurosym/bx/n }{}
-  \DeclareFontShape{U}{eurosym}{b}{sl}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/sl }{}
-  \DeclareFontShape{U}{eurosym}{b}{it}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/sl }{}
-  \DeclareFontShape{U}{eurosym}{b}{sc}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/n }{}
-  \DeclareFontShape{U}{eurosym}{b}{ol}{  <-> s*[\eurosym@@Scale] ssub*eurosym/bx/ol }{}
-  \DeclareRobustCommand\DTK@euro{{\fontencoding{U}\fontfamily{eurosym}\selectfont{}e}}
+  \DeclareFontFamily{U}{DTK@eurosym}{}
+  \DeclareFontShape{U}{DTK@eurosym}{m}{n}{ <-> s*[\eurosym@@Scale] feymr10 }{}
+  \DeclareFontShape{U}{DTK@eurosym}{m}{sc}{ <-> s*[\eurosym@@Scale] ssub*DTK@eurosym/m/n }{}
+  \DeclareFontShape{U}{DTK@eurosym}{m}{sl}{ <-> s*[\eurosym@@Scale] feymo10 }{}
+  \DeclareFontShape{U}{DTK@eurosym}{m}{it}{ <-> s*[\eurosym@@Scale] ssub*DTK@eurosym/m/sl }{}
+  \DeclareFontShape{U}{DTK@eurosym}{m}{ol}{ <-> s*[\eurosym@@Scale] feyml10 }{}
+  \DeclareFontShape{U}{DTK@eurosym}{bx}{n}{ <-> s*[\eurosym@@Scale] feybr10 }{}
+  \DeclareFontShape{U}{DTK@eurosym}{bx}{sc}{ <-> s*[\eurosym@@Scale] ssub*DTK@eurosym/bx/n }{}
+  \DeclareFontShape{U}{DTK@eurosym}{bx}{sl}{ <-> s*[\eurosym@@Scale] feybo10 }{}
+  \DeclareFontShape{U}{DTK@eurosym}{bx}{it}{ <-> s*[\eurosym@@Scale] ssub*DTK@eurosym/bx/sl }{}
+  \DeclareFontShape{U}{DTK@eurosym}{bx}{ol}{ <-> s*[\eurosym@@Scale] feybl10 }{}
+  \DeclareFontShape{U}{DTK@eurosym}{b}{n}{ <-> s*[\eurosym@@Scale] ssub*DTK@eurosym/bx/n }{}
+  \DeclareFontShape{U}{DTK@eurosym}{b}{sl}{ <-> s*[\eurosym@@Scale] ssub*DTK@eurosym/bx/sl }{}
+  \DeclareFontShape{U}{DTK@eurosym}{b}{it}{ <-> s*[\eurosym@@Scale] ssub*DTK@eurosym/bx/sl }{}
+  \DeclareFontShape{U}{DTK@eurosym}{b}{sc}{ <-> s*[\eurosym@@Scale] ssub*DTK@eurosym/bx/n }{}
+  \DeclareFontShape{U}{DTK@eurosym}{b}{ol}{ <-> s*[\eurosym@@Scale] ssub*DTK@eurosym/bx/ol }{}
+  \DeclareRobustCommand\DTK@euro{{\fontencoding{U}\fontfamily{DTK@eurosym}\selectfont{}e}}
 \else
   % Sobald das Paket Skalierung unterstützt
   \RequirePackage[right,scaled]{eurosym}
