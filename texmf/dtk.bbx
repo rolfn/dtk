@@ -18,8 +18,8 @@
 \DeclareBibliographyOption{dashed}[true]{%
   \ifstrequal{#1}{true}
     {\ExecuteBibliographyOptions{pagetracker}%
-     \renewbibmacro*{bbx:savehash}{\savefield{fullhash}{\bbx@lasthash}}}
-    {\renewbibmacro*{bbx:savehash}{}}}
+     \newbibmacro*{bbx:savehash}{\savefield{fullhash}{\bbx@lasthash}}}
+    {\newbibmacro*{bbx:savehash}{}}}
 
 \ExecuteBibliographyOptions
   {
