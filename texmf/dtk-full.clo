@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2016/04/12 v0.1f dtk class options for full mode (RN)]
+  [2016/05/31 v0.1f dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -24,17 +24,11 @@
     Abbruch}{}%
 }
 
-\RequirePackage{xcolor,multicol,graphicx,tabularx}
-\ifx\pdfvariable\undefined % altes LuaTeX oder kein LuaTeX
-  \usepackage[showzone=false]{datetime2}
-\else
-  \RequirePackage{luatex85}
-  \let\SAVE@pdfcreationdate=\pdfcreationdate
-  \edef\pdfcreationdate{\pdfcreationdate}
-  % v1.4 ist inkompatibel mit LuaTeX 0.95/luatex85
-  \usepackage[showzone=false]{datetime2}
-  \let\pdfcreationdate=\SAVE@pdfcreationdate
-\fi
+\RequirePackage{luatex85,xcolor,multicol,graphicx,tabularx}
+\edef\pdfcreationdate{\pdfcreationdate}
+% weil datetime2 inkompatible zu LuaTeX 0.95/luatex85, 
+% standardmäßig ungünstige Defionition in luatex85
+\usepackage[showzone=false]{datetime2}
 
 \newcommand*\AutorenListenName{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
 \newcommand*\DTK@fancyJournalname{%
