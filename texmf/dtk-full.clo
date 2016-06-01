@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2016/05/31 v0.1f dtk class options for full mode (RN)]
+  [2016/06/01 v0.1f dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -162,7 +162,7 @@
       }
       \makeatletter
       \scantokens{\protected@edef\x{%
-        \noexpand\sindex[autoren]{#2#1@#1 #2!#3}}}%
+        \noexpand\sindex[autoren]{#2#1@#1 #2!#3\relax}}}%
       \x
     \endgroup
   }%
