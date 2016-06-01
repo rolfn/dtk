@@ -154,15 +154,22 @@
       \printindex[autoren]%
     \endgroup
   }%
+  \RequirePackage{trimspaces}
   \newcommand\DTK@Author@list[3]{% TODO: Auch "!" und "|" maskieren?
     \begingroup
       \def\Email##1{\escape@atsign##1\relax}% herausziehen?!
       \def\escape@atsign##1@##2\relax{%
         \noexpand\Email\string{##1\string"@##2\string}%
-      }
+      }%
       \makeatletter
-      \scantokens{\protected@edef\x{%
-        \noexpand\sindex[autoren]{#2#1@#1 #2!#3\relax}}}%
+      \setbox\@tempboxa\hbox{\let\Email=\@firstofone\trim@spaces{#3}}%
+      \ifdim\wd\@tempboxa>\z@
+        \scantokens{\protected@edef\x{%
+          \noexpand\sindex[autoren]{#2#1@#1 #2!#3}}}%
+      \else
+        \edef\x{\noexpand\sindex[autoren]%
+          {#2#1@#1 #2!\noexpand\textcolor{red}{\noexpand\huge???}}}%
+      \fi
       \x
     \endgroup
   }%
