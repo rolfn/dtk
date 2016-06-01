@@ -24,7 +24,7 @@
     Abbruch}{}%
 }
 
-\RequirePackage{luatex85,xcolor,multicol,graphicx,tabularx}
+\RequirePackage{xcolor,multicol,graphicx,tabularx}
 \edef\pdfcreationdate{\pdfcreationdate}
 % weil datetime2 inkompatible zu LuaTeX 0.95/luatex85, 
 % standardmäßig ungünstige Defionition in luatex85
