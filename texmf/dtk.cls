@@ -86,6 +86,8 @@
 \newcommand*\DTK@tempb{}
 \newcommand*\DTK@tempc{}
 
+\newsavebox\DTK@tempbox
+
 \PassOptionsToPackage{hyphens}{url}
 \RequirePackage{dtk-url}
 
