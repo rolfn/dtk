@@ -168,7 +168,7 @@
           \noexpand\sindex[autoren]{#2#1@#1 #2!#3}}}%
         \x
       \else
-        \sindex[autoren]{#2#1@#1 #2!\noexpand\textcolor{red}{\noexpand\huge???}}%
+        \sindex[autoren]{#2#1@#1 #2!\textcolor{red}{\huge???}}%
       \fi
     \endgroup
   }%
