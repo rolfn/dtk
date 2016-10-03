@@ -23,7 +23,7 @@
 
 \def\DTKversion{2.04}
 \def\DTKversiondate{2016/05/17}
-\ProvidesClass{dtk}[\DTKversiondate\ v\DTKversion\ dtk documentclass (RN)]
+\ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex,luatex85}
 \newcommand*\DTK@engine{}
