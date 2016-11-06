@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2016/06/01 v0.1f dtk class options for full mode (RN)]
+  [2016/11/06 v0.1g dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -55,14 +55,6 @@
   \edef\DTKcorrVersion{\noexpand\normalfont
     \noexpand\fcolorbox{black}{DTK@marker}{Korrekturversion: \DTMnow}}%
   \overfullrule=5pt %
-  \RequirePackage[pagewise]{lineno}%
-  \linenumbers
-  \linenumbersep=.8ex %
-  \def\linenumberfont{\normalfont\footnotesize\ttfamily}%
-  \def\thelinenumber{%
-    \fboxsep=.3ex %
-    \fcolorbox{black}{DTK@marker}{\@arabic{\c@page}-\@arabic{\c@linenumber}}%
-  }%
 \fi
 
 \@ifundefined{@LN}{\let\@LN=\@gobbletwo}{}%
@@ -298,6 +290,38 @@
   }%
 }]{dtk-title-content}
 \DeclareNewPageStyleByLayers{dtk-title}{dtk-title-content}
+
+\ifDTK@korr@% === Positionsnummern am linken Rand ===
+  \newcommand*\formatPosNumber[1]{%
+    \fboxsep=.2em %
+    \fbox{\ifnum\arabic{page}<10 0\fi\arabic{page}-\ifnum#1<10 0\fi\@arabic{#1}}%
+  }
+  \newcommand\makePosNumbers[2]{%
+    \settoheight\DTK@tempdimc{\formatPosNumber{9}}%
+    \DTK@tempdimc=1.5\DTK@tempdimc
+    \DTK@tempdimd=0pt %
+    \DTK@tempdimb=#2 %
+    \@tempcnta=0 %
+    \@whiledim \dimexpr\DTK@tempdimd+.5\DTK@tempdimc < \textheight\do{%
+      \advance\@tempcnta 1 %
+      \DTK@tempdimb=\dimexpr\DTK@tempdimb-\DTK@tempdimc
+      \DTK@tempdimd=\dimexpr\DTK@tempdimd+\DTK@tempdimc
+      \put(#1,\DTK@tempdimb){\formatPosNumber{\@tempcnta}}%
+    }%
+  }
+  \DeclareNewLayer[textarea,background,mode=picture,contents={%
+    \begingroup
+      \ttfamily\scriptsize\itshape
+      \settowidth\DTK@tempdimc{\formatPosNumber{99}}%
+      \DTK@tempdima=\dimexpr-.5\textwidth-\DTK@tempdimc-.8em %
+      \putC{%
+        \makePosNumbers{\DTK@tempdima}{.5\textheight}%
+      }%
+    \endgroup
+  }]{dtk-line-positions}
+  \AddLayersToPageStyle{scrheadings}{dtk-line-positions}
+  \AddLayersToPageStyle{plain.scrheadings}{dtk-line-positions}
+\fi
 
 \deftriplepagestyle{dtk-toc}%
   {}{\DTK@toc@head}{}%

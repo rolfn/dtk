@@ -21,8 +21,8 @@
 \HyphSubstIfExists{german-x-latest}{%
   \HyphSubstLet{german}{german-x-latest}}{}
 
-\def\DTKversion{2.04}
-\def\DTKversiondate{2016/05/17}
+\def\DTKversion{2.05}
+\def\DTKversiondate{2016/11/06}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex,luatex85}
@@ -52,6 +52,11 @@
 \newif\ifDTK@bib@ \DTK@bib@false
 \newif\ifDTKcolor \DTKcolorfalse % "@" ?
 \newif\ifDTK@korr@ \DTK@korr@false
+
+\newlength\DTK@tempdima
+\newlength\DTK@tempdimb
+\newlength\DTK@tempdimc
+\newlength\DTK@tempdimd
 
 \newcommand*\journalname{Die \protect\TeX{}nische Kom\"odie}
 
