@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2016/11/06 v0.1g dtk class options for full mode (RN)]
+  [2016/12/06 v0.1h dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -135,7 +135,7 @@
   \newcommand*\DTK@addbibresource[2][]{}%
   \newcommand*\ORIG@printbibliography{}
   \let\ORIG@printbibliography=\printbibliography
-  \renewcommand*\printbibliography[1][]{\DTK@bib@true}%
+  \renewcommand*\printbibliography[1][]{\ORIG@printbibliography[heading=dtk]}
   \RequirePackage[split,protected]{splitidx} \makeindex
   \newindex[\AutorenListenName]{autoren}%
   \newcommand*\AutorenListe{%
@@ -196,7 +196,6 @@
     \let\documentclass=\DTK@documentclass
     \let\usepackage=\DTK@usepackage
     \let\addbibresource=\DTK@addbibresource
-    \DTK@bib@false
     \c@footnote=\z@
     \c@lstlisting=\z@
     \c@figure=\z@
@@ -206,7 +205,6 @@
       \ifDTKrecord\endgroup\expandafter\endinput\fi
       \DTK@embedded@begindocumenthook\ignorespaces
     }{%
-      \ifDTK@bib@\ORIG@printbibliography[heading=dtk]\fi
       \DTK@embedded@enddocumenthook\endinput
     }%
     \refsection[DTK\the\c@refsection]%

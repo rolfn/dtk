@@ -21,8 +21,8 @@
 \HyphSubstIfExists{german-x-latest}{%
   \HyphSubstLet{german}{german-x-latest}}{}
 
-\def\DTKversion{2.05}
-\def\DTKversiondate{2016/11/06}
+\def\DTKversion{2.06}
+\def\DTKversiondate{2016/12/06}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex,luatex85}
@@ -49,7 +49,6 @@
 \RequirePackage{xkeyval}
 
 \newif\ifDTK@Author@ \DTK@Author@true
-\newif\ifDTK@bib@ \DTK@bib@false
 \newif\ifDTKcolor \DTKcolorfalse % "@" ?
 \newif\ifDTK@korr@ \DTK@korr@false
 
