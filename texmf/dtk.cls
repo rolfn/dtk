@@ -21,8 +21,8 @@
 \HyphSubstIfExists{german-x-latest}{%
   \HyphSubstLet{german}{german-x-latest}}{}
 
-\def\DTKversion{2.06}
-\def\DTKversiondate{2016/12/06}
+\def\DTKversion{2.07-pre}
+\def\DTKversiondate{2016/12/22}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex,luatex85}
@@ -254,6 +254,8 @@
   \ifx\relax#1\relax\gdef\@@title{#2}\else\gdef\@@title{#1}\fi%
 }
 
+\let\DTK@thispagestyle=\thispagestyle
+
 \newcommand\DTK@maketitle[1][]{%
   \begingroup
     \dimen0=\textheight
@@ -269,6 +271,7 @@
     \usekomafont{author}\lineskip 0.75em %
     \begin{tabular}[t]{@{}c@{}}\@author\end{tabular}\par
   \endgroup
+  \DTK@thispagestyle{plain.scrheadings}%
   \@thanks
   \global\let\@thanks=\@empty
   \global\let\@title=\@empty
