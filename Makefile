@@ -17,6 +17,8 @@ ADDINPUTS += artikel4.bib
 PICTURES = knuth.jpg LANDSCHAFT.JPG 
 #PICTURES = $(wildcard *.jpg) $(wildcard *.JPG) $(wildcard *.jpeg) $(wildcard *.JPEG)
 
+ADDINPUTS += $(PICTURES)
+
 include Makefile.in
 
 
