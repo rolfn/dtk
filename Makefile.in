@@ -79,7 +79,16 @@ $(MAIN).pdf : $(MAIN).tex $(MAIN)-userpackages.tex $(ARTICLES) $(ADDINPUTS)
 			then $(BIBTEX) $(basename $<); fi; \
 	  if $(EGREP) '$(RERUN_WARNINGS)' $(basename $<).log > /dev/null; \
 	  then $(LATEX) $(LATEX_OPTS) "\input{$<}"; fi; \
-	done
+	done 
+
+profiles : dtk-profiles.txt
+
+dtk-profiles.txt : $(PICTURES)
+	@ $(RM) dtk-profiles.txt
+	@ $(foreach f, $+, echo -n $f >> $@; \
+	  if [[ $$(exiftool -profiledescription $f) != "" ]]; then \
+	  echo " 1" >> $@; else echo " 0" >> $@; fi; \
+	)
 
 clean :
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), $(TEMP_EXT)))
