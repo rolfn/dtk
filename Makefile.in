@@ -85,8 +85,8 @@ profiles : dtk-profiles.txt
 
 dtk-profiles.txt : $(PICTURES)
 	@ $(RM) dtk-profiles.txt
-	@ $(foreach f, $+, echo -n $f >> $@; \
-	  if [[ $$(exiftool -profiledescription $f) != "" ]]; then \
+	@ $(foreach f, $+, echo -n "$f" >> $@; \
+	  if [[ $$(exiftool -profiledescription "$f") != "" ]]; then \
 	  echo " 1" >> $@; else echo " 0" >> $@; fi; \
 	)
 
