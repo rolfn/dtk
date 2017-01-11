@@ -1,4 +1,4 @@
-# Rolf Niepraschk, 2016/03/07, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2017/01/11, Rolf.Niepraschk@gmx.de
 #
 # Hilfsdefinitionen zum make-Prozess für "Die TeXnische Komödie"
 #
@@ -79,16 +79,24 @@ $(MAIN).pdf : $(MAIN).tex $(MAIN)-userpackages.tex $(ARTICLES) $(ADDINPUTS)
 			then $(BIBTEX) $(basename $<); fi; \
 	  if $(EGREP) '$(RERUN_WARNINGS)' $(basename $<).log > /dev/null; \
 	  then $(LATEX) $(LATEX_OPTS) "\input{$<}"; fi; \
-	done 
+	done
+
+ifeq ($(PICTURES),)
+
+profiles dtk-profiles.txt :
+	@ :
+
+else
 
 profiles : dtk-profiles.txt
 
 dtk-profiles.txt : $(PICTURES)
 	@ $(RM) dtk-profiles.txt
-	@ $(foreach f, $+, echo -n "$f" >> $@; \
+	@ $(foreach f, $+, echo -n "$f " >> $@; \
 	  if [[ $$(exiftool -profiledescription "$f") != "" ]]; then \
-	  echo " 1" >> $@; else echo " 0" >> $@; fi; \
-	)
+	  echo "1" >> $@; else echo "0" >> $@; fi;)
+
+endif 
 
 clean :
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), $(TEMP_EXT)))
