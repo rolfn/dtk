@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-extern}%
-  [2016/04/13 v0.02 dtk package for running external documents (HV)]
+  [2016/08/04 v0.03 dtk package for running external documents (HV)]
 
 \RequirePackage{shellesc,filecontents,xkeyval,graphicx}
 
@@ -23,33 +23,59 @@
 \define@key{dtk}{runsequence}[]{\gdef\dtk@extern@runsequence{#1}}
 \define@key{dtk}{runs}[1]{\setcounter{dtk@extern@runs}{#1}}
 \define@key{dtk}{grfOptions}[]{\gdef\dtk@extern@grfOptions{#1}}
+\define@key{dtk}{lstOptions}[]{\gdef\dtk@extern@lstOptions{#1}}
+\define@boolkey{dtk}[dtk@extern@]{code}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{force}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{crop}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{biber}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{includegraphic}[true]{}
+\define@boolkey{dtk}[dtk@extern@]{frame}[true]{}
+\define@boolkey{dtk}[dtk@extern@]{float}[true]{}
 \setkeys{dtk}{
+  code=false,%          show Code
   crop=false,%		erzeugte PDF "croppen"
   compiler=pdflatex,%	zu verwendener Compiler
   grfOptions={},%	Optionen der einzubindenden Grafik
-  includegraphic=true,% Grafik einbinden user User überlassen
+  lstOptions={},%	Optionen für das Listing
+  includegraphic=true,% Grafik einbinden oder User überlassen
   runs=1,%		Anzahl Compiler-Durchläufe
   runsequence={},%	Im Moment nicht aktiv
   biber=false,%		Biber laufen lassen?
   force=false,%		Compiler, auch wenn PDF existiert?
+  frame=false,%		keinen Rahmen um Abbildung
+  float=false,%		nicht als Gleitumgebung
   }
-
+\def\ResetKeys{%
+ \setkeys{dtk}{
+  code=false,%          show Code
+  crop=false,%		erzeugte PDF "croppen"
+  compiler=pdflatex,%	zu verwendener Compiler
+  grfOptions={},%	Optionen der einzubindenden Grafik
+  lstOptions={},%	Optionen für das Listing
+  includegraphic=true,% Grafik einbinden oder User überlassen
+  runs=1,%		Anzahl Compiler-Durchläufe
+  runsequence={},%	Im Moment nicht aktiv
+  biber=false,%		Biber laufen lassen?
+  force=false,%		Compiler, auch wenn PDF existiert?
+  frame=false,%		keinen Rahmen um Abbildung
+  float=false,%		nicht als Gleitumgebung
+  }
+}
 %%
 %% [#1]: Optionen  #2: Dateiname
 %%
 \newenvironment{ErstelleGrafik}[2][]
   {\global\setkeys{dtk}{#1}%                   \begin
      \gdef\dtk@extern@dateiname{#2}%
+     \typeout{Externer Dateiname: \dtk@extern@dateiname}% 
      \@nameuse{filecontents*}{#2.tex}}
   {\@nameuse{endfilecontents*}%         \end
    \loop\ifnum\thedtk@extern@runs>0
+     \typeout{Run: \thedtk@extern@runs\space \dtk@extern@compiler\space\dtk@extern@dateiname}%
      \ShellEscape{\dtk@extern@compiler\space\dtk@extern@dateiname}%
      \addtocounter{dtk@extern@runs}{-1}%
    \repeat
+   \ifdtk@extern@code\expandafter\lstinputlisting\expandafter[\dtk@extern@lstOptions]{\dtk@extern@dateiname}\fi
    \expandafter\IfFileExists\expandafter{\dtk@extern@dateiname.pdf}%
      {\ifdtk@extern@force
         \ifdtk@extern@biber
@@ -63,7 +89,14 @@
       \fi
      }{}
    \ifdtk@extern@includegraphic
-     \expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}%
-   \fi}
+     \ifdtk@extern@float\begin{figure}[!htb]\fi
+     \ifdtk@extern@frame
+       \fbox{\expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}}%
+     \else
+       \expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}%
+     \fi
+     \ifdtk@extern@float\end{figure}\fi
+   \fi
+   \global\ResetKeys}
 %
 \endinput

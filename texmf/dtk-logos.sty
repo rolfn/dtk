@@ -4,7 +4,7 @@
 %%
 %% LaTeX Class for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2015-
+%% Copyright (C) 2017
 %% Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -18,9 +18,9 @@
 % $Id: deLogos.sty 188 2015-10-08 20:06:29Z herbert $
 %
 % -------------------------------------
-\ProvidesPackage{dtk-logos}[2017/01/23 Dante Edition: Logos (hv)]
+\ProvidesPackage{dtk-logos}[2017/03/20 v. 1.00 Dante Edition: Logos (hv)]
 %
-\RequirePackage{hologo,dantelogo,xspace}
+\RequirePackage{hologo,dantelogo,fontspec}
 %
 \def\HoLogo@La#1{%
   L%
@@ -120,5 +120,9 @@
 \let\biblatex\BibLaTeX
 \def\CTAN{\texttt{CTAN}\xspace}
 
+\newfontfamily\LinWikipedia{LinLibertine_R_G}[Extension=.ttf,
+  Path=/usr/local/texlive/texmf-local/fonts/opentype/libertine/]
+\def\WikipediA{{\LinWikipedia\char"E02F\textsc{ikipediA}}} % dezimal
+\let\wikipedia\WikipediA
 
 \endinput
