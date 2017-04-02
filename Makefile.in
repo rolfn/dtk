@@ -1,4 +1,4 @@
-# Rolf Niepraschk, 2017/01/11, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2017/04/02, Rolf.Niepraschk@gmx.de
 #
 # Hilfsdefinitionen zum make-Prozess für "Die TeXnische Komödie"
 #
@@ -45,7 +45,7 @@ DIST_FILES_0 = dtk0.tex dtk.cbx dtk.nolig dtk-url.sty dtk-author.clo dtk.cls \
   dtk-logos.sty dtk-extern.sty dtk-old-engines.clo dtk.xdy dtk.bbx dtk-full.clo \
   dtk-new-engines.clo dtk-ruecken.tex  
 DIST_FILES_0 := README.md $(addprefix $(LOCAL_PATH),$(DIST_FILES_0))
-DIST_FILES_1 = beispiel.tex beispiel.bib beispiel.pdf
+DIST_FILES_1 = beispiel.tex beispiel.bib beispiel.pdf dtk-extern-test.tex
 DIST_DIR = $(MAIN)
 
 all : $(MAIN).pdf
