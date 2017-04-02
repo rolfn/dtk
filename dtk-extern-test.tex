@@ -1,0 +1,104 @@
+\documentclass[ngerman]{dtk}
+\ifluatex\else
+  \usepackage[utf8]{inputenc}
+\fi
+
+\usepackage{dtk-extern}
+
+\begin{document}
+
+
+\begin{minipage}{.3\linewidth}
+\begin{ErstelleGrafik}[grfOptions={width=0.5\linewidth},compiler=pdflatex]{Roemer1}
+\documentclass{standalone}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{libertine}
+\usepackage[linguistics]{forest}
+\forestapplylibrarydefaults{linguistics, edges}
+\begin{document}
+\begin{forest}
+[VP
+  [DP]
+  [V’
+   [V]
+  [DP]
+  ]
+]
+\end{forest}
+\end{document}
+\end{ErstelleGrafik}
+\end{minipage} 
+\begin{minipage}{.3\linewidth}
+\begin{lstlisting}
+\begin{forest}
+[VP
+  [DP]
+  [V’
+   [V]
+  [DP]
+  ]
+]
+\end{forest}
+\end{lstlisting}
+\end{minipage} \quad oder \quad
+\begin{minipage}{.2\linewidth}
+\begin{lstlisting}
+\Forest*{
+[VP
+  [DP]
+  [V’
+   [V]
+  [DP]
+  ]
+]
+}
+\end{lstlisting}
+\end{minipage}
+
+
+\begin{minipage}{0.35\textwidth}
+\begin{ErstelleGrafik}[grfOptions={width=\linewidth},compiler=xelatex,crop]{Senger3}
+\documentclass{article}
+\usepackage{tikz}
+\usepackage[hks,pantone,xcolor]{xespotcolor}
+\pagestyle{empty}
+\begin{document}
+\SetPageColorSpace{HKS}
+\definecolor{HYellow}{spotcolor}{HKS05N,0.5}
+\definecolor{HRed}{spotcolor}{HKS14N,0.5}
+\definecolor{HBlue}{spotcolor}{HKS38N,0.5}
+\begin{tikzpicture}[scale=0.7,fill opacity=0.7]
+    \fill[HYellow]   ( 90:1.2) circle (2);
+    \fill[HRed] (210:1.2) circle (2);
+    \fill[HBlue]  (330:1.2) circle (2);
+ \node at ( 90:2) {Typography};
+\node at ( 210:2) {Design};
+\node at ( 330:2) {Coding};
+\node {\LaTeX};
+\end{tikzpicture}
+\end{document}
+\end{ErstelleGrafik}
+\end{minipage}
+\hfill
+\begin{minipage}{0.64\textwidth}
+\begin{lstlisting}
+\SetPageColorSpace{HKS}
+\definecolor{HYellow}{spotcolor}{HKS05N,0.5}
+\definecolor{HRed}{spotcolor}{HKS14N,0.5}
+\definecolor{HBlue}{spotcolor}{HKS38N,0.5}
+\begin{tikzpicture}[scale=0.7,fill opacity=0.7]
+\fill[HYellow]( 90:1.2) circle (2);
+\fill[HRed]   (210:1.2) circle (2);
+\fill[HBlue]  (330:1.2) circle (2);
+\node at ( 90:2)  {Typography};
+\node at ( 210:2) {Design};
+\node at ( 330:2) {Coding};
+\node {\LaTeX};
+\end{tikzpicture}
+\end{lstlisting}
+\end{minipage}
+
+\end{document}
+
+
