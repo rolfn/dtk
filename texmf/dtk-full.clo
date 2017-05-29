@@ -135,7 +135,9 @@
   \newcommand*\DTK@addbibresource[2][]{}%
   \newcommand*\ORIG@printbibliography{}
   \let\ORIG@printbibliography=\printbibliography
-  \renewcommand*\printbibliography[1][]{\ORIG@printbibliography[heading=dtk]}
+  \renewcommand*\printbibliography[1][]{\ORIG@printbibliography[heading=dtk]%
+    \global\let\bbx@lasthash=\relax
+  }
   \RequirePackage[split,protected]{splitidx} \makeindex
   \newindex[\AutorenListenName]{autoren}%
   \newcommand*\AutorenListe{%
