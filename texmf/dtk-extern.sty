@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-extern}%
-  [2016/08/15 v0.04 dtk package for running external documents (HV)]
+  [2017/06/04 v0.05: dtk package for running external documents (HV)]
 
 \RequirePackage{shellesc,filecontents,xkeyval,graphicx}
 
@@ -27,6 +27,7 @@
 \define@key{dtk}{docType}[latex]{\def\dtk@extern@docType{#1}}
 \define@key{dtk}{caption}[]{\def\dtk@extern@caption{#1}}
 \define@key{dtk}{label}[]{\def\dtk@extern@label{#1}}
+\define@key{dtk}{pages}[1]{\def\dtk@extern@pages{#1}}
 \define@boolkey{dtk}[dtk@extern@]{code}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{force}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{crop}[true]{}
@@ -51,6 +52,7 @@
   float=false,%		nicht als Gleitumgebung
   caption=,%	        keine Caption
   label=,%		kein Label
+  pages=1,%		welche Seiten auszugeben sind
   docType=latex,%	LaTeX example Code
   }
 }
@@ -123,9 +125,15 @@
    \ifdtk@extern@includegraphic
      \ifdtk@extern@float\begin{figure}[!htb]\centering\fi
      \ifdtk@extern@frame
-       \fbox{\expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}}%
+       \expandafter\@for\expandafter\next\expandafter:\expandafter=\dtk@extern@pages\do{%
+          \fbox{\expandafter\includegraphics\expandafter[\dtk@extern@grfOptions,page=\next]{\dtk@extern@dateiname}}%
+              \hspace{5pt}}\hspace*{-5pt}
+%   \fbox{\expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}}%
      \else
-       \expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}%
+       \expandafter\@for\expandafter\next\expandafter:\expandafter=\dtk@extern@pages\do{%
+          \expandafter\includegraphics\expandafter[\dtk@extern@grfOptions,page=\next]{\dtk@extern@dateiname}%
+              \hspace{5pt}}\hspace*{-5pt}
+%       \expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}%
      \fi
      \ifx\dtk@extern@caption\@empty\else\caption{\dtk@extern@caption}\fi
      \ifx\dtk@extern@label\@empty\else\label{\dtk@extern@label}\fi
