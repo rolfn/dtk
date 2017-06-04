@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-extern}%
-  [2017/06/04 v0.05: dtk package for running external documents (HV)]
+  [2017/06/04 v0.06: dtk package for running external documents (HV)]
 
 \RequirePackage{shellesc,filecontents,xkeyval,graphicx}
 
@@ -35,6 +35,7 @@
 \define@boolkey{dtk}[dtk@extern@]{includegraphic}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{frame}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{float}[true]{}
+\define@boolkey{dtk}[dtk@extern@]{cleanup}[true]{}
 
 \def\ResetKeys{%
  \setkeys{dtk}{
@@ -54,6 +55,7 @@
   label=,%		kein Label
   pages=1,%		welche Seiten auszugeben sind
   docType=latex,%	LaTeX example Code
+  cleanup=false,%	Hilfsdateien nicht löschen
   }
 }
 \ResetKeys
@@ -138,6 +140,12 @@
      \ifx\dtk@extern@caption\@empty\else\caption{\dtk@extern@caption}\fi
      \ifx\dtk@extern@label\@empty\else\label{\dtk@extern@label}\fi
      \ifdtk@extern@float\end{figure}\fi
+   \fi
+   \ifdtk@extern@cleanup
+      \ShellEscape{rm \dtk@extern@dateiname.log}%
+      \ShellEscape{rm \dtk@extern@dateiname.aux}%
+      \ShellEscape{rm \dtk@extern@dateiname.toc}%
+%      \ShellEscape{rm \dtk@extern@dateiname.log}%
    \fi
    \global\ResetKeys}
 %
