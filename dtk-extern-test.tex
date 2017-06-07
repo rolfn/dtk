@@ -3,15 +3,42 @@
   \usepackage[utf8]{inputenc}
 \fi
 
-% lualatex --shell-escape dtk-extern-test.tex
-
 \usepackage{dtk-extern}
-
+\makeatletter
+\edef\dtkFileversion{\@nameuse{ver@dtk-extern}}
+\makeatother
 \begin{document}
+\title[Externe Dokumente erzeugen]{\dtkFileversion~-- Externe Dokumente aus \LaTeX\ heraus definieren und das Ergebnis einbinden, }
+\Author{Herbert}{Voß}{\Email{herbert@dante.de}}
+\maketitle
 
+\section{Syntax}
+
+\begin{verbatim}
+\usepackage{dtk-extern}
+\end{verbatim}
+
+Das Paket wird standardmäßig bei Verwendung der Klasse \texttt{dtk} geladen.
+Externe \LaTeX-, \ConTeXt-, \ldots\ Dokumente lassen sich mit der folgenden
+Umgebung erzeugen:
+
+
+
+\begin{verbatim}
+\begin{externalDocument}[<optionale Argumente>]{<externer Dateiname ohne .tex>}
+...
+Quellcode
+...
+\end{externalDocument}
+\end{verbatim}
+
+Das Hauptdocument \emph{muss} mit der Option \texttt{-shell-escape} aufgerufen werden.
+
+
+\section{Beispiele}
 
 \begin{minipage}{.3\linewidth}
-\begin{ErstelleGrafik}[grfOptions={width=0.5\linewidth},compiler=pdflatex]{Roemer1}
+\begin{externalDocument}[grfOptions={width=0.5\linewidth},compiler=pdflatex,force,cleanup]{Roemer1}
 \documentclass{standalone}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -29,7 +56,7 @@
 ]
 \end{forest}
 \end{document}
-\end{ErstelleGrafik}
+\end{externalDocument}
 \end{minipage} 
 \begin{minipage}{.3\linewidth}
 \begin{lstlisting}
@@ -60,7 +87,8 @@
 
 
 \begin{minipage}{0.35\textwidth}
-\begin{ErstelleGrafik}[grfOptions={width=\linewidth},compiler=xelatex,crop]{Senger3}
+\begin{externalDocument}[grfOptions={width=\linewidth},compiler=xelatex,
+  crop,cleanup,force]{Senger3}
 \documentclass{article}
 \usepackage{tikz}
 \usepackage[hks,pantone,xcolor]{xespotcolor}
@@ -80,7 +108,7 @@
 \node {\LaTeX};
 \end{tikzpicture}
 \end{document}
-\end{ErstelleGrafik}
+\end{externalDocument}
 \end{minipage}
 \hfill
 \begin{minipage}{0.64\textwidth}
@@ -100,6 +128,98 @@
 \end{tikzpicture}
 \end{lstlisting}
 \end{minipage}
+
+
+\section{Optionale Argumente}
+
+
+\begin{verbatim}
+  code=false,%          show Source Code
+  crop=false,%		erzeugte PDF "croppen"
+  compiler=pdflatex,%	zu verwendener Compiler
+  grfOptions={},%	Optionen der einzubindenden Grafik
+  lstOptions={},%	Optionen für das Listing
+  includegraphic=true,% Grafik einbinden oder User überlassen
+  runs=1,%		Anzahl Compiler-Durchläufe
+  runsequence={},%	Im Moment nicht aktiv
+  biber=false,%		Biber laufen lassen?
+  force=false,%		Compiler, auch wenn PDF existiert?
+  frame=false,%		keinen Rahmen um Abbildung
+  float=false,%		nicht als Gleitumgebung
+  caption=,%	        keine Caption
+  label=,%		kein Label
+  pages=1,%		welche Seiten auszugeben sind
+  docType=latex,%	LaTeX example Code
+\end{verbatim}
+
+\begin{externalDocument}[
+  grfOptions={width=0.48\linewidth},
+  pages={1,3},
+  frame,compiler=pdflatex,
+%  crop,
+  force,runs=2,code,docType=latex,
+  frame,
+  lstOptions={columns=fixed}]{Schubert-A}
+%StartVisiblePreamble
+\documentclass[chapterprefix=on,parskip=half-,DIV=12,fontsize=12pt]{scrbook}
+\DeclareNewSectionCommand[
+  style=section,
+  level=4,
+  beforeskip=-3.25ex plus -1ex minus -.2ex,
+  afterskip=1.5ex plus .2ex,
+  font=\normalsize,
+  indent=0pt,
+  counterwithin=subsubsection
+]{subsubsubsection}
+\RedeclareSectionCommand[
+  level=5,
+  toclevel=5,
+  tocindent=13em,
+  tocnumwidth=5.9em,
+  counterwithin=subsubsubsection
+]{paragraph}
+\RedeclareSectionCommand[
+  level=6,
+  toclevel=6,
+  tocindent=15em,
+  tocnumwidth=6.8em
+]{subparagraph}
+\setcounter{secnumdepth}{\subsubsubsectionnumdepth}
+\setcounter{tocdepth}{\subsubsubsectiontocdepth}
+%StopVisiblePreamble
+\usepackage[ngerman]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{libertine}
+\usepackage{blindtext}
+\begin{document}
+\tableofcontents
+\chapter{Einführung}
+\section{Ein Abschnitt}
+\subsection{Ein Unterabschnitt}
+\subsubsection{Ein Unter-Unterabschnitt}
+\subsubsubsection{Ein Unter-Unter-Unterabschnitt}
+\paragraph{Der normale Paragraph}
+\blindtext
+\subparagraph{Der normale Unterparagraph}
+\blindtext
+\blinddocument
+\end{document}
+\end{externalDocument}
+
+
+\section{Ausgabe des Quellcodes}
+Die Ausgabe des Quellcodes erzeugt im Allgemeinen partiell. Die beiden Marker
+
+\begin{verbatim}
+[...]
+%StartVisiblePreamble
+[... auszugebene Präambelteil]
+%StopVisiblePreamble
+[...]
+\end{verbatim}
+
+begrenzen den Teil der ausgegeben werden soll. Aus dem Textkörper wird alles
+zwischen \verb|\begin{document}| und \verb|\end{document}| ausgegeben.
 
 \end{document}
 

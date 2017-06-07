@@ -14,16 +14,20 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-extern}%
-  [2016/08/04 v0.03 dtk package for running external documents (HV)]
+  [2017/06/04 v0.06: dtk package for running external documents (HV)]
 
 \RequirePackage{shellesc,filecontents,xkeyval,graphicx}
 
 \newcounter{dtk@extern@runs}
-\define@key{dtk}{compiler}[pdflatex]{\gdef\dtk@extern@compiler{#1}}
-\define@key{dtk}{runsequence}[]{\gdef\dtk@extern@runsequence{#1}}
+\define@key{dtk}{compiler}[pdflatex]{\def\dtk@extern@compiler{#1}}
+\define@key{dtk}{runsequence}[]{\def\dtk@extern@runsequence{#1}}
 \define@key{dtk}{runs}[1]{\setcounter{dtk@extern@runs}{#1}}
-\define@key{dtk}{grfOptions}[]{\gdef\dtk@extern@grfOptions{#1}}
-\define@key{dtk}{lstOptions}[]{\gdef\dtk@extern@lstOptions{#1}}
+\define@key{dtk}{grfOptions}[]{\def\dtk@extern@grfOptions{#1}}
+\define@key{dtk}{lstOptions}[]{\def\dtk@extern@lstOptions{#1}}
+\define@key{dtk}{docType}[latex]{\def\dtk@extern@docType{#1}}
+\define@key{dtk}{caption}[]{\def\dtk@extern@caption{#1}}
+\define@key{dtk}{label}[]{\def\dtk@extern@label{#1}}
+\define@key{dtk}{pages}[1]{\def\dtk@extern@pages{#1}}
 \define@boolkey{dtk}[dtk@extern@]{code}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{force}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{crop}[true]{}
@@ -31,20 +35,8 @@
 \define@boolkey{dtk}[dtk@extern@]{includegraphic}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{frame}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{float}[true]{}
-\setkeys{dtk}{
-  code=false,%          show Code
-  crop=false,%		erzeugte PDF "croppen"
-  compiler=pdflatex,%	zu verwendener Compiler
-  grfOptions={},%	Optionen der einzubindenden Grafik
-  lstOptions={},%	Optionen für das Listing
-  includegraphic=true,% Grafik einbinden oder User überlassen
-  runs=1,%		Anzahl Compiler-Durchläufe
-  runsequence={},%	Im Moment nicht aktiv
-  biber=false,%		Biber laufen lassen?
-  force=false,%		Compiler, auch wenn PDF existiert?
-  frame=false,%		keinen Rahmen um Abbildung
-  float=false,%		nicht als Gleitumgebung
-  }
+\define@boolkey{dtk}[dtk@extern@]{cleanup}[true]{}
+
 \def\ResetKeys{%
  \setkeys{dtk}{
   code=false,%          show Code
@@ -59,23 +51,67 @@
   force=false,%		Compiler, auch wenn PDF existiert?
   frame=false,%		keinen Rahmen um Abbildung
   float=false,%		nicht als Gleitumgebung
+  caption=,%	        keine Caption
+  label=,%		kein Label
+  pages=1,%		welche Seiten auszugeben sind
+  docType=latex,%	LaTeX example Code
+  cleanup=false,%	Hilfsdateien nicht löschen
   }
 }
+\ResetKeys
+
+{\catcode`\%=12 
+ \gdef\perCent{%}
+ \gdef\DoubleperCent{%%}
+}
+
+\newcommand\ExampleType[5]{%
+   \@namedef{#1@initText}{linerange=#2-#3,includerangemarker=false}% text
+   \@namedef{#1@initPreamble}{linerange=#4-#5,includerangemarker=false}% code
+}
+
+\ExampleType{latex}%               #1
+  {begin\string{document\string}}%       #2
+  {end\string{document\string}}%         #3
+  {\perCent StartVisiblePreamble}% #4
+  {\perCent StopVisiblePreamble}%  #5
+
+\ExampleType{context}
+  {\string\starttext}
+  {\string\stoptext}
+  {\perCent StartVisiblePreamble}
+  {\perCent StopVisiblePreamble}
+
 %%
 %% [#1]: Optionen  #2: Dateiname
 %%
 \newenvironment{ErstelleGrafik}[2][]
   {\global\setkeys{dtk}{#1}%                   \begin
      \gdef\dtk@extern@dateiname{#2}%
-     \typeout{Externer Dateiname: \dtk@extern@dateiname}% 
-     \@nameuse{filecontents*}{#2.tex}}
+   \begingroup
+   \@nameuse{filecontents*}{#2.tex}
+  }
   {\@nameuse{endfilecontents*}%         \end
+   \endgroup
    \loop\ifnum\thedtk@extern@runs>0
      \typeout{Run: \thedtk@extern@runs\space \dtk@extern@compiler\space\dtk@extern@dateiname}%
      \ShellEscape{\dtk@extern@compiler\space\dtk@extern@dateiname}%
      \addtocounter{dtk@extern@runs}{-1}%
    \repeat
-   \ifdtk@extern@code\expandafter\lstinputlisting\expandafter[\dtk@extern@lstOptions]{\dtk@extern@dateiname}\fi
+   \ifdtk@extern@code
+      \expandafter\edef\expandafter\dtk@lst@options@preamble\expandafter{%
+        \@nameuse{\dtk@extern@docType @initPreamble},
+        \dtk@extern@lstOptions,
+        backgroundcolor=\noexpand\color{black!12}}%
+      \expandafter\lstinputlisting\expandafter[\dtk@lst@options@preamble]{\dtk@extern@dateiname}
+%     
+      \expandafter\edef\expandafter\dtk@lst@options@text\expandafter{%
+        \@nameuse{\dtk@extern@docType @initText},
+        \dtk@extern@lstOptions,
+        backgroundcolor=\noexpand\color{black!8}}%
+      \typeout{\dtk@lst@options@text}
+      \expandafter\lstinputlisting\expandafter[\dtk@lst@options@text]{\dtk@extern@dateiname}
+   \fi
    \expandafter\IfFileExists\expandafter{\dtk@extern@dateiname.pdf}%
      {\ifdtk@extern@force
         \ifdtk@extern@biber
@@ -89,14 +125,31 @@
       \fi
      }{}
    \ifdtk@extern@includegraphic
-     \ifdtk@extern@float\begin{figure}[!htb]\fi
+     \ifdtk@extern@float\begin{figure}[!htb]\centering\fi
      \ifdtk@extern@frame
-       \fbox{\expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}}%
+       \expandafter\@for\expandafter\next\expandafter:\expandafter=\dtk@extern@pages\do{%
+          \fbox{\expandafter\includegraphics\expandafter[\dtk@extern@grfOptions,page=\next]{\dtk@extern@dateiname}}%
+              \hspace{5pt}}\hspace*{-5pt}
+%   \fbox{\expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}}%
      \else
-       \expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}%
+       \expandafter\@for\expandafter\next\expandafter:\expandafter=\dtk@extern@pages\do{%
+          \expandafter\includegraphics\expandafter[\dtk@extern@grfOptions,page=\next]{\dtk@extern@dateiname}%
+              \hspace{5pt}}\hspace*{-5pt}
+%       \expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}%
      \fi
+     \ifx\dtk@extern@caption\@empty\else\caption{\dtk@extern@caption}\fi
+     \ifx\dtk@extern@label\@empty\else\label{\dtk@extern@label}\fi
      \ifdtk@extern@float\end{figure}\fi
+   \fi
+   \ifdtk@extern@cleanup
+      \ShellEscape{rm \dtk@extern@dateiname.log}%
+      \ShellEscape{rm \dtk@extern@dateiname.aux}%
+      \ShellEscape{rm \dtk@extern@dateiname.toc}%
+%      \ShellEscape{rm \dtk@extern@dateiname.log}%
    \fi
    \global\ResetKeys}
 %
+\let\externalDocument\ErstelleGrafik
+\let\endexternalDocument\endErstelleGrafik
+%%
 \endinput

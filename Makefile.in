@@ -55,7 +55,7 @@ x : $(XTARGET)
 userpackages $(MAIN)-userpackages.tex :
 	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex ; :
 
-$(MAIN)-ruecken.pdf : $(MAIN)-ruecken.tex $(MAIN)-ruecken.dat
+$(MAIN)-ruecken.pdf : $(LOCAL_PATH)/$(MAIN)-ruecken.tex $(MAIN)-ruecken.dat
 	TEXINPUTS=$(LOCAL_PATH): pdflatex $(MAIN)-ruecken.tex
 
 $(MAIN)-autoren.ind : $(MAIN)-autoren.idx
