@@ -16,7 +16,7 @@
 \ProvidesFile{dtk-extern}%
   [2017/06/04 v0.06: dtk package for running external documents (HV)]
 
-\RequirePackage{shellesc,filecontents,xkeyval,graphicx}
+\RequirePackage{shellesc,filecontents,xkeyval,graphicx,marginnote}
 
 \newcounter{dtk@extern@runs}
 \define@key{dtk}{compiler}[pdflatex]{\def\dtk@extern@compiler{#1}}
@@ -65,6 +65,8 @@
  \gdef\DoubleperCent{%%}
 }
 
+\newcounter{dtk@example@counter}
+
 \newcommand\ExampleType[5]{%
    \@namedef{#1@initText}{linerange=#2-#3,includerangemarker=false}% text
    \@namedef{#1@initPreamble}{linerange=#4-#5,includerangemarker=false}% code
@@ -87,11 +89,13 @@
 %%
 \newenvironment{ErstelleGrafik}[2][]
   {\global\setkeys{dtk}{#1}%                   \begin
-     \gdef\dtk@extern@dateiname{#2}%
+   \xdef\dtk@extern@dateiname{#2-\arabic{dtk@example@counter}}%
+   \typeout{Externer Dateiname: \dtk@extern@dateiname}%
    \begingroup
-   \@nameuse{filecontents*}{#2.tex}
+   \@nameuse{filecontents*}{\dtk@extern@dateiname.tex}
   }
   {\@nameuse{endfilecontents*}%         \end
+   \global\stepcounter{dtk@example@counter}%
    \endgroup
    \loop\ifnum\thedtk@extern@runs>0
      \typeout{Run: \thedtk@extern@runs\space \dtk@extern@compiler\space\dtk@extern@dateiname}%
@@ -104,13 +108,14 @@
         \dtk@extern@lstOptions,
         backgroundcolor=\noexpand\color{black!12}}%
       \expandafter\lstinputlisting\expandafter[\dtk@lst@options@preamble]{\dtk@extern@dateiname}
+      \marginnote{\rotatebox{90}{\dtk@extern@dateiname}}%[-15mm]%
 %     
       \expandafter\edef\expandafter\dtk@lst@options@text\expandafter{%
         \@nameuse{\dtk@extern@docType @initText},
         \dtk@extern@lstOptions,
         backgroundcolor=\noexpand\color{black!8}}%
-      \typeout{\dtk@lst@options@text}
-      \expandafter\lstinputlisting\expandafter[\dtk@lst@options@text]{\dtk@extern@dateiname}
+%      \typeout{\dtk@lst@options@text}
+      \expandafter\lstinputlisting\expandafter[\dtk@lst@options@text]{\dtk@extern@dateiname}%
    \fi
    \expandafter\IfFileExists\expandafter{\dtk@extern@dateiname.pdf}%
      {\ifdtk@extern@force
@@ -148,6 +153,7 @@
 %      \ShellEscape{rm \dtk@extern@dateiname.log}%
    \fi
    \global\ResetKeys}
+\stepcounter{dtk@example@counter}%
 %
 \let\externalDocument\ErstelleGrafik
 \let\endexternalDocument\endErstelleGrafik

@@ -180,6 +180,7 @@
 
 %%% Laden eines Einzeldokuments
 \newcommand*\DTKinput[1]{%
+  \setcounter{dtk@example@counter}{1}%
   \begingroup
     \filename@parse{#1}%
     \edef\jobname{\filename@base}%
