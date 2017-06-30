@@ -18,9 +18,18 @@
 % $Id: deLogos.sty 188 2015-10-08 20:06:29Z herbert $
 %
 % -------------------------------------
-\ProvidesPackage{dtk-logos}[2017/06/07 v. 1.01 Dante Edition: Logos (hv)]
+\ProvidesPackage{dtk-logos}[2017/06/06 v. 1.02 Dante Edition: Logos (hv)]
+%
+
+\newif\if@dtk@newengine \@dtk@newenginetrue 
+\RequirePackage{ifluatex,ifxetex}
+%
+\ifluatex\else\ifxetex\else\@dtk@newenginefalse\fi\fi
 %
 \RequirePackage{hologo,dantelogo}
+\if@dtk@newengine
+  \RequirePackage{fontspec}
+\fi  
 %
 \def\HoLogo@La#1{%
   L%
@@ -120,11 +129,15 @@
 \let\biblatex\BibLaTeX
 \def\CTAN{\texttt{CTAN}\xspace}
 
-\iffalse
-\newfontfamily\LinWikipedia{LinLibertine_R_G}[Extension=.ttf,
-  Path=/usr/local/texlive/texmf-local/fonts/opentype/libertine/]
-\def\WikipediA{{\LinWikipedia\char"E02F\textsc{ikipediA}}} % dezimal
-\let\wikipedia\WikipediA
+\if@dtk@newengine
+  \IfFileExists{LinLibertine_R_G.ttf}%
+    {\newfontfamily\LinWikipedia{LinLibertine_R_G}[Extension=.ttf,
+       Path=/usr/local/texlive/texmf-local/fonts/opentype/libertine/]
+     \def\WikipediA{{\LinWikipedia\char"E02F\textsc{ikipediA}}}} % dezimal
+    {\def\WikipediA{WikipediA}}%
+\else
+  \def\WikipediA{WikipediA}%
 \fi
-
+\let\wikipedia\WikipediA
+%
 \endinput
