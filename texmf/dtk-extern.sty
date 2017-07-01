@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-extern}%
-  [2017/06/04 v0.06: dtk package for running external documents (HV)]
+  [2017/07/01 v0.07: dtk package for running external documents (HV)]
 
 \RequirePackage{shellesc,filecontents,xkeyval,graphicx,marginnote}
 
@@ -129,6 +129,8 @@
         \fi
       \fi
      }{}
+   \ifdtk@extern@code\else\marginnote{\rotatebox{90}{\dtk@extern@dateiname}}\fi
+%
    \ifdtk@extern@includegraphic
      \ifdtk@extern@float\begin{figure}[!htb]\centering\fi
      \ifdtk@extern@frame
