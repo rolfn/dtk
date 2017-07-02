@@ -28,7 +28,7 @@
 \edef\pdfcreationdate{\pdfcreationdate}
 % weil datetime2 inkompatible zu LuaTeX 0.95/luatex85,
 % standardmäßig ungünstige Defionition in luatex85
-\usepackage[showzone=false]{datetime2}
+\RequirePackage[showzone=false]{datetime2}
 
 \newcommand*\AutorenListenName{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
 \newcommand*\DTK@fancyJournalname{%
