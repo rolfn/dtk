@@ -84,7 +84,13 @@
     {\DTK@@usepackage{#1}{#2}}%
     {\DTK@@usepackage{#1}{#2}[]}%
 }%
+\newcommand*\DTK@RequirePackage[2][]{%  TODO: Besser  \DTK@eat@version
+  \@ifnextchar[%]
+    {\DTK@@RequirePackage{#1}{#2}}%
+    {\DTK@@RequirePackage{#1}{#2}[]}%
+}%
 \newcommand*\DTK@@usepackage{}
+\newcommand*\DTK@@RequirePackage{}
 \newcommand*\DTK@documentclass[2][]{%
   \DTK@eat@version
 }
@@ -94,13 +100,15 @@
   \@ifdefinable\user@usepackages{%
     \newwrite\user@usepackages
     \immediate\openout\user@usepackages dtk-userpackages.tex\relax
-    \immediate\write\user@usepackages{\@percentchar\space *** \DTMnow\space ***}%
+    \immediate\write\user@usepackages{%
+      \@percentchar\space *** \DTMnow\space ***}%
     \AtEndDocument{\immediate\closeout\user@usepackages\relax}%
   }
   \@ifdefinable\user@requirepackages{%
     \newwrite\user@requirepackages
     \immediate\openout\user@requirepackages dtk-requirepackages.tex\relax
-    \immediate\write\user@requirepackages{\@percentchar\space *** \DTMnow\space ***}%
+    \immediate\write\user@requirepackages{%
+      \@percentchar\space *** \DTMnow\space ***}%
     \AtEndDocument{\immediate\closeout\user@requirepackages\relax}%
   }
   \renewcommand*\printbibliography[1][]{}%
@@ -123,6 +131,16 @@
     }%
     \ignorespaces
   }%
+  \def\DTK@@RequirePackage#1#2[#3]{%
+    \edef\@tempb{\zap@space#2 \@empty}%
+    \@for\@tempa:=\@tempb\do{%
+      \immediate\write\user@requirepackages{%
+        \string\RequirePackage\ifx\relax#1\relax\else[#1]\fi{\@tempa}%
+        \ifx\relax#3\relax\else[#3]\fi\@percentchar\space \DTK@local@inputname
+      }%
+    }%
+    \ignorespaces
+  }%
   \let\DTK@@Author=\DTK@Author
   \newcommand*\AutorenListe{}%
   \let\tableofcontents=\relax
@@ -138,6 +156,7 @@
   }%
   \AtBeginDocument{\DTK@backside}%
   \def\DTK@@usepackage#1#2[#3]{}%
+  \def\DTK@@RequirePackage#1#2[#3]{}%
   \newcommand*\DTK@addbibresource[2][]{}%
   \newcommand*\ORIG@printbibliography{}
   \let\ORIG@printbibliography=\printbibliography
@@ -204,6 +223,7 @@
     \let\nofiles=\relax
     \let\documentclass=\DTK@documentclass
     \let\usepackage=\DTK@usepackage
+    \let\RequirePackage=\DTK@RequirePackage
     \let\addbibresource=\DTK@addbibresource
     \c@footnote=\z@
     \c@lstlisting=\z@

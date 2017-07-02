@@ -36,14 +36,15 @@ RERUN_WARNINGS = ($(RERUN_WARN1)|$(RERUN_WARN2)|$(RERUN_WARN3)|$(RERUN_WARN4))
 MAX_LTX_RUNS = 3
 
 ADDINPUTS += $(addprefix $(LOCAL_PATH), dtk.cls dtk.bbx dtk.cbx dtk-full.clo \
-  dtk-new-engines.clo dtk-old-engines.clo $(MAIN)0.tex $(MAIN)-ruecken.tex dtk.nolig \
-  dtk-logos.sty) $(IDX_STYLE) $(MAIN)-mitarbeiter.tex
+  dtk-new-engines.clo dtk-old-engines.clo $(MAIN)0.tex $(MAIN)-ruecken.tex \
+  dtk.nolig dtk-logos.sty) $(IDX_STYLE) $(MAIN)-mitarbeiter.tex
 
-VERSION = $(shell awk -F"[{}]" '/\\def\\DTKversion\{/{print$$2}' $(LOCAL_PATH)/dtk.cls)#
+VERSION = $(shell awk -F"[{}]" '/\\def\\DTKversion\{/{print$$2}' \
+  $(LOCAL_PATH)/dtk.cls)#
 ARCHNAME = dtk-$(VERSION).zip
 DIST_FILES_0 = dtk0.tex dtk.cbx dtk.nolig dtk-url.sty dtk-author.clo dtk.cls \
-  dtk-logos.sty dtk-extern.sty dtk-old-engines.clo dtk.xdy dtk.bbx dtk-full.clo \
-  dtk-new-engines.clo dtk-ruecken.tex  
+  dtk-logos.sty dtk-extern.sty dtk-old-engines.clo dtk.xdy dtk-full.clo \
+  dtk.bbx dtk-new-engines.clo dtk-ruecken.tex  
 DIST_FILES_0 := README.md $(addprefix $(LOCAL_PATH),$(DIST_FILES_0))
 DIST_FILES_1 = beispiel.tex beispiel.bib beispiel.pdf dtk-extern-test.tex
 DIST_DIR = $(MAIN)
@@ -55,7 +56,8 @@ x : $(XTARGET)
 userpackages : $(MAIN)-userpackages.tex $(MAIN)-requirepackages
 
 $(MAIN)-userpackages.tex $(MAIN)-requirepackages :
-	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode $(MAIN)0.tex ; :
+	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode \
+	  $(MAIN)0.tex ; :
 
 $(MAIN)-ruecken.pdf : $(LOCAL_PATH)/$(MAIN)-ruecken.tex $(MAIN)-ruecken.dat
 	TEXINPUTS=$(LOCAL_PATH): pdflatex $(MAIN)-ruecken.tex

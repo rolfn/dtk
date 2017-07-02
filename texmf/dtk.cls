@@ -14,6 +14,13 @@
 %% version 2005/12/01 or later.
 
 \listfiles
+
+\InputIfFileExists{dtk-requirepackages.tex}{%
+  \typeout{*************************************^^J%
+           * File `dtk-requirepackages.tex' used.^^J%
+           *************************************}%
+}{}%
+
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 \RequirePackage{hyphsubst}% Trennregeln austauschen
 \HyphSubstIfExists{ngerman-x-latest}{%
