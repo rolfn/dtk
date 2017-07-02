@@ -91,15 +91,21 @@
 
 \ifDTKrecord
   % Testlauf zum Aufsammeln von Paket- und bib-Dateinamen
-  \@ifdefinable\user@packages{%
-    \newwrite\user@packages
-    \immediate\openout\user@packages dtk-userpackages.tex\relax
-    \immediate\write\user@packages{\@percentchar\space *** \DTMnow\space ***}%
-    \AtEndDocument{\immediate\closeout\user@packages\relax}%
+  \@ifdefinable\user@usepackages{%
+    \newwrite\user@usepackages
+    \immediate\openout\user@usepackages dtk-userpackages.tex\relax
+    \immediate\write\user@usepackages{\@percentchar\space *** \DTMnow\space ***}%
+    \AtEndDocument{\immediate\closeout\user@usepackages\relax}%
+  }
+  \@ifdefinable\user@requirepackages{%
+    \newwrite\user@requirepackages
+    \immediate\openout\user@requirepackages dtk-requirepackages.tex\relax
+    \immediate\write\user@requirepackages{\@percentchar\space *** \DTMnow\space ***}%
+    \AtEndDocument{\immediate\closeout\user@requirepackages\relax}%
   }
   \renewcommand*\printbibliography[1][]{}%
   \newcommand*\DTK@addbibresource[2][]{%
-    \immediate\write\user@packages{%
+    \immediate\write\user@usepackages{%
       \string\addbibresource[datatype=bibtex,label=DTK\the\c@refsection]{#2}%
         \@percentchar\space \DTK@local@inputname
     }%
@@ -110,7 +116,7 @@
       \let\DTK@tempa=\@empty
       \ifstr{\@tempa}{inputenc}{\let\DTK@tempa=\@percentchar}{%
         \ifstr{\@tempa}{fontenc}{\let\DTK@tempa=\@percentchar}{}}%
-      \immediate\write\user@packages{%
+      \immediate\write\user@usepackages{%
         \DTK@tempa\string\usepackage\ifx\relax#1\relax\else[#1]\fi{\@tempa}%
         \ifx\relax#3\relax\else[#3]\fi\@percentchar\space \DTK@local@inputname
       }%
