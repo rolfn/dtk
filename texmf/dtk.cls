@@ -278,7 +278,7 @@
     \usekomafont{author}\lineskip 0.75em %
     \begin{tabular}[t]{@{}c@{}}\@author\end{tabular}\par
   \endgroup
-  \DTK@thispagestyle{plain.scrheadings}%
+%  \DTK@thispagestyle{plain.scrheadings}%
   \@thanks
   \global\let\@thanks=\@empty
   \global\let\@title=\@empty

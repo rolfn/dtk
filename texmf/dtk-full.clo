@@ -400,6 +400,7 @@
 
 \newcommand*\Part{%
 % [#1]=toc, {#2}=Überschrift, [#3]=Präambel, *=nur Strich
+  \DTK@thispagestyle{plain.scrheadings}% 
   \@ifstar{\global\@tempswatrue\DTK@Part}{\global\@tempswafalse\DTK@Part}%
 }
 
