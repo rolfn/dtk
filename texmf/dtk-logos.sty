@@ -18,15 +18,15 @@
 % $Id: deLogos.sty 188 2015-10-08 20:06:29Z herbert $
 %
 % -------------------------------------
-\ProvidesPackage{dtk-logos}[2017/06/06 v. 1.02 Dante Edition: Logos (hv)]
+\ProvidesPackage{dtk-logos}[2017/07/16 v. 1.03 Dante Edition: Logos (hv)]
 %
-
 \newif\if@dtk@newengine \@dtk@newenginetrue 
 \RequirePackage{ifluatex,ifxetex}
 %
 \ifluatex\else\ifxetex\else\@dtk@newenginefalse\fi\fi
 %
-\RequirePackage{hologo,dantelogo}
+\RequirePackage{fetamont}
+\RequirePackage{hologo,dantelogo,xspace}
 \if@dtk@newengine
   \RequirePackage{fontspec}
 \fi  
@@ -55,6 +55,7 @@
 \def\AmSLaTeX{\hologo{AmSLaTeX}}
 \def\AmSTeX{\hologo{AmSTeX}}
 \def\biber{\hologo{biber}}
+\def\Biber{\Hologo{biber}}
 \def\BibTeX{\hologo{BibTeX}}
 \def\BibTeXacht{\hologo{BibTeX8}}
 \def\ConTeXt{\hologo{ConTeXt}}
@@ -76,7 +77,7 @@
 \def\LyX{\hologo{LyX}}
 \def\METAFONT{\hologo{METAFONT}}
 \let\MF\METAFONT
-\def\MetaFun{\hologo{MetaFun}}
+\def\MetaFun{\textffm{METAFUN}}
 \def\METAPOST{\hologo{METAPOST}}
 \def\MetaPost{\hologo{MetaPost}}
 \let\MP\METAPOST
@@ -85,7 +86,7 @@
 \def\OzMF{\hologo{OzMF}}
 \def\OzMP{\hologo{OzMP}}
 \def\OzTeX{\hologo{OzTeX}}
-\def\OzTtH{\hologo{OzTth}}
+\def\OzTtH{\hologo{OzTtH}}
 \def\PCTeX{\hologo{PCTeX}}
 \def\pdfTeX{\hologo{pdfTeX}}
 \let\pdftex\pdfTeX
@@ -109,7 +110,6 @@
 \newcommand\BibTool{\textsc{Bib\hskip-.1em
         T\hskip-.15emo\hskip-.05emo\hskip-.05eml}\xspace}
 \providecommand\tikz{\textsf{Ti\textit{k}Z}}
-\def\pgf/tikz{\textsf{pgf/Ti\textit{k}Z}}
 \def\ALEPH{\ensuremath{\aleph}}
 \let\TikZ\tikz
 
@@ -130,14 +130,11 @@
 \def\CTAN{\texttt{CTAN}\xspace}
 
 \if@dtk@newengine
-  \IfFileExists{LinLibertine_R_G.ttf}%
-    {\newfontfamily\LinWikipedia{LinLibertine_R_G}[Extension=.ttf,
-       Path=/usr/local/texlive/texmf-local/fonts/truetype/libertine/]
-     \def\WikipediA{{\LinWikipedia\char"E02F\textsc{ikipediA}}}} % dezimal
-    {\def\WikipediA{WikipediA}}%
+  \newfontfamily\dtk@LinWikipedia{Linux Libertine O}%
+  \def\WikipediA{{\dtk@LinWikipedia\char"E02F\textsc{ikipediA}}} % hexadezimal
 \else
   \def\WikipediA{WikipediA}%
 \fi
-\let\wikipedia\WikipediA%
+\let\wikipedia\WikipediA
 %
 \endinput
