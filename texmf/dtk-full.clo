@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2017/05/30 v0.1i dtk class options for full mode (RN)]
+  [2017/07/19 v0.1i dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -79,12 +79,12 @@
   \g@addto@macro\DTK@embedded@enddocumenthook}
 \newcommand*\DTK@local@inputname{}
 \newcommand*\DTK@eat@version[1][]{\ignorespaces}
-\newcommand*\DTK@usepackage[2][]{%  TODO: Besser  \DTK@eat@version
+\newcommand*\DTK@usepackage[2][]{%
   \@ifnextchar[%]
     {\DTK@@usepackage{#1}{#2}}%
     {\DTK@@usepackage{#1}{#2}[]}%
 }%
-\newcommand*\DTK@RequirePackage[2][]{%  TODO: Besser  \DTK@eat@version
+\newcommand*\DTK@RequirePackage[2][]{%
   \@ifnextchar[%]
     {\DTK@@RequirePackage{#1}{#2}}%
     {\DTK@@RequirePackage{#1}{#2}[]}%
