@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-extern}%
-  [2017/07/01 v0.07: dtk package for running external documents (HV)]
+  [2017/08/04 v0.08: dtk package for running external documents (HV)]
 
 \RequirePackage{shellesc,filecontents,xkeyval,graphicx,marginnote}
 
@@ -36,6 +36,8 @@
 \define@boolkey{dtk}[dtk@extern@]{frame}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{float}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{cleanup}[true]{}
+\define@boolkey{dtk}[dtk@extern@]{copyToExampleDir}[true]{}
+\define@key{dtk}{ExamplesDir}[Examples]{\def\dtk@extern@ExamplesDir{#1}}
 
 \def\ResetKeys{%
  \setkeys{dtk}{
@@ -56,6 +58,8 @@
   pages=1,%		welche Seiten auszugeben sind
   docType=latex,%	LaTeX example Code
   cleanup=false,%	Hilfsdateien nicht löschen
+  copyToExampleDir,%    Kopie nach ExamplesDir
+  ExamplesDir=Examples% Unterverzeichnis für Beispiele
   }
 }
 \ResetKeys
@@ -95,6 +99,9 @@
    \@nameuse{filecontents*}{\dtk@extern@dateiname.tex}
   }
   {\@nameuse{endfilecontents*}%         \end
+   \ifdtk@extern@copyToExampleDir
+     \ShellEscape{cp\space\dtk@extern@dateiname.tex \dtk@extern@ExamplesDir/}%
+   \fi
    \global\stepcounter{dtk@example@counter}%
    \endgroup
    \loop\ifnum\thedtk@extern@runs>0
