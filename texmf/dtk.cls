@@ -272,7 +272,7 @@
     \fi
   \endgroup
   \def\and{\end{tabular}, \begin{tabular}[t]{@{}c@{}}}%
-  \chapter[\@@title]{\@title}%
+  \addchap[\@@title]{\@title}%
   %%%\ifx\@author\@empty\else\addsec*{\@author}\fi
   \begingroup
     \usekomafont{author}\lineskip 0.75em %

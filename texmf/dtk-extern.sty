@@ -2,7 +2,7 @@
 %%
 %% LaTeX package for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2016-
+%% Copyright (C) 2016-17
 %% Rolf Niepraschk, Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-extern}%
-  [2017/08/04 v0.08: dtk package for running external documents (HV)]
+  [2017/08/25 v0.09: dtk package for running external documents (HV)]
 
 \RequirePackage{shellesc,filecontents,xkeyval,graphicx,marginnote}
 
@@ -28,6 +28,7 @@
 \define@key{dtk}{caption}[]{\def\dtk@extern@caption{#1}}
 \define@key{dtk}{label}[]{\def\dtk@extern@label{#1}}
 \define@key{dtk}{pages}[1]{\def\dtk@extern@pages{#1}}
+\define@boolkey{dtk}[dtk@extern@]{showFilename}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{code}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{force}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{crop}[true]{}
@@ -41,6 +42,7 @@
 
 \def\ResetKeys{%
  \setkeys{dtk}{
+  showFilename=false,%  Dateinamen im Rand angeben
   code=false,%          show Code
   crop=false,%		erzeugte PDF "croppen"
   compiler=pdflatex,%	zu verwendener Compiler
@@ -115,7 +117,9 @@
         \dtk@extern@lstOptions,
         backgroundcolor=\noexpand\color{black!12}}%
       \expandafter\lstinputlisting\expandafter[\dtk@lst@options@preamble]{\dtk@extern@dateiname}
-      \marginnote{\rotatebox{90}{\dtk@extern@dateiname}}%[-15mm]%
+      \ifdtk@extern@showFilename
+        \marginnote{\rotatebox{90}{\dtk@extern@dateiname}}%[-15mm]%
+      \fi
 %     
       \expandafter\edef\expandafter\dtk@lst@options@text\expandafter{%
         \@nameuse{\dtk@extern@docType @initText},
@@ -136,7 +140,11 @@
         \fi
       \fi
      }{}
-   \ifdtk@extern@code\else\marginnote{\rotatebox{90}{\dtk@extern@dateiname}}\fi
+   \ifdtk@extern@code\else
+      \ifdtk@extern@showFilename
+        \marginnote{\rotatebox{90}{\dtk@extern@dateiname}}%
+      \fi
+   \fi
 %
    \ifdtk@extern@includegraphic
      \ifdtk@extern@float\begin{figure}[!htb]\centering\fi
