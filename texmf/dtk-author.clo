@@ -14,12 +14,12 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-author.clo}%
-  [2016/02/15 v0.1b dtk class options for author mode (RN)]
+  [2017/12/16 v0.1c dtk class options for author mode (RN)]
 
 \newcommand*\keywords[1]{}
 \newcommand*\AutorenListe{}
 \let\maketitle=\DTK@maketitle
-\let\tableofcontents=\relax
+%\let\tableofcontents=\relax
 
 \let\DTK@@Author=\DTK@Author@article
 
