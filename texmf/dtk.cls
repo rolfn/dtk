@@ -369,10 +369,11 @@
 
 %%%\ifDTKrecord \expandafter \endinput \fi % lohnt es?
 
-\addtokomafont{caption}{\RaggedRight\small}
+\addtokomafont{caption}{%\RaggedRight
+  \small}
 \setkomafont{captionlabel}{\sffamily}
 \setcapindent{0pt}
-\setcapwidth[c]{\textwidth}
+%\setcapwidth[c]{\textwidth}
 \renewcaptionname{ngerman}{\figurename}{Abb.}
 \renewcaptionname{ngerman}{\tablename}{Tab.}
 \def\thefigure{\@arabic\c@figure}
