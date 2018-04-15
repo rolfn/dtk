@@ -187,7 +187,11 @@
           \noexpand\sindex[autoren]{#2#1@#1 #2!#3}}}%
         \x
       \else
-        \sindex[autoren]{#2#1@#1 #2!\ifDTK@korr@\textcolor{red}{\huge???}\fi}%
+        \ifDTK@korr@
+          \sindex[autoren]{#2#1@#1 #2!\textcolor{red}{\huge???}}%
+        \else
+          \sindex[autoren]{#2#1@#1 #2!\relax}%
+        \fi        
       \fi
     \endgroup
   }%
