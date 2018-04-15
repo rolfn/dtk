@@ -28,8 +28,8 @@
 \HyphSubstIfExists{german-x-latest}{%
   \HyphSubstLet{german}{german-x-latest}}{}
 
-\def\DTKversion{2.07a}
-\def\DTKversiondate{2017/06/07}
+\def\DTKversion{2.07b}
+\def\DTKversiondate{2018/04/15}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex,luatex85}
@@ -63,6 +63,9 @@
 \newlength\DTK@tempdimb
 \newlength\DTK@tempdimc
 \newlength\DTK@tempdimd
+
+\newlength\Linewidth
+\AtBeginDocument{\Linewidth=\dimexpr\linewidth-2\fboxsep-2\fboxrule}
 
 \newcommand*\journalname{Die \protect\TeX{}nische Kom\"odie}
 
