@@ -191,7 +191,7 @@
 \fi
 
 \RequirePackage[autostyle=true,german=guillemets,maxlevel=3]{csquotes}%
-\@ifpackagelater{csquotes}{2018/04/13}{}{%
+\@ifpackagelater{csquotes}{2018/02/11}{}{%
   \def\@inpenc@undefined{}
 }
 \MakeAutoQuote{»}{«}
