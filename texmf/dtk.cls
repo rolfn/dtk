@@ -191,6 +191,9 @@
 \fi
 
 \RequirePackage[autostyle=true,german=guillemets,maxlevel=3]{csquotes}%
+\@ifpackagelater{titlesec}{2018/04/13}{}{%
+  \def\@inpenc@undefined{}
+}
 \MakeAutoQuote{»}{«}
 \defineshorthand{"`}{\openautoquote}%
 \defineshorthand{"'}{\closeautoquote}%
