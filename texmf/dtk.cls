@@ -190,10 +190,10 @@
   \input{dtk-new-engines.clo}% LuaTeX oder XeTeX
 \fi
 
-\RequirePackage[autostyle=true,german=guillemets,maxlevel=3]{csquotes}%
 \@ifpackagelater{csquotes}{2018/02/11}{}{%
   \def\@inpenc@undefined{}
 }
+\RequirePackage[autostyle=true,german=guillemets,maxlevel=3]{csquotes}%
 \MakeAutoQuote{»}{«}
 \defineshorthand{"`}{\openautoquote}%
 \defineshorthand{"'}{\closeautoquote}%
