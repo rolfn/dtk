@@ -1,0 +1,113 @@
+%% $Id: libertinus-otf.sty 739 2018-03-06 19:23:26Z herbert $
+%%
+%% This file is distributed under the terms of the LaTeX Project Public
+%% License from CTAN archives in directory  macros/latex/base/lppl.txt.
+%% Either version 1.3 or, at your option, any later version.
+%%
+%
+% Copyright 2017 Herbert Voss hvoss@tug.org
+%
+\ProvidesPackage{libertinus-otf}[%
+  2018/04/19 (Herbert Voss) Supports libertinus fonts for all luatex/xetex v. 0.04.] 
+
+\RequirePackage{ifxetex,ifluatex,xkeyval,textcomp}
+
+\newif\iflibertinus@lining \libertinus@liningtrue         
+\newif\ifbiolinum@lining \biolinum@liningtrue            
+\newif\iflibertinus@tabular \libertinus@tabulartrue
+\newif\ifbiolinum@tabular \biolinum@tabulartrue
+\newif\iflibertinus@semibold \libertinus@semiboldfalse
+
+\DeclareOptionX{lining}[true]{\@nameuse{libertinus@lining#1}}
+\DeclareOptionX{nf}[true]{%
+  \@nameuse{libertinus@lining#1}
+  \iflibertinus@lining\libertinus@newfigdefaults\fi
+}
+\DeclareOptionX{lf}[true]{\iflibertinus@lining\libertinus@newfigdefaults\fi}
+\DeclareOptionX{oldstyle}[true]{\iflibertinus@lining\libertinus@newfigdefaults\fi}
+\DeclareOptionX{osf}[true]{\iflibertinus@lining\libertinus@newfigdefaults\fi}
+\DeclareOptionX{tabular}[true]{\iflibertinus@tabular\libertinus@newfigdefaults\fi}
+\DeclareOptionX{t}[true]{\iflibertinus@tabular\libertinus@newfigdefaults\fi}
+\DeclareOptionX{proportional}[true]{\iflibertinus@tabular\libertinus@newfigdefaults\fi}
+\DeclareOptionX{p}[true]{\iflibertinus@tabular\libertinus@newfigdefaults\fi}
+\DeclareOptionX{semibold}[true]{\@nameuse{libertinus@semibold#1}}
+\DeclareOptionX{sb}[true]{\@nameuse{libertinus@semibold#1}}
+\DeclareOptionX{bold}[true]{\libertinus@semiboldfalse\else\libertinus@semiboldtrue\fi}
+
+\newcommand*\libertinusRM@scale{1}  
+\newcommand*\libertinusDisplayT@scale{1} 
+\newcommand*\libertinusSF@scale{1}
+\newcommand*\libertinusTT@scale{MatchLowercase}  
+\newcommand*\libertinusInitialsT@scale{1}  
+\DeclareOptionX{ScaleRM}{\renewcommand*{\libertinusRM@scale}{#1}}
+\DeclareOptionX{ScaleSF}{\renewcommand*{\libertinusSF@scale}{#1}}
+\DeclareOptionX{ScaleTT}{\renewcommand*{\libertinusTT@scale}{#1}}
+
+\def\libertinus@defaultfeatures{}
+\DeclareOptionX{defaultfeatures}{\def\libertinus@defaultfeatures{#1}}
+
+\ProcessOptionsX\relax
+
+\iflibertinus@lining
+    \def\libertinus@figurestyle{Lining}
+\else
+    \def\libertinus@figurestyle{OldStyle}
+\fi
+
+\iflibertinus@tabular
+    \def\libertinus@figurealign{Monospaced} 
+\else
+    \def\libertinus@figurealign{Proportional} 
+\fi
+
+\iflibertinus@semibold
+     \def\libertinus@boldstyle{bold} 
+\else
+    \def\libertinus@boldstyle{semibold} 
+\fi
+
+\RequirePackage{unicode-math}
+
+\ifxetex\XeTeXtracingfonts=1\fi
+\defaultfontfeatures{
+     Ligatures = TeX ,
+     SmallCapsFeatures={Letters=SmallCaps\ifluatex,Renderer=Basic\fi} , 
+     \libertinus@defaultfeatures
+}
+\setmainfont{libertinusserif}[ 
+%  Numbers        = {%\libertinus@figurealign,\libertinus@figurestyle},
+  Scale          = \libertinusRM@scale ,
+  UprightFont    = *-regular,
+  ItalicFont     = *-italic,
+  BoldFont       = *-\libertinus@boldstyle, 
+  BoldItalicFont = *-\libertinus@boldstyle italic,
+  SmallCapsFeatures={Letters=SmallCaps}, 
+  Extension      = .otf  ]
+\setsansfont{libertinussans}[ 
+%  Numbers   = {\libertinus@figurealign, \libertinus@figurestyle} ,
+  Scale     = \libertinusSF@scale ,
+  UprightFont    = *-regular,
+  ItalicFont     = *-italic,
+  BoldFont       = *-bold, 
+  BoldItalicFont = *-bolditalic, 
+  SmallCapsFeatures={Letters=SmallCaps},
+  Extension      = .otf  ]
+\setmonofont{libertinusmono}[ 
+%  Numbers   = {\libertinus@figurealign, \libertinus@figurestyle} ,
+  Scale     = \libertinusTT@scale ,
+  FakeStretch    = 0.8,
+  UprightFont    = *-regular,
+  ItalicFont     = *-italic,
+  BoldFont       = *-bold,
+% AutoFakeBold   = 1.5,
+  Extension      = .otf, ]
+
+\setmathfont{libertinusmath-regular.otf}[BoldFont=libertinusmath-bold.otf]
+%\setmathfont{libertinusmath-regular.otf}
+%\setmathfont[version=bold]{libertinusmath-bold.otf}
+
+\newfontfamily\LibertinusKeyboard{libertinuskeyboard-regular.otf}
+\newfontfamily\LibertinusDisplay{libertinusserifdisplay-regular.otf}
+\newfontfamily\Libertinusinitials{libertinusserifinitials-regular.otf}
+
+\endinput
