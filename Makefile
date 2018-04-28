@@ -19,6 +19,8 @@ PICTURES = knuth.jpg LANDSCHAFT.JPG
 
 ADDINPUTS += $(PICTURES)
 
+SHELL=/bin/bash 
+
 include Makefile.in
 
 
