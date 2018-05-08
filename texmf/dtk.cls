@@ -174,7 +174,7 @@
   \ClassError{dtk2}{%
     Eines der Makros `\string\DTKrmFontName', `\string\DTKsfFontName',
     \MessageBreak
-    `\string\DTKttFontName`' oder `\string\DTKmathFontName'
+    `\string\DTKttFontName' oder `\string\DTKmathFontName'
     \MessageBreak
     ist nicht korrekt definiert%
   }{}%
