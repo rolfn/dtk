@@ -28,8 +28,8 @@
 \HyphSubstIfExists{german-x-latest}{%
   \HyphSubstLet{german}{german-x-latest}}{}
 
-\def\DTKversion{2.07b}
-\def\DTKversiondate{2018/04/15}
+\def\DTKversion{2.08a}
+\def\DTKversiondate{2018/05/08}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex,luatex85}
@@ -299,11 +299,28 @@
 \RequirePackage[automark,draft=false]{scrlayer-scrpage}
 \pagestyle{scrheadings}
 \clearpairofpagestyles
-\ihead{\headmark}
-\ohead{\pagemark}
+% https://komascript.de/node/2177
+\ihead{\ifstr{\righttopmark}{\rightbotmark}{\leftmark}{}}
+\ohead{\ifstr{\righttopmark}{\rightbotmark}{\pagemark}{}}
 \ofoot*{\normalsize\DTKcorrVersion}
 \ifoot*{\journalname~~\DTKdate}
 \automark[chapter]{chapter}
+
+\RedeclareSectionCommand[%
+  ,style=section
+  ,indent=\z@
+  ,beforeskip=-2\baselineskip \@plus -.2\baselineskip \@minus -.2\baselineskip
+  ,afterskip=1\baselineskip \@plus .1\baselineskip \@minus .1\baselineskip
+]{chapter}
+
+\RedeclareSectionCommand[%
+  ,beforeskip=-2.4ex \@plus -1ex \@minus -.2ex % Betrag ist von Bedeutung!
+  ,afterskip=0.8ex \@plus .1ex \@minus .1ex %
+]{section}
+
+\RedeclareSectionCommand[%
+  ,afterskip=0.8ex \@plus .1ex %
+]{subsection}
 
 \RequirePackage{xcolor}
 
@@ -386,22 +403,6 @@
 \def\thetable{\@arabic\c@table}
 \def\theequation{\@arabic\c@equation}
 \def\thelstlisting{\@arabic\c@lstlisting}
-
-\RedeclareSectionCommand[%
-  ,beforeskip=-2.4ex \@plus -1ex \@minus -.2ex % Betrag ist von Bedeutung!
-  ,afterskip=0.8ex \@plus .1ex \@minus .1ex %
-]{section}
-
-\RedeclareSectionCommand[%
-  ,afterskip=0.8ex \@plus .1ex %
-]{subsection}
-
-\RedeclareSectionCommand[%
-  ,style=section
-  ,indent=\z@
-  ,beforeskip=-2\baselineskip \@plus -.2\baselineskip \@minus -.2\baselineskip
-  ,afterskip=1\baselineskip \@plus .1\baselineskip \@minus .1\baselineskip
-]{chapter}
 
 \setkomafont{disposition}{\normalfont\sffamily}
 \setkomafont{part}{\usekomafont{disposition}\huge}
