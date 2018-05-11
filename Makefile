@@ -1,6 +1,8 @@
 # Aktuelle Definitionen zum make-Prozess für "Die TeXnische Komödie"
 # -- anzupassen für die aktuelle Ausgabe --
 
+Shell=/bin/bash
+
 MAIN = dtk
 
 ARTICLES += artikel1.tex
