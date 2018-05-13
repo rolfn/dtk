@@ -4,7 +4,7 @@
 %%
 %% LaTeX Class for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2017
+%% Copyright (C) 2018
 %% Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -18,7 +18,7 @@
 % $Id: deLogos.sty 188 2015-10-08 20:06:29Z herbert $
 %
 % -------------------------------------
-\ProvidesPackage{dtk-logos}[2017/07/16 v. 1.03 Dante Edition: Logos (hv)]
+\ProvidesPackage{dtk-logos}[2018/05/13 v. 1.04 Dante Edition: Logos (hv)]
 %
 \newif\if@dtk@newengine \@dtk@newenginetrue 
 \RequirePackage{ifluatex,ifxetex}
@@ -29,6 +29,7 @@
 \RequirePackage{hologo,dantelogo,xspace}
 \if@dtk@newengine
   \RequirePackage{fontspec}
+  \setmathfont[version=XITS]{XITS Math}
 \fi  
 %
 \def\HoLogo@La#1{%
@@ -107,6 +108,9 @@
 \def\XeLaTeX{\hologo{XeLaTeX}}
 \def\XeTeX{\hologo{XeTeX}}
 %%
+\def\AmS{{\ifluatex\mathversion{XITS}\fi%
+     $\mathcal{A}$\kern-.1667em\lower.5ex\hbox{$\mathcal{M}$}\kern-.125em$\mathcal{S}$}}%  $ 
+%
 \newcommand\BibTool{\textsc{Bib\hskip-.1em
         T\hskip-.15emo\hskip-.05emo\hskip-.05eml}\xspace}
 \providecommand\tikz{\textsf{Ti\textit{k}Z}}
@@ -123,11 +127,14 @@
 \providecommand\TUGboat{\textsl{TUGboat}}
 \let\DANTE\dantelogo
 \def\pgf/tikz{\textsf{pgf/Ti\textit{k}Z}}
-\def\TeXLive{\TeX{}Live}
+\def\TeXLive{\TeX{}Live\xspace}
 
 \def\BibLaTeX{Bib\hologo{LaTeX}}
 \let\biblatex\BibLaTeX
 \def\CTAN{\texttt{CTAN}\xspace}
+
+\def\PSTricks{\textsf{PSTricks}\xspace}
+\let\pstricks\PSTricks
 
 \if@dtk@newengine
   \newfontfamily\dtk@LinWikipedia{Linux Libertine O}%
@@ -137,4 +144,6 @@
 \fi
 \let\wikipedia\WikipediA
 %
+\def\macOS{\textsf{macOS}\xspace}
+
 \endinput
