@@ -41,15 +41,13 @@
            * File `dtk-fonts.cfg' used.^^J%
            *************************************}%
 }{%
-  \RequirePackage[lining=true]{libertine}%
-    \def\DTKrmFontName{Linux Libertine}%
-    \def\DTKsfFontName{Linux Biolinum}%
-  \setmathfont{XITSMath}[Scale=0.9,math-style=TeX,bold-style=TeX]%
-    \def\DTKmathFontName{XITS Math}%
-  \setmonofont{AnonymousPro}[Scale=0.955,FakeStretch=0.87]%
+  \RequirePackage{libertinus-otf}%
+    \def\DTKrmFontName{Libertinus Serif}%
+    \def\DTKsfFontName{Libertinus Sans Serif}%
+%  \setmathfont{XITSMath}[Scale=0.9,math-style=TeX,bold-style=TeX]%
+    \def\DTKmathFontName{Libertinus Math}%
+  \setmonofont{AnonymousPro}[Scale=MatchLowercase,FakeStretch=0.87]%
     \def\DTKttFontName{Anonymous Pro}%
-  %\setmonofont{DejaVuSansMono}[Scale=0.81,FakeStretch=0.9]%
-    %\def\DTKttFontName{DejaVu Mono}%
 }
 
 \endinput

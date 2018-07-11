@@ -18,7 +18,7 @@
 % $Id: deLogos.sty 188 2015-10-08 20:06:29Z herbert $
 %
 % -------------------------------------
-\ProvidesPackage{dtk-logos}[2018/05/13 v. 1.04 Dante Edition: Logos (hv)]
+\ProvidesPackage{dtk-logos}[2018/06/18 v. 1.05 Dante Edition: Logos (hv)]
 %
 \newif\if@dtk@newengine \@dtk@newenginetrue 
 \RequirePackage{ifluatex,ifxetex}
@@ -28,7 +28,8 @@
 \RequirePackage{fetamont}
 \RequirePackage{hologo,dantelogo,xspace}
 \if@dtk@newengine
-  \RequirePackage{fontspec}
+  \RequirePackage{unicode-math}
+  \setmathfont{LatinModernMath-Regular}
   \setmathfont[version=XITS]{XITS Math}
 \fi  
 %
@@ -53,8 +54,8 @@
   \endgroup
 }
 \def\LaTeXTeX{\hologo{(La)TeX}}
-\def\AmSLaTeX{\hologo{AmSLaTeX}}
-\def\AmSTeX{\hologo{AmSTeX}}
+\def\AmSLaTeX{\mbox{\textsf{AMS}-\hologo{LaTeX}}}
+\def\AmSTeX{\mbox{\textsf{AMS}-\hologo{TeX}}}
 \def\biber{\hologo{biber}}
 \def\Biber{\Hologo{biber}}
 \def\BibTeX{\hologo{BibTeX}}
