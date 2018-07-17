@@ -146,15 +146,17 @@
     \let\embedfilefinish\relax
     \AfterLastShipout{%
       \immediate\closeout\DTK@UrlHandle
-      \embedfile[%
-        mimetype=text/plain,%
-        stringmethod=escape,%
-        desc={%
-          List of URLs found in %
-          \@backslashchar url and \@backslashchar ctanurl%
-        },%
-      ]{\DTK@UrlFile}%
-      \DTK@embedfilefinish
+      \IfFileExists{\DTK@UrlFile}{%
+        \embedfile[%
+          mimetype=text/plain,%
+          stringmethod=escape,%
+          desc={%
+            List of URLs found in %
+            \@backslashchar url and \@backslashchar ctanurl%
+          },%
+        ]{\DTK@UrlFile}%
+        \DTK@embedfilefinish
+      }{}
     }%
   \else
     \let\DTK@UrlWrite\@gobbletwo
