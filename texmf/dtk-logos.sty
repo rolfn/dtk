@@ -15,10 +15,9 @@
 %% and version 1.3c or later is part of all distributions of LaTeX
 %% version 2005/12/01 or later.
 %
-% $Id: deLogos.sty 188 2015-10-08 20:06:29Z herbert $
 %
 % -------------------------------------
-\ProvidesPackage{dtk-logos}[2018/06/18 v. 1.05 Dante Edition: Logos (hv)]
+\ProvidesPackage{dtk-logos}[2018/10/19 v. 1.06 Dante Edition: Logos (hv)]
 %
 \newif\if@dtk@newengine \@dtk@newenginetrue 
 \RequirePackage{ifluatex,ifxetex}
@@ -30,7 +29,7 @@
 \if@dtk@newengine
   \RequirePackage{unicode-math}
   \setmathfont{LatinModernMath-Regular}
-  \setmathfont[version=XITS]{XITS Math}
+  \setmathfont[version=XITS]{XITSMath-Regular.otf}
 \fi  
 %
 \def\HoLogo@La#1{%
