@@ -198,7 +198,7 @@
   \let\DTK@Author=\DTK@Author@list
   \newcommand\DTK@@Author[3]{%
     \DTK@Author@article{#1}{#2}{#3}%
-    \DTK@Author@list{#1}{#2}{#3}%
+    \g@addto@macro\DTK@Author@list@exec{\DTK@Author@list{#1}{#2}{#3}}%
   }
   \renewcommand\maketitle[1][]{%
     \thispagestyle{dtk-title}%

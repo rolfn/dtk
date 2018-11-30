@@ -269,6 +269,7 @@
 
 \let\DTK@thispagestyle=\thispagestyle
 
+\let\DTK@Author@list@exec=\@empty
 \newcommand\DTK@maketitle[1][]{%
   \begingroup
     \dimen0=\textheight
@@ -286,6 +287,8 @@
   \endgroup
 %  \DTK@thispagestyle{plain.scrheadings}%
   \@thanks
+  \DTK@Author@list@exec
+  \global\let\DTK@Author@list@exec=\@empty
   \global\let\@thanks=\@empty
   \global\let\@title=\@empty
   \global\let\@author=\@empty
