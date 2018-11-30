@@ -195,7 +195,7 @@
       \fi
     \endgroup
   }%
-  \newcommand\DTK@Author[3]{%
+  \renewcommand\DTK@Author[3]{%
     \g@addto@macro\DTK@Author@list@exec{\DTK@Author@list{#1}{#2}{#3}}%
   }
   \newcommand\DTK@@Author[3]{%
