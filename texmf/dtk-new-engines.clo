@@ -42,12 +42,13 @@
            *************************************}%
 }{%
   \RequirePackage{libertinus-otf}%
-    \def\DTKrmFontName{Libertinus Serif}%
-    \def\DTKsfFontName{Libertinus Sans Serif}%
+  \def\DTKrmFontName{Libertinus Serif}%
+  \def\DTKsfFontName{Libertinus Sans Serif}%
 %  \setmathfont{XITSMath}[Scale=0.9,math-style=TeX,bold-style=TeX]%
-    \def\DTKmathFontName{Libertinus Math}%
-  \setmonofont{AnonymousPro}[Scale=MatchLowercase,FakeStretch=0.87]%
-    \def\DTKttFontName{Anonymous Pro}%
+  \def\DTKmathFontName{Libertinus Math}%
+  \setmonofont{AnonymousPro}[Scale=MatchLowercase,FakeStretch=0.87,
+    RawFeature=-tlig]%
+  \def\DTKttFontName{Anonymous Pro}%
 }
 
 \endinput
