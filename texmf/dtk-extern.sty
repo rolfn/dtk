@@ -2,7 +2,7 @@
 %%
 %% LaTeX package for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2016-18
+%% Copyright (C) 2016-19
 %% Rolf Niepraschk, Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -14,11 +14,13 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-extern}%
-  [2018/03/05 v0.10: dtk package for running external documents (HV)]
+  [2018/12/01 v0.12: dtk package for running external documents (HV)]
 
-\RequirePackage{shellesc,filecontents,xkeyval,graphicx,marginnote}
+\RequirePackage{shellesc,filecontents,xkeyval,graphicx,marginnote,fancyvrb}
 
 \newcounter{dtk@extern@runs}
+\newlength\dtk@extern@mpwidth \setlength\dtk@extern@mpwidth{\z@}
+
 \define@key{dtk}{compiler}[pdflatex]{\def\dtk@extern@compiler{#1}}
 \define@key{dtk}{runsequence}[]{\def\dtk@extern@runsequence{#1}}
 \define@key{dtk}{runs}[1]{\setcounter{dtk@extern@runs}{#1}}
@@ -28,18 +30,22 @@
 \define@key{dtk}{caption}[]{\def\dtk@extern@caption{#1}}
 \define@key{dtk}{label}[]{\def\dtk@extern@label{#1}}
 \define@key{dtk}{pages}[1]{\def\dtk@extern@pages{#1}}
+\define@key{dtk}{mpwidth}[0pt]{\setlength\dtk@extern@mpwidth{#1}}
+\define@boolkey{dtk}[dtk@extern@]{usefancyvrb}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{showFilename}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{code}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{force}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{crop}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{biber}[true]{}
+\define@boolkey{dtk}[dtk@extern@]{xindex}[true]{}
+\define@key{dtk}{xindexOptions}[]{\def\dtk@extern@xindexOptions{#1}}
 \define@boolkey{dtk}[dtk@extern@]{includegraphic}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{frame}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{float}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{cleanup}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{copyToExampleDir}[true]{}
+\define@key{dtk}{align}[\centering]{\def\dtk@extern@align{#1}}
 \define@key{dtk}{ExamplesDir}[Examples]{\def\dtk@extern@ExamplesDir{#1}}
-\define@key{dtk}{align}[]{\def\dtk@extern@align{#1}}
 
 \def\ResetKeys{%
  \setkeys{dtk}{
@@ -53,6 +59,8 @@
   runs=1,%		Anzahl Compiler-Durchläufe
   runsequence={},%	Im Moment nicht aktiv
   biber=false,%		Biber laufen lassen?
+  xindex=false,%	xindex laufen lassen?
+  xindexOptions={},%     options for xindex
   force=false,%		Compiler, auch wenn PDF existiert?
   frame=false,%		keinen Rahmen um Abbildung
   float=false,%		nicht als Gleitumgebung
@@ -63,7 +71,9 @@
   cleanup=false,%	Hilfsdateien nicht löschen
   copyToExampleDir,%    Kopie nach ExamplesDir
   ExamplesDir=Examples,% Unterverzeichnis für Beispiele
-  align={},%            horizontale Anordnung
+  align=\centering,%    Ausgabe zentrieren
+  mpwidth=0pt,%         no minipage
+  usefancyvrb=false,%   use VerbatimInput instead of listings
   }
 }
 \ResetKeys
@@ -76,13 +86,18 @@
 \newcounter{dtk@example@counter}
 
 \newcommand\ExampleType[5]{%
-   \@namedef{#1@initText}{linerange=#2-#3,includerangemarker=false}% text
-   \@namedef{#1@initPreamble}{linerange=#4-#5,includerangemarker=false}% code
+   \ifdtk@extern@usefancyvrb
+     \@namedef{#1@initText}{\gdef\FancyVerbStartString{#2}\gdef\FancyVerbStopString{#3}}% text
+     \@namedef{#1@initPreamble}{\gdef\FancyVerbStartString{#4}\gdef\FancyVerbStopString{#5}}% code
+   \else
+     \@namedef{#1@initText}{linerange=#2-#3,includerangemarker=false}% text
+     \@namedef{#1@initPreamble}{linerange=#4-#5,includerangemarker=false}% code
+   \fi
 }
 
 \ExampleType{latex}%               #1
-  {begin\string{document\string}}%       #2
-  {end\string{document\string}}%         #3
+  {\string\begin\string{document\string}}%       #2
+  {\string\end\string{document\string}}%         #3
   {\perCent StartVisiblePreamble}% #4
   {\perCent StopVisiblePreamble}%  #5
 
@@ -95,81 +110,115 @@
 %%
 %% [#1]: Optionen  #2: Dateiname
 %%
-\newenvironment{ErstelleGrafik}[2][]
-  {\global\setkeys{dtk}{#1}%                   \begin
-   \xdef\dtk@extern@dateiname{#2-\arabic{dtk@example@counter}}%
-   \typeout{Externer Dateiname: \dtk@extern@dateiname}%
+\newenvironment{ErstelleGrafik}[2][]{%
+   \xdef\dtkExternDateiname{#2-\arabic{dtk@example@counter}}%
+   \typeout{Externer Dateiname: \dtkExternDateiname}%
+   \global\setkeys{dtk}{#1}%                   \begin
+   \expandafter\IfFileExists\expandafter{\dtkExternDateiname.pdf}{}{\setkeys{dtk}{force}}%
    \begingroup
-   \@nameuse{filecontents*}{\dtk@extern@dateiname.tex}
+   \@nameuse{filecontents*}{\dtkExternDateiname.tex}
   }
   {\@nameuse{endfilecontents*}%         \end
    \ifdtk@extern@copyToExampleDir
-     \ShellEscape{cp\space\dtk@extern@dateiname.tex \dtk@extern@ExamplesDir/}%
+     \ShellEscape{cp\space\dtkExternDateiname.tex \dtk@extern@ExamplesDir/}%
    \fi
    \global\stepcounter{dtk@example@counter}%
    \endgroup
-   \loop\ifnum\thedtk@extern@runs>0
-     \typeout{Run: \thedtk@extern@runs\space \dtk@extern@compiler\space\dtk@extern@dateiname}%
-     \ShellEscape{\dtk@extern@compiler\space\dtk@extern@dateiname}%
-     \addtocounter{dtk@extern@runs}{-1}%
-   \repeat
+   \ifdtk@extern@force
+     \loop\ifnum\thedtk@extern@runs>0
+       \typeout{Run: \thedtk@extern@runs\space \dtk@extern@compiler\space\dtkExternDateiname}%
+       \ShellEscape{\dtk@extern@compiler\space\dtkExternDateiname}%
+       \addtocounter{dtk@extern@runs}{-1}%
+     \repeat
+   \fi
    \ifdtk@extern@code
-      \expandafter\edef\expandafter\dtk@lst@options@preamble\expandafter{%
-        \@nameuse{\dtk@extern@docType @initPreamble},
-        \dtk@extern@lstOptions,
-        backgroundcolor=\noexpand\color{black!12}}%
-      \expandafter\lstinputlisting\expandafter[\dtk@lst@options@preamble]{\dtk@extern@dateiname}
-      \ifdtk@extern@showFilename
-        \marginnote{\rotatebox{90}{\dtk@extern@dateiname}}%[-15mm]%
-      \fi
+      \ifdim\dtk@extern@mpwidth>\z@ \minipage[t]{\dtk@extern@mpwidth}\vspace{0pt}\fi
+        \expandafter\edef\expandafter\dtk@lst@options@preamble\expandafter{%
+          \@nameuse{\dtk@extern@docType @initPreamble},
+          \dtk@extern@lstOptions,
+          backgroundcolor=\noexpand\color{black!12}}%
+          \ifdtk@extern@usefancyvrb
+            \expandafter\VerbatimInput\expandafter[\dtk@lst@options@preamble]{\dtkExternDateiname}%
+          \else
+           \expandafter\lstinputlisting\expandafter[\dtk@lst@options@preamble]{\dtkExternDateiname}%
+          \fi
+        \ifdtk@extern@showFilename
+          \marginnote{\rotatebox{90}{\dtkExternDateiname}}%[-15mm]%
+        \fi
 %     
       \expandafter\edef\expandafter\dtk@lst@options@text\expandafter{%
         \@nameuse{\dtk@extern@docType @initText},
         \dtk@extern@lstOptions,
         backgroundcolor=\noexpand\color{black!8}}%
 %      \typeout{\dtk@lst@options@text}
-      \expandafter\lstinputlisting\expandafter[\dtk@lst@options@text]{\dtk@extern@dateiname}%
+       \ifdtk@extern@usefancyvrb
+         \expandafter\VerbatimInput\expandafter[\dtk@lst@options@text]{\dtkExternDateiname}%
+       \else
+         \expandafter\lstinputlisting\expandafter[\dtk@lst@options@text]{\dtkExternDateiname}%
+       \fi
+     \ifdim\dtk@extern@mpwidth > \z@\relax \endminipage\fi
    \fi
-   \expandafter\IfFileExists\expandafter{\dtk@extern@dateiname.pdf}%
+   \expandafter\IfFileExists\expandafter{\dtkExternDateiname.pdf}%
      {\ifdtk@extern@force
         \ifdtk@extern@biber
-          \ShellEscape{biber  \dtk@extern@dateiname}%  NAch biber nochmal latex
-          \ShellEscape{\dtk@extern@compiler\space\dtk@extern@dateiname}%
+          \ShellEscape{biber  \dtkExternDateiname}%  NAch biber nochmal latex
+          \ShellEscape{\dtk@extern@compiler\space\dtkExternDateiname}%
+        \fi
+        \ifdtk@extern@xindex 
+          \ShellEscape{xindex \dtk@extern@xindexOptions\space \dtkExternDateiname.idx}%  NAch xindex nochmal latex
+          \ShellEscape{\dtk@extern@compiler\space\dtkExternDateiname}%
         \fi
         \ifdtk@extern@crop
-          \ShellEscape{pdfcrop \dtk@extern@dateiname}%
-          \ShellEscape{mv \dtk@extern@dateiname-crop.pdf \dtk@extern@dateiname.pdf}%
+          \ShellEscape{pdfcrop \dtkExternDateiname}%
+          \ShellEscape{mv \dtkExternDateiname-crop.pdf \dtkExternDateiname.pdf}%
         \fi
       \fi
      }{}
    \ifdtk@extern@code\else
       \ifdtk@extern@showFilename
-        \marginnote{\rotatebox{90}{\dtk@extern@dateiname}}%
+        \marginnote{\rotatebox{90}{\dtkExternDateiname}}%
       \fi
    \fi
 %
    \ifdtk@extern@includegraphic
-     \ifdtk@extern@float\begin{figure}[!htb]\centering\fi
+     \ifdtk@extern@float
+       \begin{figure}[!htb]
+     \else
+       \ifdim\dtk@extern@mpwidth>\z@ 
+         \hfill\minipage[t]{\dimexpr\linewidth-\dtk@extern@mpwidth-1em\relax}\vspace{0pt}
+       \else
+         \par\begingroup
+       \fi
+     \fi
+     \dtk@extern@align
      \ifdtk@extern@frame
        \expandafter\@for\expandafter\next\expandafter:\expandafter=\dtk@extern@pages\do{%
-          \fbox{\expandafter\includegraphics\expandafter[\dtk@extern@grfOptions,page=\next]{\dtk@extern@dateiname}}%
+          \fbox{\expandafter\includegraphics\expandafter[\dtk@extern@grfOptions,page=\next]{\dtkExternDateiname}}%
               \hspace{5pt}}\hspace*{-5pt}
-%   \fbox{\expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}}%
+%   \fbox{\expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtkExternDateiname}}%
      \else
        \expandafter\@for\expandafter\next\expandafter:\expandafter=\dtk@extern@pages\do{%
-          \expandafter\dtk@extern@align\expandafter\includegraphics\expandafter[\dtk@extern@grfOptions,page=\next]{\dtk@extern@dateiname}%
+          \expandafter\includegraphics\expandafter[\dtk@extern@grfOptions,page=\next]{\dtkExternDateiname}%
               \hspace{5pt}}\hspace*{-5pt}
-%       \expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtk@extern@dateiname}%
+%       \expandafter\includegraphics\expandafter[\dtk@extern@grfOptions]{\dtkExternDateiname}%
      \fi
      \ifx\dtk@extern@caption\@empty\else\caption{\dtk@extern@caption}\fi
      \ifx\dtk@extern@label\@empty\else\label{\dtk@extern@label}\fi
-     \ifdtk@extern@float\end{figure}\fi
+     \ifdtk@extern@float
+       \end{figure}
+     \else
+       \ifdim\dtk@extern@mpwidth>\z@ 
+         \endminipage
+       \else
+         \par\endgroup
+       \fi
+     \fi
    \fi
    \ifdtk@extern@cleanup
-      \ShellEscape{rm \dtk@extern@dateiname.log}%
-      \ShellEscape{rm \dtk@extern@dateiname.aux}%
-      \ShellEscape{rm \dtk@extern@dateiname.toc}%
-%      \ShellEscape{rm \dtk@extern@dateiname.log}%
+      \ShellEscape{rm \dtkExternDateiname.log}%
+      \ShellEscape{rm \dtkExternDateiname.aux}%
+      \ShellEscape{rm \dtkExternDateiname.toc}%
+%      \ShellEscape{rm \dtkExternDateiname.log}%
    \fi
    \global\ResetKeys}
 \stepcounter{dtk@example@counter}%
