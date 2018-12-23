@@ -242,7 +242,7 @@
     }{%
       \DTK@embedded@enddocumenthook\endinput
     }%
-    \refsection[DTK\the\c@refsection]%
+    \newrefsection[DTK\the\c@refsection]%
       \input{\DTK@local@inputname}%
     \endrefsection
   \endgroup
