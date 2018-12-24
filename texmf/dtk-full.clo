@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2017/07/19 v0.1i dtk class options for full mode (RN)]
+  [2018/12/24 v0.1j dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
