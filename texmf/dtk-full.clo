@@ -38,6 +38,8 @@
 
 \newcommand*\DTKissueTOmonth[1]{\numexpr#1*3-1\relax}
 
+\newcounter{DTK@bibresource}
+
 \ifnum\DTKissue=\z@
   \def\DTKmonth{0}%
   \def\DTKmonthName{?????}%
@@ -113,8 +115,17 @@
   }
   \renewcommand*\printbibliography[1][]{}%
   \newcommand*\DTK@addbibresource[2][]{%
+    \stepcounter{DTK@bibresource}%
+    \@ifundefined{DTK@RS\the\c@refsection}{%
+      \def\DTK@tempa{}%
+      \expandafter\let\csname DTK@RS\the\c@refsection\endcsname\@empty
+    }{\def\DTK@tempa{,}}%
+    \edef\DTK@tempb{\DTK@tempa ART\the\c@refsection:\the\c@DTK@bibresource}%
+    \expandafter\g@addto@macro\csname DTK@RS\the\c@refsection
+      \expandafter\endcsname\expandafter{\DTK@tempb}
     \immediate\write\user@usepackages{%
-      \string\addbibresource[datatype=bibtex,label=DTK\the\c@refsection]{#2}%
+      \string\addbibresource[\ifx\relax#1\relax\else#1,\fi datatype=bibtex,%
+        label=ART\the\c@refsection:\the\c@DTK@bibresource]{#2}%
         \@percentchar\space \DTK@local@inputname
     }%
   }%
@@ -212,6 +223,7 @@
 %%% Laden eines Einzeldokuments
 \newcommand*\DTKinput[1]{%
   \setcounter{dtk@example@counter}{1}%
+  \setcounter{DTK@bibresource}{0}%
   \begingroup
     \filename@parse{#1}%
     \edef\jobname{\filename@base}%
@@ -237,12 +249,24 @@
     \c@table=\z@
     \c@equation=\z@
     \renewenvironment{document}{%
-      \ifDTKrecord\endgroup\expandafter\endinput\fi
+      \ifDTKrecord
+        %%%\expandafter\show\csname DTK@RS\the\c@refsection\endcsname
+        % Inhalt von DTK@RS\the\c@refsection schreiben
+        \@ifundefined{DTK@RS\the\c@refsection}{}{%
+          \immediate\write\user@usepackages{%
+            \string\@namedef{DTKRS\the\c@refsection}%
+              {\csname DTK@RS\the\c@refsection\endcsname}%
+            \@percentchar\space \DTK@local@inputname
+          }%
+        }%
+        \endgroup\expandafter\endinput
+      \fi
       \DTK@embedded@begindocumenthook\ignorespaces
     }{%
       \DTK@embedded@enddocumenthook\endinput
     }%
-    \newrefsection[DTK\the\c@refsection]%
+    \newrefsection\@ifundefined{DTK@RS\the\c@refsection}{}{%
+      \expandafter[\csname DTK@RS\the\c@refsection\endcsname]}%
       \input{\DTK@local@inputname}%
     \endrefsection
   \endgroup

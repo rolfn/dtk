@@ -9,7 +9,8 @@ ARTICLES += artikel1.tex
 ADDINPUTS += artikel1.bib
 
 ARTICLES += artikel2.tex
-ADDINPUTS += artikel2.bib
+ADDINPUTS += artikel2a.bib
+ADDINPUTS += artikel2b.bib
 
 ARTICLES += artikel3.tex
 
