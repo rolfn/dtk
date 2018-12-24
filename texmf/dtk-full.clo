@@ -121,6 +121,7 @@
       \expandafter\let\csname DTK@RS\the\c@refsection\endcsname\@empty
     }{\def\DTK@tempa{,}}%
     \edef\DTK@tempb{\DTK@tempa ART\the\c@refsection:\the\c@DTK@bibresource}%
+    % Collect all specific labels as comma list for \newrefsection
     \expandafter\g@addto@macro\csname DTK@RS\the\c@refsection
       \expandafter\endcsname\expandafter{\DTK@tempb}
     \immediate\write\user@usepackages{%
@@ -250,8 +251,7 @@
     \c@equation=\z@
     \renewenvironment{document}{%
       \ifDTKrecord
-        %%%\expandafter\show\csname DTK@RS\the\c@refsection\endcsname
-        % Inhalt von DTK@RS\the\c@refsection schreiben
+        % Write the definition of DTK@RS\the\c@refsection 
         \@ifundefined{DTK@RS\the\c@refsection}{}{%
           \immediate\write\user@usepackages{%
             \string\@namedef{DTKRS\the\c@refsection}%
