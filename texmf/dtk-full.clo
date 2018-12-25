@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2018/12/24 v0.1j dtk class options for full mode (RN)]
+  [2018/12/25 v0.1j dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -120,13 +120,11 @@
       \def\DTK@tempa{}%
       \expandafter\let\csname ART\the\c@refsection\endcsname\@empty
     }{\def\DTK@tempa{,}}%
-    \edef\DTK@tempb{\DTK@tempa ART\the\c@refsection:\the\c@DTK@bibresource}%
-    % Collect all specific labels as comma list for \newrefsection
+    % Collect all bib filenames as comma list for \newrefsection
     \expandafter\g@addto@macro\csname ART\the\c@refsection
-      \expandafter\endcsname\expandafter{\DTK@tempb}%
+      \expandafter\endcsname\expandafter{\DTK@tempa #2}%
     \immediate\write\user@usepackages{%
-      \string\addbibresource[\ifx\relax#1\relax\else#1,\fi datatype=bibtex,%
-        label=ART\the\c@refsection:\the\c@DTK@bibresource]{#2}%
+      \string\addbibresource\ifx\relax#1\relax\else[#1]\fi{#2}%
         \@percentchar\space \DTK@local@inputname
     }%
   }%
@@ -251,7 +249,7 @@
     \c@equation=\z@
     \renewenvironment{document}{%
       \ifDTKrecord
-        % Write the definition of ART\the\c@refsection 
+        % Write the definition of the complete bib filename list
         \@ifundefined{ART\the\c@refsection}{}{%
           \immediate\write\user@usepackages{%
             \string\@namedef{ART\the\c@refsection}%
