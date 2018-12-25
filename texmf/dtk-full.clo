@@ -116,14 +116,14 @@
   \renewcommand*\printbibliography[1][]{}%
   \newcommand*\DTK@addbibresource[2][]{%
     \stepcounter{DTK@bibresource}%
-    \@ifundefined{DTK@RS\the\c@refsection}{%
+    \@ifundefined{ART\the\c@refsection}{%
       \def\DTK@tempa{}%
-      \expandafter\let\csname DTK@RS\the\c@refsection\endcsname\@empty
+      \expandafter\let\csname ART\the\c@refsection\endcsname\@empty
     }{\def\DTK@tempa{,}}%
     \edef\DTK@tempb{\DTK@tempa ART\the\c@refsection:\the\c@DTK@bibresource}%
     % Collect all specific labels as comma list for \newrefsection
-    \expandafter\g@addto@macro\csname DTK@RS\the\c@refsection
-      \expandafter\endcsname\expandafter{\DTK@tempb}
+    \expandafter\g@addto@macro\csname ART\the\c@refsection
+      \expandafter\endcsname\expandafter{\DTK@tempb}%
     \immediate\write\user@usepackages{%
       \string\addbibresource[\ifx\relax#1\relax\else#1,\fi datatype=bibtex,%
         label=ART\the\c@refsection:\the\c@DTK@bibresource]{#2}%
@@ -251,11 +251,11 @@
     \c@equation=\z@
     \renewenvironment{document}{%
       \ifDTKrecord
-        % Write the definition of DTK@RS\the\c@refsection 
-        \@ifundefined{DTK@RS\the\c@refsection}{}{%
+        % Write the definition of ART\the\c@refsection 
+        \@ifundefined{ART\the\c@refsection}{}{%
           \immediate\write\user@usepackages{%
-            \string\@namedef{DTKRS\the\c@refsection}%
-              {\csname DTK@RS\the\c@refsection\endcsname}%
+            \string\@namedef{ART\the\c@refsection}%
+              {\csname ART\the\c@refsection\endcsname}%
             \@percentchar\space \DTK@local@inputname
           }%
         }%
@@ -265,8 +265,8 @@
     }{%
       \DTK@embedded@enddocumenthook\endinput
     }%
-    \newrefsection\@ifundefined{DTK@RS\the\c@refsection}{}{%
-      \expandafter[\csname DTK@RS\the\c@refsection\endcsname]}%
+    \newrefsection\@ifundefined{ART\the\c@refsection}{}{%
+      \expandafter[\csname ART\the\c@refsection\endcsname]}%
       \input{\DTK@local@inputname}%
     \endrefsection
   \endgroup
