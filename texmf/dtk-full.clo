@@ -38,8 +38,6 @@
 
 \newcommand*\DTKissueTOmonth[1]{\numexpr#1*3-1\relax}
 
-\newcounter{DTK@bibresource}
-
 \ifnum\DTKissue=\z@
   \def\DTKmonth{0}%
   \def\DTKmonthName{?????}%
@@ -115,7 +113,6 @@
   }
   \renewcommand*\printbibliography[1][]{}%
   \newcommand*\DTK@addbibresource[2][]{%
-    \stepcounter{DTK@bibresource}%
     \@ifundefined{ART\the\c@refsection}{%
       \def\DTK@tempa{}%
       \expandafter\let\csname ART\the\c@refsection\endcsname\@empty
@@ -222,7 +219,6 @@
 %%% Laden eines Einzeldokuments
 \newcommand*\DTKinput[1]{%
   \setcounter{dtk@example@counter}{1}%
-  \setcounter{DTK@bibresource}{0}%
   \begingroup
     \filename@parse{#1}%
     \edef\jobname{\filename@base}%
