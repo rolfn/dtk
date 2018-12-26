@@ -119,7 +119,7 @@
       \def\DTK@tempa{}%
       \expandafter\let\csname BIBS:\the\c@artcounter\endcsname\@empty
     }{\def\DTK@tempa{,}}%
-    % Collect all bib filenames as comma list for \newartnumber
+    % Collect all bib filenames as comma list for \newrefsection
     \expandafter\g@addto@macro\csname BIBS:\the\c@artcounter
       \expandafter\endcsname\expandafter{\DTK@tempa #2}%
     \immediate\write\user@usepackages{%
@@ -266,7 +266,7 @@
       \input{\DTK@local@inputname}%
     }{%
       \expandafter\newrefsection\expandafter
-        [\csname BIBS:\the\c@artcounter\endcsname]
+        [\csname BIBS:\the\c@artcounter\endcsname]%
         \input{\DTK@local@inputname}%
       \endrefsection 
     }%
