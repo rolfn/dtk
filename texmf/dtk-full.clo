@@ -95,6 +95,8 @@
   \DTK@eat@version
 }
 
+\newcounter{artcounter}
+
 \ifDTKrecord
   % Testlauf zum Aufsammeln von Paket- und bib-Dateinamen
   \@ifdefinable\user@usepackages{%
@@ -113,12 +115,12 @@
   }
   \renewcommand*\printbibliography[1][]{}%
   \newcommand*\DTK@addbibresource[2][]{%
-    \@ifundefined{ART\the\c@refsection}{%
+    \@ifundefined{BIBS:\the\c@artcounter}{%
       \def\DTK@tempa{}%
-      \expandafter\let\csname ART\the\c@refsection\endcsname\@empty
+      \expandafter\let\csname BIBS:\the\c@artcounter\endcsname\@empty
     }{\def\DTK@tempa{,}}%
-    % Collect all bib filenames as comma list for \newrefsection
-    \expandafter\g@addto@macro\csname ART\the\c@refsection
+    % Collect all bib filenames as comma list for \newartnumber
+    \expandafter\g@addto@macro\csname BIBS:\the\c@artcounter
       \expandafter\endcsname\expandafter{\DTK@tempa #2}%
     \immediate\write\user@usepackages{%
       \string\addbibresource\ifx\relax#1\relax\else[#1]\fi{#2}%
@@ -219,6 +221,7 @@
 %%% Laden eines Einzeldokuments
 \newcommand*\DTKinput[1]{%
   \setcounter{dtk@example@counter}{1}%
+  \stepcounter{artcounter}%
   \begingroup
     \filename@parse{#1}%
     \edef\jobname{\filename@base}%
@@ -246,10 +249,10 @@
     \renewenvironment{document}{%
       \ifDTKrecord
         % Write the definition of the complete bib filename list
-        \@ifundefined{ART\the\c@refsection}{}{%
+        \@ifundefined{BIBS:\the\c@artcounter}{}{%
           \immediate\write\user@usepackages{%
-            \string\@namedef{ART\the\c@refsection}%
-              {\csname ART\the\c@refsection\endcsname}%
+            \string\@namedef{BIBS:\the\c@artcounter}%
+              {\csname BIBS:\the\c@artcounter\endcsname}%
             \@percentchar\space \DTK@local@inputname
           }%
         }%
@@ -259,10 +262,14 @@
     }{%
       \DTK@embedded@enddocumenthook\endinput
     }%
-    \newrefsection\@ifundefined{ART\the\c@refsection}{}{%
-      \expandafter[\csname ART\the\c@refsection\endcsname]}%
+    \@ifundefined{BIBS:\the\c@artcounter}{%
       \input{\DTK@local@inputname}%
-    \endrefsection
+    }{%
+      \expandafter\newrefsection\expandafter
+        [\csname BIBS:\the\c@artcounter\endcsname]
+        \input{\DTK@local@inputname}%
+      \endrefsection 
+    }%
   \endgroup
 }
 
