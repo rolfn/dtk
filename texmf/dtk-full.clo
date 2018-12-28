@@ -113,6 +113,13 @@
       \@percentchar\space *** \DTMnow\space ***}%
     \AtEndDocument{\immediate\closeout\user@requirepackages\relax}%
   }
+  \@ifdefinable\user@bibs{%
+    \newwrite\user@bibs
+    \immediate\openout\user@bibs dtk-userbibs.tex\relax
+    \immediate\write\user@bibs{%
+      \@percentchar\space *** \DTMnow\space ***}%
+    \AtEndDocument{\immediate\closeout\user@bibs\relax}%
+  }
   \renewcommand*\printbibliography[1][]{}%
   \newcommand*\DTK@addbibresource[2][]{%
     \@ifundefined{BIBS:\the\c@artcounter}{%
@@ -122,7 +129,7 @@
     % Collect all bib filenames as comma list for \newrefsection
     \expandafter\g@addto@macro\csname BIBS:\the\c@artcounter
       \expandafter\endcsname\expandafter{\DTK@tempa #2}%
-    \immediate\write\user@usepackages{%
+    \immediate\write\user@bibs{%
       \string\addbibresource\ifx\relax#1\relax\else[#1]\fi{#2}%
         \@percentchar\space \DTK@local@inputname
     }%
@@ -159,6 +166,11 @@
     \InputIfFileExists{dtk-userpackages.tex}{%
       \typeout{*************************************^^J%
                * File `dtk-userpackages.tex' used.^^J%
+               *************************************}%
+    }{}%
+    \InputIfFileExists{dtk-userbibs.tex}{%
+      \typeout{*************************************^^J%
+               * File `dtk-userbibs.tex' used.^^J%
                *************************************}%
     }{}%
     \shorthandon{"}%
@@ -250,7 +262,7 @@
       \ifDTKrecord
         % Write the definition of the complete bib filename list
         \@ifundefined{BIBS:\the\c@artcounter}{}{%
-          \immediate\write\user@usepackages{%
+          \immediate\write\user@bibs{%
             \string\@namedef{BIBS:\the\c@artcounter}%
               {\csname BIBS:\the\c@artcounter\endcsname}%
             \@percentchar\space \DTK@local@inputname
