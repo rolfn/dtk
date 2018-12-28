@@ -387,7 +387,8 @@
   \def\bibliography#1{%
     \ClassError{dtk2}{%
       Das Makro `\string\bibliography' wird nicht unterstützt!\MessageBreak
-      Verwende stattdessen `\string\addbibresource\string{#1.bib\string}'\MessageBreak
+      Verwende stattdessen `\string\addbibresource\string{#1.bib\string}'
+      \MessageBreak
       und `\string\printbibliography' (siehe biblatex-Dokumentation)
     }{}%
   }%
@@ -441,13 +442,15 @@
 % Listings
 \newcommand*\DTKlstfont{\small\ttfamily}
 
-\lstnewenvironment{dtklisting}[2][]
-{%
-%%%%	\leavevmode           %%%%%%%%%%%%%%%
- 	\lst@TestEOLChar{#2}%
-	\lstset{#1}%
-	\csname\@lst @SetFirstNumber\endcsname}
-{\csname\@lst @SaveFirstNumber\endcsname}
+\let\lstlisting=\relax
+\let\lstlisting@=\relax
+% Correct wrong vertical spaces
+\lstnewenvironment{lstlisting}[2][]{%
+  %%%%\leavevmode%
+  \lst@TestEOLChar{#2}%
+  \lstset{#1}%
+  \csname\@lst @SetFirstNumber\endcsname
+}{\csname\@lst @SaveFirstNumber\endcsname}
 
 % siehe ggf.: https://github.com/jez/latex-solarized
 
