@@ -441,6 +441,14 @@
 % Listings
 \newcommand*\DTKlstfont{\small\ttfamily}
 
+\lstnewenvironment{dtklisting}[2][]
+{%
+%%%%	\leavevmode           %%%%%%%%%%%%%%%
+ 	\lst@TestEOLChar{#2}%
+	\lstset{#1}%
+	\csname\@lst @SetFirstNumber\endcsname}
+{\csname\@lst @SaveFirstNumber\endcsname}
+
 % siehe ggf.: https://github.com/jez/latex-solarized
 
 \lstdefinestyle{DTKlstSimple0}{%
