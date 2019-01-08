@@ -295,7 +295,10 @@
   \global\let\@author=\@empty
   \global\let\@thanks=\@empty
   \global\let\and\relax
-  \xdef\DTK@@license{Lizenz: \DTK@license}
+  \ifx\DTK@license\@empty\else
+    \xdef\DTK@@license{Lizenz: \DTK@license}%
+    \global\let\DTK@license=\@empty
+  \fi
 }
 
 \renewcaptionname{ngerman}{\bibname}{Literatur und Software}
