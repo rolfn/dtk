@@ -63,6 +63,7 @@
 \newlength\DTK@tempdimb
 \newlength\DTK@tempdimc
 \newlength\DTK@tempdimd
+\newlength\DTK@tempdime
 
 \newlength\Linewidth
 \AtBeginDocument{\Linewidth=\dimexpr\linewidth-2\fboxsep-2\fboxrule}
@@ -294,6 +295,7 @@
   \global\let\@author=\@empty
   \global\let\@thanks=\@empty
   \global\let\and\relax
+  \xdef\DTK@@license{\DTK@license}
 }
 
 \renewcaptionname{ngerman}{\bibname}{Literatur und Software}
@@ -306,8 +308,18 @@
 \ihead{\ifstr{\righttopmark}{\rightbotmark}{\leftmark}{}}
 \ohead{\ifstr{\righttopmark}{\rightbotmark}{\pagemark}{}}
 \ofoot*{\normalsize\DTKcorrVersion}
+\lefoot*{\makebox[0pt][r]{\rotatebox[origin=lb]{90}{\makebox[0pt][l]{%
+  \hspace*{\footskip}\DTK@@license}}\quad}\gdef\DTK@@license{}}
+\rofoot*{\makebox[0pt][l]{\quad\rotatebox[origin=lb]{90}{%
+  \makebox[0pt][l]{\hspace*{\footskip}\DTK@@license}}}\gdef\DTK@@license{}}
 \ifoot*{\journalname~~\DTKdate}
 \automark[chapter]{chapter}
+
+\newcommand*\DTK@license{}
+\newcommand*\DTK@@license{}
+\newcommand*\license[1]{%
+  \gdef\DTK@license{#1}%
+}
 
 \RedeclareSectionCommand[%
   ,style=section

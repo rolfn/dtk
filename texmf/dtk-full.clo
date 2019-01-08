@@ -363,20 +363,23 @@
 
 \ifDTK@korr@% === Positionsnummern am linken Rand ===
   \newcommand*\formatPosNumber[1]{%
-    \fboxsep=.2em %
     \fbox{\ifnum\arabic{page}<10 0\fi\arabic{page}-\ifnum#1<10 0\fi\@arabic{#1}}%
   }
   \newcommand\makePosNumbers[2]{%
+    \fboxsep=.2em %
     \settoheight\DTK@tempdimc{\formatPosNumber{9}}%
+    \settowidth\DTK@tempdime{\formatPosNumber{9}}%
     \DTK@tempdimc=1.5\DTK@tempdimc
     \DTK@tempdimd=0pt %
     \DTK@tempdimb=#2 %
+    %%%\settowidth\DTK@tempdima{\formatPosNumber{9}}%
     \@tempcnta=0 %
     \@whiledim \dimexpr\DTK@tempdimd+.5\DTK@tempdimc < \textheight\do{%
       \advance\@tempcnta 1 %
       \DTK@tempdimb=\dimexpr\DTK@tempdimb-\DTK@tempdimc
       \DTK@tempdimd=\dimexpr\DTK@tempdimd+\DTK@tempdimc
-      \put(#1,\DTK@tempdimb){\formatPosNumber{\@tempcnta}}%
+      \put(\ifodd\c@page #1\else\dimexpr#1+\textwidth+1.7\DTK@tempdime\fi,%
+        \DTK@tempdimb){\formatPosNumber{\@tempcnta}}%
     }%
   }
   \DeclareNewLayer[textarea,background,mode=picture,contents={%
