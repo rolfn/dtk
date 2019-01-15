@@ -444,6 +444,7 @@
 \def\footnote{%
   \@ifstar\DTK@@footnote\DTK@footnote
 }
+\setfootnoterule{.15\textwidth}
 
 \RequirePackage{enumitem}
 \setlist{leftmargin=*,nosep}
