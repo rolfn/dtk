@@ -312,9 +312,10 @@
 \ohead{\ifstr{\righttopmark}{\rightbotmark}{\pagemark}{}}
 \ofoot*{\normalsize\DTKcorrVersion}
 \lefoot*{\makebox[0pt][r]{\rotatebox[origin=lb]{90}{\makebox[0pt][l]{%
-  \hspace*{\footskip}\DTK@@license}}\quad}\gdef\DTK@@license{}}
+  \hspace*{0pt}\DTK@@license}}\quad}\gdef\DTK@@license{}}
+% "\hspace*{0pt}" --> vertikaler Offset relativ zur Fußzeile
 \rofoot*{\makebox[0pt][l]{\quad\rotatebox[origin=lb]{90}{%
-  \makebox[0pt][l]{\hspace*{\footskip}\DTK@@license}}}\gdef\DTK@@license{}}
+  \makebox[0pt][l]{\hspace*{0pt}\DTK@@license}}}\gdef\DTK@@license{}}
 \ifoot*{\journalname~~\DTKdate}
 \automark[chapter]{chapter}
 
