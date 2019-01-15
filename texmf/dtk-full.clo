@@ -378,7 +378,7 @@
       \advance\@tempcnta 1 %
       \DTK@tempdimb=\dimexpr\DTK@tempdimb-\DTK@tempdimc
       \DTK@tempdimd=\dimexpr\DTK@tempdimd+\DTK@tempdimc
-      \put(\ifodd\c@page #1\else\dimexpr#1+\textwidth+1.7\DTK@tempdime\fi,%
+      \put(\ifodd\c@page #1\else\dimexpr#1+\textwidth+1.5\DTK@tempdime\fi,%
         \DTK@tempdimb){\formatPosNumber{\@tempcnta}}%
     }%
   }
@@ -386,7 +386,7 @@
     \begingroup
       \ttfamily\scriptsize\itshape
       \settowidth\DTK@tempdimc{\formatPosNumber{99}}%
-      \DTK@tempdima=\dimexpr-.5\textwidth-\DTK@tempdimc-.8em %
+      \DTK@tempdima=\dimexpr-.5\textwidth-\DTK@tempdimc-.1em %
       \putC{%
         \makePosNumbers{\DTK@tempdima}{.5\textheight}%
       }%
