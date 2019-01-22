@@ -295,10 +295,7 @@
   \global\let\@author=\@empty
   \global\let\@thanks=\@empty
   \global\let\and\relax
-  \ifx\DTK@license\@empty\else
-    \xdef\DTK@@license{Lizenz: \DTK@license}%
-    \global\let\DTK@license=\@empty
-  \fi
+  \global\let\DTK@license=\@empty
 }
 
 \renewcaptionname{ngerman}{\bibname}{Literatur und Software}
@@ -311,16 +308,10 @@
 \ihead{\ifstr{\righttopmark}{\rightbotmark}{\leftmark}{}}
 \ohead{\ifstr{\righttopmark}{\rightbotmark}{\pagemark}{}}
 \ofoot*{\normalsize\DTKcorrVersion}
-\lefoot*{\makebox[0pt][r]{\rotatebox[origin=lb]{90}{\makebox[0pt][l]{%
-  \hspace*{0pt}\DTK@@license}}\quad}\gdef\DTK@@license{}}
-% "\hspace*{0pt}" --> vertikaler Offset relativ zur Fußzeile
-\rofoot*{\makebox[0pt][l]{\quad\rotatebox[origin=lb]{90}{%
-  \makebox[0pt][l]{\hspace*{0pt}\DTK@@license}}}\gdef\DTK@@license{}}
 \ifoot*{\journalname~~\DTKdate}
 \automark[chapter]{chapter}
 
 \newcommand*\DTK@license{}
-\newcommand*\DTK@@license{}
 \newcommand*\license[1]{%
   \gdef\DTK@license{#1}%
 }
@@ -432,6 +423,20 @@
 \setkomafont{pagehead}{\sffamily\slshape}% \itshape?
 \setkomafont{pagefoot}{\footnotesize\sffamily\slshape}% \itshape?
 \setkomafont{author}{\usekomafont{section}}
+
+\RequirePackage{marginnote}
+\renewcommand*{\marginfont}{\normalfont\itshape\small} 
+\renewcommand*{\sectionlinesformat}[4]{%
+  % reagiert auf \addchap in \maketitle (wegen "style=section")
+  \@hangfrom{%
+    \ifx\DTK@license\@empty\else
+      \marginnote{\rotatebox{90}{\makebox[.5em][r]{%
+        Lizenz:~\DTK@license
+      }}}%
+    \fi
+    \hskip #2#3%
+  }{#4}%
+}
 
 %\addtokomafont{footnote}{\RaggedRight}
 \deffootnote[1.2em]{1.2em}{1.2em}{\textsuperscript{\thefootnotemark}\,}
