@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2019/01/08 v0.1k dtk class options for full mode (RN)]
+  [2019/01/31 v0.1l dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -217,11 +217,15 @@
     \endgroup
   }%
   \renewcommand\DTK@Author[3]{%
-    \g@addto@macro\DTK@Author@list@exec{\DTK@Author@list{#1}{#2}{#3}}%
+    \g@addto@macro\DTK@Author@list@content{\DTK@Author@list{#1}{#2}{#3}}%
+    \everypar=\expandafter{\the\everypar\DTK@Author@list@exec}%
   }
   \newcommand\DTK@@Author[3]{%
     \DTK@Author@article{#1}{#2}{#3}%
-    \g@addto@macro\DTK@Author@list@exec{\DTK@Author@list{#1}{#2}{#3}}%
+    \g@addto@macro\DTK@Author@list@content{\DTK@Author@list{#1}{#2}{#3}}%
+    % Paket "everyhook"?
+    % Erst zu Beginn des nächsten Absatzes (hmode) Index-Befehle ausführen
+    \everypar=\expandafter{\the\everypar\DTK@Author@list@exec}%
   }
   \renewcommand\maketitle[1][]{%
     \thispagestyle{dtk-title}%
@@ -447,7 +451,7 @@
 \newcommand*\Part{%
 % [#1]=toc, {#2}=Überschrift, [#3]=Präambel, *=nur Strich
   \clearpage
-  \DTK@thispagestyle{plain.scrheadings}% 
+  %\DTK@thispagestyle{plain.scrheadings}% 
   \@ifstar{\global\@tempswatrue\DTK@Part}{\global\@tempswafalse\DTK@Part}%
 }
 
@@ -459,23 +463,31 @@
 
 \newcommand\DTK@@Part[1][]{%
   \let\DTK@tempb=\partheadendvskip
-  \if@tempswa
+  \DTK@tempdime=10pt %
+  \if@tempswa% Strich
     \setpartpreamble{%
       \noindent\raisebox{\height}[\height]{\rule{\textwidth}{2pt}}%
     }%
-    \def\partheadendvskip{%
-      \medskip\par
-    }
+    \advance\DTK@tempdime 3mm %
   \fi
-  \ifx\relax#1\relax\else
-    \setpartpreamble{%
+  \ifx\relax#1\relax
+  \else% Präambel
+    \setbox0=\vbox{%
       \noindent\raisebox{\height}[\height]{\rule{\textwidth}{2pt}}\par
-      \usekomafont{section} #1\par
+      \usekomafont{section} #1\par}%
+    \settoheight{\DTK@tempdima}{\usebox0}%
+    \settodepth{\DTK@tempdimb}{\usebox0}%
+    \advance\DTK@tempdima\DTK@tempdimb
+    \setpartpreamble{%
+      \box0
     }%
+    \advance\DTK@tempdime \DTK@tempdima %
   \fi
+  \def\partheadendvskip{\vskip \DTK@tempdime\par}%
   \DTK@tempa
   \let\partheadendvskip=\DTK@tempb
-  \bigskip\par
+  \vskip -5mm %
+  \leavevmode
 }
 
 \def\partheadstartvskip{% 12.0pt plus 1.0fil

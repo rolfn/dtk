@@ -29,7 +29,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \def\DTKversion{2.08a}
-\def\DTKversiondate{2019/01/08}
+\def\DTKversiondate{2019/01/31}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex,luatex85}
@@ -270,7 +270,11 @@
 
 \let\DTK@thispagestyle=\thispagestyle
 
-\let\DTK@Author@list@exec=\@empty
+\let\DTK@Author@list@content=\@empty
+\newcommand\DTK@Author@list@exec{%
+  \DTK@Author@list@content
+  \global\let\DTK@Author@list@content=\@empty
+}
 \newcommand\DTK@maketitle[1][]{%
   \begingroup
     \dimen0=\textheight
@@ -280,16 +284,14 @@
     \fi
   \endgroup
   \def\and{\end{tabular}, \begin{tabular}[t]{@{}c@{}}}%
+  \leavevmode% erzwingt Ausführung \everypar (speziell: \DTK@Author@list@exec)
+  \vspace*{-8mm}%
   \addchap[\@@title]{\@title}%
-  %%%\ifx\@author\@empty\else\addsec*{\@author}\fi
   \begingroup
     \usekomafont{author}\lineskip 0.75em %
-    \begin{tabular}[t]{@{}c@{}}\@author\end{tabular}\par
+    \begin{tabular}[t]{@{}c@{}}\@author\end{tabular}\par\medskip
   \endgroup
-%  \DTK@thispagestyle{plain.scrheadings}%
   \@thanks
-  \DTK@Author@list@exec
-  \global\let\DTK@Author@list@exec=\@empty
   \global\let\@thanks=\@empty
   \global\let\@title=\@empty
   \global\let\@author=\@empty
@@ -315,12 +317,22 @@
 \newcommand*\license[1]{%
   \gdef\DTK@license{#1}%
 }
+\iffalse
+\RedeclareSectionCommand[%
+  ,style=part
+  %,indent=\z@
+  ,beforeskip=40mm
+  ,afterskip=60mm %
+  ,pagestyle=plain.scrheadings
+  %,innerskip=\z@
+]{part}
+\fi
 
 \RedeclareSectionCommand[%
   ,style=section
   ,indent=\z@
   ,beforeskip=-2\baselineskip \@plus -.2\baselineskip \@minus -.2\baselineskip
-  ,afterskip=1\baselineskip \@plus .1\baselineskip \@minus .1\baselineskip
+  ,afterskip=.4\baselineskip \@plus .04\baselineskip \@minus .04\baselineskip
 ]{chapter}
 
 \RedeclareSectionCommand[%
