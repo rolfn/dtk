@@ -216,16 +216,18 @@
       \fi
     \endgroup
   }%
-  \renewcommand\DTK@Author[3]{%
-    \g@addto@macro\DTK@Author@list@content{\DTK@Author@list{#1}{#2}{#3}}%
-    \everypar=\expandafter{\the\everypar\DTK@Author@list@exec}%
-  }
-  \newcommand\DTK@@Author[3]{%
-    \DTK@Author@article{#1}{#2}{#3}%
-    \g@addto@macro\DTK@Author@list@content{\DTK@Author@list{#1}{#2}{#3}}%
+  \newcommand*\DTK@Update@Author@list[3]{%
     % Paket "everyhook"?
     % Erst zu Beginn des nächsten Absatzes (hmode) Index-Befehle ausführen
-    \everypar=\expandafter{\the\everypar\DTK@Author@list@exec}%
+    \g@addto@macro\DTK@Author@list@content{\DTK@Author@list{#1}{#2}{#3}}%
+    \everypar=\expandafter{\the\everypar\DTK@Author@list@exec}%    
+  }
+  % Sternversion: keine Ausgabe der Autoren, nur Index ergänzen
+  \let\DTK@Author=\DTK@Update@Author@list
+  % Normale Version
+  \newcommand\DTK@@Author[3]{%
+    \DTK@Author@article{#1}{#2}{#3}% Ausgabe der Autoren wie im Autor-Modus
+    \DTK@Update@Author@list{#1}{#2}{#3}%
   }
   \renewcommand\maketitle[1][]{%
     \thispagestyle{dtk-title}%

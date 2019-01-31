@@ -270,7 +270,7 @@
 
 \let\DTK@thispagestyle=\thispagestyle
 
-\let\DTK@Author@list@content=\@empty
+\newcommand*\DTK@Author@list@content{}
 \newcommand\DTK@Author@list@exec{%
   \DTK@Author@list@content
   \global\let\DTK@Author@list@content=\@empty
@@ -284,7 +284,7 @@
     \fi
   \endgroup
   \def\and{\end{tabular}, \begin{tabular}[t]{@{}c@{}}}%
-  \leavevmode% erzwingt Ausführung \everypar (speziell: \DTK@Author@list@exec)
+  \leavevmode% erzwingt \everypar (speziell: \DTK@Author@list@exec)
   \vspace*{-8mm}%
   \addchap[\@@title]{\@title}%
   \begingroup
