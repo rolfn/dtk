@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2019/01/31 v0.1l dtk class options for full mode (RN)]
+  [2019/04/22 v0.1m dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -200,12 +200,12 @@
       \setbox\DTK@tempbox\hbox{\trim@spaces{#3}}%
       \def\Email##1{\escape@atsign##1\relax}% herausziehen?!
       \def\escape@atsign##1@##2\relax{%
-        \noexpand\Email\string{##1\string"@##2\string}%
+        \noexpand\Email\bgroup##1\string"@##2\egroup
       }%
       \makeatletter
       \ifdim\wd\DTK@tempbox>\z@
         \scantokens{\protected@edef\x{%
-          \noexpand\sindex[autoren]{#2#1@#1 #2!#3}}}%
+          \noexpand\sindex[autoren]{#2#1@#1 #2!#3}}\@empty}%
         \x
       \else
         \ifDTK@korr@
