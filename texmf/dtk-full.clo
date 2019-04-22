@@ -200,7 +200,7 @@
       \setbox\DTK@tempbox\hbox{\trim@spaces{#3}}%
       \def\Email##1{\escape@atsign##1\relax}% herausziehen?!
       \def\escape@atsign##1@##2\relax{%
-        \noexpand\Email\bgroup##1\string"@##2\egroup
+        \noexpand\Email\string{##1\string"@##2\string}%
       }%
       \makeatletter
       \ifdim\wd\DTK@tempbox>\z@
