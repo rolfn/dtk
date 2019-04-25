@@ -4,6 +4,12 @@
 #
 # -- unveränderlicher Teil --
 
+# Colors
+RED   = \033[0;31m
+CYAN  = \033[0;36m
+NC    = \033[0m
+echoPROJECT = @echo -e "$(CYAN) <dtk>$(RED)"
+
 LOCAL_PATH = ./texmf/
 
 ifeq ($(filter x,$(MAKECMDGOALS)),)
@@ -49,7 +55,7 @@ DIST_FILES_0 := README.md $(addprefix $(LOCAL_PATH),$(DIST_FILES_0))
 DIST_FILES_1 = beispiel.tex beispiel.bib beispiel.pdf dtk-extern-test.tex
 DIST_DIR = $(MAIN)
 
-all : $(MAIN).pdf
+all : $(MAIN).pdf count.colorpages
 
 x : $(XTARGET)
 
@@ -127,5 +133,24 @@ dist :
 	zip $(ARCHNAME) -r $(DIST_DIR)
 	rm -rf $(DIST_DIR)
 
+count.colorpages:
+	$(echoPROJECT) "* listing and counting colored pages * $(NC)"
+	@echo "Meta information about colors in dtk"
+	@gs -o - -sDEVICE=inkcov dtk.pdf \
+	 | tail -n +5 \
+	 | sed '/^Page*/N;s/\n//' \
+	 | tee dtk.csv
+	@echo -n "List of pages with colors: "
+	@cat dtk.csv \
+	 | awk '$$3!="0.00000" ||  $$4!="0.00000" || $$5!="0.00000"{if(length(colored))colored=colored","$$2;else colored=$$2} END{print colored}' \
+	 | tee  -a dtk.csv
+	@echo -n "Total amount of pages with color: "
+	@gs -o - -sDEVICE=inkcov dtk.pdf \
+	 | grep -v "^ 0.00000  0.00000  0.00000" \
+	 | grep "^ " \
+	 | wc -l \
+	 | sed 's/[[:space:]]//g' \
+	 | tee  -a dtk.csv
+	$(echoPROJECT) "* colored pages listed and counted * $(NC)"
 
 
