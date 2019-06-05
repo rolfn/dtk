@@ -4,7 +4,7 @@
 %%
 %% LaTeX Class for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2018
+%% Copyright (C) 2019
 %% Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -17,7 +17,7 @@
 %
 %
 % -------------------------------------
-\ProvidesPackage{dtk-logos}[2018/10/19 v. 1.06 Dante Edition: Logos (hv)]
+\ProvidesPackage{dtk-logos}[2019/06/05 v. 1.07 Dante Edition: Logos (hv)]
 %
 \newif\if@dtk@newengine \@dtk@newenginetrue 
 \RequirePackage{ifluatex,ifxetex}
@@ -57,8 +57,9 @@
 \def\AmSTeX{\mbox{\textsf{AMS}-\hologo{TeX}}}
 \def\biber{\hologo{biber}}
 \def\Biber{\Hologo{biber}}
-\def\BibTeX{\hologo{BibTeX}}
-\def\BibTeXacht{\hologo{BibTeX8}}
+\def\BibTeX{{\hologoLogoSetup{BibTeX}{variant=sc}\hologo{BibTeX}}}
+\def\BibTeXacht{{\hologoLogoSetup{BibTeX8}{variant=sc}\hologo{BibTeX8}}}
+\def\BibTeX8{{\hologoLogoSetup{BibTeX8}{variant=sc}\hologo{BibTeX8}}}
 \def\ConTeXt{\hologo{ConTeXt}}
 \let\context\ConTeXt
 \def\emTeX{\hologo{emTeX}}
