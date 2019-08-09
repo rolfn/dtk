@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-extern}%
-  [2018/12/01 v0.12: dtk package for running external documents (HV)]
+  [2019/08/09 v0.13: dtk package for running external documents (HV)]
 
 \RequirePackage{shellesc,filecontents,xkeyval,graphicx,marginnote,fancyvrb}
 
@@ -40,6 +40,7 @@
 \define@boolkey{dtk}[dtk@extern@]{xindex}[true]{}
 \define@key{dtk}{xindexOptions}[]{\def\dtk@extern@xindexOptions{#1}}
 \define@boolkey{dtk}[dtk@extern@]{includegraphic}[true]{}
+\define@boolkey{dtk}[dtk@extern@]{inline}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{frame}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{float}[true]{}
 \define@boolkey{dtk}[dtk@extern@]{cleanup}[true]{}
@@ -56,6 +57,7 @@
   grfOptions={},%	Optionen der einzubindenden Grafik
   lstOptions={},%	Optionen für das Listing
   includegraphic=true,% Grafik einbinden oder User überlassen
+  inline=false,%        Grafik nicht in derselben Zeile
   runs=1,%		Anzahl Compiler-Durchläufe
   runsequence={},%	Im Moment nicht aktiv
   biber=false,%		Biber laufen lassen?
@@ -85,7 +87,7 @@
 
 \newcounter{dtk@example@counter}
 
-\newcommand\ExampleType[5]{%
+\newcommand\extern@ExampleType[5]{%
    \ifdtk@extern@usefancyvrb
      \@namedef{#1@initText}{\gdef\FancyVerbStartString{#2}\gdef\FancyVerbStopString{#3}}% text
      \@namedef{#1@initPreamble}{\gdef\FancyVerbStartString{#4}\gdef\FancyVerbStopString{#5}}% code
@@ -95,13 +97,13 @@
    \fi
 }
 
-\ExampleType{latex}%               #1
+\extern@ExampleType{latex}%               #1
   {\string\begin\string{document\string}}%       #2
   {\string\end\string{document\string}}%         #3
   {\perCent StartVisiblePreamble}% #4
   {\perCent StopVisiblePreamble}%  #5
 
-\ExampleType{context}
+\extern@ExampleType{context}
   {\string\starttext}
   {\string\stoptext}
   {\perCent StartVisiblePreamble}
@@ -187,7 +189,7 @@
        \ifdim\dtk@extern@mpwidth>\z@ 
          \hfill\minipage[t]{\dimexpr\linewidth-\dtk@extern@mpwidth-1em\relax}\vspace{0pt}
        \else
-         \par\begingroup
+         \ifdtk@extern@inline\else\par\fi\begingroup
        \fi
      \fi
      \dtk@extern@align
