@@ -17,7 +17,7 @@
 %
 %
 % -------------------------------------
-\ProvidesPackage{dtk-logos}[2019/06/05 v. 1.07 Dante Edition: Logos (hv)]
+\ProvidesPackage{dtk-logos}[2019/09/14 v. 1.08 Dante Edition: Logos (hv)]
 %
 \newif\if@dtk@newengine \@dtk@newenginetrue 
 \RequirePackage{ifluatex,ifxetex}
@@ -52,14 +52,17 @@
     }%
   \endgroup
 }
+
+
 \def\LaTeXTeX{\hologo{(La)TeX}}
 \def\AmSLaTeX{\mbox{\textsf{AMS}-\hologo{LaTeX}}}
 \def\AmSTeX{\mbox{\textsf{AMS}-\hologo{TeX}}}
 \def\biber{\hologo{biber}}
 \def\Biber{\Hologo{biber}}
-\def\BibTeX{{\hologoLogoSetup{BibTeX}{variant=sc}\hologo{BibTeX}}}
+\def\BibTeX{\@ifnextchar8\@@BibTeX\@BibTeX}
+\def\@BibTeX{{\hologoLogoSetup{BibTeX}{variant=sc}\hologo{BibTeX}}}
 \def\BibTeXacht{{\hologoLogoSetup{BibTeX8}{variant=sc}\hologo{BibTeX8}}}
-\def\BibTeX8{{\hologoLogoSetup{BibTeX8}{variant=sc}\hologo{BibTeX8}}}
+\def\@@BibTeX8{{\hologoLogoSetup{BibTeX8}{variant=sc}\hologo{BibTeX8}}}
 \def\ConTeXt{\hologo{ConTeXt}}
 \let\context\ConTeXt
 \def\emTeX{\hologo{emTeX}}
