@@ -18,7 +18,7 @@
 
 \typeout{NEW-ENGINE}
 
-\RequirePackage{fontspec}
+\RequirePackage[no-math]{fontspec}
 \RequirePackage{unicode-math}
 
 \ifluatex
@@ -41,13 +41,22 @@
            * File `dtk-fonts.cfg' used.^^J%
            *************************************}%
 }{%
+  \typeout{*************************************^^J%
+           * Using libertinus-otf              *^^J%
+           *************************************}%
   \RequirePackage{libertinus-otf}%
   \def\DTKrmFontName{Libertinus Serif}%
   \def\DTKsfFontName{Libertinus Sans Serif}%
 %  \setmathfont{XITSMath}[Scale=0.9,math-style=TeX,bold-style=TeX]%
   \def\DTKmathFontName{Libertinus Math}%
-  \setmonofont{AnonymousPro}[Scale=MatchLowercase,FakeStretch=0.87,
-    RawFeature=-tlig]%
+  \setmonofont{AnonymousPro}[
+    Scale          = MatchLowercase,FakeStretch=0.87,
+    RawFeature     = -tlig,
+    UprightFont    =*-Regular,
+    BoldFont       = *-Bold,
+    BoldItalicFont = *-BoldItalic,
+    ItalicFont     = *-Italic,
+    Extension      = .ttf]%
   \def\DTKttFontName{Anonymous Pro}%
 }
 

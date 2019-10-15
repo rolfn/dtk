@@ -14,9 +14,9 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-extern}%
-  [2019/08/09 v0.13: dtk package for running external documents (HV)]
+  [2019/10/11 v0.15: dtk package for running external documents (HV)]
 
-\RequirePackage{shellesc,filecontents,xkeyval,graphicx,marginnote,fancyvrb}
+\RequirePackage{shellesc,xkeyval,graphicx,marginnote,fancyvrb}
 
 \newcounter{dtk@extern@runs}
 \newlength\dtk@extern@mpwidth \setlength\dtk@extern@mpwidth{\z@}
@@ -118,9 +118,9 @@
    \global\setkeys{dtk}{#1}%                   \begin
    \expandafter\IfFileExists\expandafter{\dtkExternDateiname.pdf}{}{\setkeys{dtk}{force}}%
    \begingroup
-   \@nameuse{filecontents*}{\dtkExternDateiname.tex}
+   \filecontents[force,noheader]{\dtkExternDateiname.tex}
   }
-  {\@nameuse{endfilecontents*}%         \end
+  {\endfilecontents%         \end
    \ifdtk@extern@copyToExampleDir
      \ShellEscape{cp\space\dtkExternDateiname.tex \dtk@extern@ExamplesDir/}%
    \fi
@@ -212,7 +212,7 @@
        \ifdim\dtk@extern@mpwidth>\z@ 
          \endminipage
        \else
-         \par\endgroup
+         \ifdtk@extern@inline\else\par\fi\endgroup
        \fi
      \fi
    \fi
