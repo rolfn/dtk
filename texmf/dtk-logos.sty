@@ -17,7 +17,7 @@
 %
 %
 % -------------------------------------
-\ProvidesPackage{dtk-logos}[2019/09/14 v. 1.08 Dante Edition: Logos (hv)]
+\ProvidesPackage{dtk-logos}[2019/10/15 v. 1.09 Dante Edition: Logos (hv)]
 %
 \newif\if@dtk@newengine \@dtk@newenginetrue 
 \RequirePackage{ifluatex,ifxetex}
@@ -55,6 +55,12 @@
 
 
 \def\LaTeXTeX{\hologo{(La)TeX}}
+
+\def\AmS{\textsf{AMS}}
+\let\AMS\AmS
+%{\ifluatex\mathversion{XITS}\fi%
+%     $\mathcal{A}$\kern-.1667em\lower.5ex\hbox{$\mathcal{M}$}\kern-.125em$\mathcal{S}$}}%  $ 
+\def\amsmath{\AMS\textsf{math}}
 \def\AmSLaTeX{\mbox{\textsf{AMS}-\hologo{LaTeX}}}
 \def\AmSTeX{\mbox{\textsf{AMS}-\hologo{TeX}}}
 \def\biber{\hologo{biber}}
@@ -112,8 +118,6 @@
 \def\XeLaTeX{\hologo{XeLaTeX}}
 \def\XeTeX{\hologo{XeTeX}}
 %%
-\def\AmS{{\ifluatex\mathversion{XITS}\fi%
-     $\mathcal{A}$\kern-.1667em\lower.5ex\hbox{$\mathcal{M}$}\kern-.125em$\mathcal{S}$}}%  $ 
 %
 \newcommand\BibTool{\textsc{Bib\hskip-.1em
         T\hskip-.15emo\hskip-.05emo\hskip-.05eml}\xspace}
