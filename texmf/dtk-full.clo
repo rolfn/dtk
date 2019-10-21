@@ -244,8 +244,7 @@
     \filename@parse{#1}%
     \edef\jobname{\filename@base}%
     \@ifundefined{filename@ext}%
-      {\IfFileExists{\jobname.tex}%
-        {\edef\DTK@local@inputname{\jobname.tex}}{}}%
+      {\edef\DTK@local@inputname{\filename@base.tex}}%
       {\edef\DTK@local@inputname{#1}}%
     \let\AtBeginDocument=\AtEmbeddedBeginDocument
     \let\AtEndDocument=\AtEmbeddedEndDocument
