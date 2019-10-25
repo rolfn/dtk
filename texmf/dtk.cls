@@ -155,6 +155,9 @@
 \widowpenalty = 10000 %
 \raggedbottom
 
+\setlength\textfloatsep{10.0pt plus 1pt minus 1pt}
+\setlength\intextsep{6.0pt plus .5pt minus .5pt} 
+
 \setcounter{secnumdepth}{\numexpr\partnumdepth-1\relax}
 \setcounter{tocdepth}{\chapternumdepth}
 
