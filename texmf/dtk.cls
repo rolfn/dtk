@@ -169,13 +169,13 @@
 \RequirePackage[english,main=ngerman]{babel}
 
 \defineshorthand{"|}{%
-  \ClassError{dtk2}{%
+  \ClassError{dtk}{%
     Shorthand `\string"|' wird nicht unterstützt! Entferne `\string"|'%
   }{}%
 }
 
 \newcommand*\DTK@FontNameMissing{%
-  \ClassError{dtk2}{%
+  \ClassError{dtk}{%
     Eines der Makros `\string\DTKrmFontName', `\string\DTKsfFontName',
     \MessageBreak
     `\string\DTKttFontName' oder `\string\DTKmathFontName'
@@ -371,13 +371,13 @@
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 
 \newcommand*\address[3]{%
-  \ClassError{dtk2}{%
+  \ClassError{dtk}{%
     Das Makro \string\address\space existiert nicht mehr!\MessageBreak
     Nimm stattdessen \string\Author%
     \string{Vorn.\string}\string{Nachn.\string}\string{Adr.\string}}{}%
 }%
 \def\author#1{%
-  \ClassError{dtk2}{%
+  \ClassError{dtk}{%
     Das Makro \string\author\space existiert nicht mehr!\MessageBreak
     Nimm stattdessen \string\Author%
     \string{Vorn.\string}\string{Nachn.\string}\string{Adr.\string}}{}%
@@ -407,7 +407,7 @@
 
 \AfterEndPreamble{% "etoolbox"
   \def\bibliography#1{%
-    \ClassError{dtk2}{%
+    \ClassError{dtk}{%
       Das Makro `\string\bibliography' wird nicht unterstützt!\MessageBreak
       Verwende stattdessen `\string\addbibresource\string{#1.bib\string}'
       \MessageBreak

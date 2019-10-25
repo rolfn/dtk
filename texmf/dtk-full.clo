@@ -17,7 +17,7 @@
   [2019/10/25 v0.1n dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
-  \ClassError{dtk2}{%
+  \ClassError{dtk}{%
     Die geladene Version der Dokumentenklasse `scrbook' \MessageBreak
     (\KOMAScriptVersion) ist zu alt. \MessageBreak
     Gefordert ist die Version 2015/09/29 oder jünger. \MessageBreak
