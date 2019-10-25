@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2019/04/22 v0.1m dtk class options for full mode (RN)]
+  [2019/10/25 v0.1n dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk2}{%
@@ -208,11 +208,7 @@
           \noexpand\sindex[autoren]{#2#1@#1 #2!#3}}\@empty}%
         \x
       \else
-        \ifDTK@korr@
-          \sindex[autoren]{#2#1@#1 #2!\textcolor{red}{\huge???}}%
-        \else
-          \sindex[autoren]{#2#1@#1 #2!\relax}%
-        \fi        
+        \sindex[autoren]{#2#1@#1 #2!\relax}%       
       \fi
     \endgroup
   }%
