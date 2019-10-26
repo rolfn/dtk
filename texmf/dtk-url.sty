@@ -182,7 +182,7 @@
 }
 
 \RequirePackage{qrcode}
-\qrset{level=L, height=10mm}
+\qrset{level=L, height=\marginparwidth}
 \def\qr@blank{0}
 \newcommand*\qrurl{%
   \@ifstar{\@tempswafalse}{\@tempswatrue}%
@@ -191,7 +191,7 @@
 \newcommand*\qr@url[2][-0.25\normalbaselineskip]{%
   \if@tempswa\url{#2}\fi
   \edef\reserved@a{\noexpand\marginnote{\noexpand\qrcode{%
-     \detokenize\expandafter{#2}}}[#1]}%
+     \detokenize{#2}}}[#1]}%
   \reserved@a
 }
 
