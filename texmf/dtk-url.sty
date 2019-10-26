@@ -182,17 +182,19 @@
 }
 
 \RequirePackage{qrcode}
-\qrset{level=L, height=\marginparwidth}
 \def\qr@blank{0}
 \newcommand*\qrurl{%
-  \@ifstar{\@tempswafalse}{\@tempswatrue}%
-  \qr@url
+  \begingroup
+    \qrset{level=L, height=\marginparwidth}
+    \@ifstar{\@tempswafalse}{\@tempswatrue}%
+    \qr@url
 }
 \newcommand*\qr@url[2][-0.25\normalbaselineskip]{%
-  \if@tempswa\url{#2}\fi
-  \edef\reserved@a{\noexpand\marginnote{\noexpand\qrcode{%
-     \detokenize{#2}}}[#1]}%
-  \reserved@a
+    \if@tempswa\url{#2}\fi
+    \edef\reserved@a{\noexpand\marginnote{\noexpand\qrcode{%
+      \detokenize{#2}}}[#1]}%
+    \reserved@a
+  \endgroup
 }
 
 \endinput
