@@ -182,9 +182,9 @@
 }
 
 \RequirePackage{qrcode}
-\def\qr@blank{0}
 \newcommand*\qrurl{%
   \begingroup
+    \providecommand*\qr@blank{0}
     \qrset{level=L, height=\marginparwidth}
     \@ifstar{\@tempswafalse}{\@tempswatrue}%
     \qr@url
