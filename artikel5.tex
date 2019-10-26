@@ -1,10 +1,6 @@
 \documentclass[ngerman]{dtk}
-\ifluatex\else
-  \usepackage[utf8]{inputenc}
-  %\usepackage[latin9]{inputenc}
-\fi
-
-\addbibresource{beispiel.bib}
+\usepackage{dtk-logos}
+\addbibresource{\jobname.bib}
 
 \let\File\texttt
 \let\Package\texttt
@@ -15,11 +11,25 @@
     {Dorfstraße~1\\
      14129 Berlin\\
      \Email{Max.Mustermann@xyz.de}}
-\Author{Peter}{Silie}%
-    {Hauptstr.~2\\
-     10245~Berlin\\
-     \Email{Peter.Silie@abc.de}}
+\Author{Herbert}{Voß}%
+    {Wasgenstr.~21\\
+     14129~Berlin\\
+     \Email{herbert@voss.mobi}}
 \maketitle
+
+Man beachte bei Manuskripten auch unbedingt die FAQ für 
+Autoren: \qrcode{https://projekte.dante.de/DanteFAQ/WebHome},
+die wesentliche Hinweise für \LaTeX"=Dokumente enthält, die in 
+»\DTK« veröffentlicht werden sollen.
+
+
+\begin{verbatim}
+Man beachte bei Manuskripten auch unbedingt die FAQ für 
+Autoren: \qrcode{https://projekte.dante.de/DanteFAQ/WebHome},
+die ...
+\end{verbatim}
+
+
 
 \section{Makros}
 
@@ -109,11 +119,6 @@ Demonstrationscharakter.
 
 \nocite{*}
 \printbibliography
-
-
-\section{Quelltext}
-Zm Schluss folgt der Quelltext dieses Beispieldokumentes:
-\lstinputlisting[style=number,language={[AlLaTeX]{TeX}}]{\jobname.tex}
 
 
 \end{document}
