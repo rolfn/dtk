@@ -1,6 +1,7 @@
 \documentclass[ngerman]{dtk}
-\usepackage{dtk-logos}
+\usepackage{dtk-logos,blindtext}
 \addbibresource{\jobname.bib}
+
 
 \let\File\texttt
 \let\Package\texttt
@@ -18,15 +19,27 @@
 \maketitle
 
 Man beachte bei Manuskripten auch unbedingt die FAQ für 
-Autoren: \qrcode{https://projekte.dante.de/DanteFAQ/WebHome},
+Autoren: \qrurl{https://projekte.dante.de/DanteFAQ/WebHome},
+die wesentliche Hinweise für \LaTeX"=Dokumente enthält, die in 
+»\DTK« veröffentlicht werden sollen.
+\blindtext
+
+Man beachte bei Manuskripten auch unbedingt die FAQ für 
+Autoren: \qrurl[qrcolor=red,qradjust=-1cm,qrlevel=H]%
+{https://projekte.dante.de/DanteFAQ/WebHome},
 die wesentliche Hinweise für \LaTeX"=Dokumente enthält, die in 
 »\DTK« veröffentlicht werden sollen.
 
 
 \begin{verbatim}
 Man beachte bei Manuskripten auch unbedingt die FAQ für 
-Autoren: \qrcode{https://projekte.dante.de/DanteFAQ/WebHome},
+Autoren: \qrurl{https://projekte.dante.de/DanteFAQ/WebHome},
 die ...
+...
+Autoren: \qrurl[qrcolor=red,qradjust=-1cm,qrlevel=L]%
+{https://projekte.dante.de/DanteFAQ/WebHome},
+die wesentliche Hinweise für \LaTeX"=Dokumente enthält, die in 
+
 \end{verbatim}
 
 
