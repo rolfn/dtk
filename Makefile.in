@@ -55,7 +55,7 @@ DIST_FILES_0 := README.md $(addprefix $(LOCAL_PATH),$(DIST_FILES_0))
 DIST_FILES_1 = beispiel.tex beispiel.bib beispiel.pdf dtk-extern-test.tex
 DIST_DIR = $(MAIN)
 
-all : $(MAIN).pdf count.colorpages
+all : $(MAIN).pdf $(MAIN)-autoren.ind count.colorpages
 
 x : $(XTARGET)
 

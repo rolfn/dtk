@@ -7,6 +7,7 @@
 \makeatletter
 \edef\dtkFileversion{\@nameuse{ver@dtk-extern}}
 \makeatother
+
 \begin{document}
 \title[Externe Dokumente erzeugen]{\dtkFileversion~-- Externe Dokumente aus \LaTeX\ heraus definieren und das Ergebnis einbinden, }
 \Author{Herbert}{Voß}{\Email{herbert@dante.de}}
@@ -85,6 +86,9 @@ Das Hauptdocument \emph{muss} mit der Option \texttt{-shell-escape} aufgerufen w
 \end{lstlisting}
 \end{minipage}
 
+\end{document}
+
+
 
 \begin{minipage}{0.35\textwidth}
 \begin{externalDocument}[grfOptions={width=\linewidth},compiler=xelatex,
@@ -134,7 +138,6 @@ Das Hauptdocument \emph{muss} mit der Option \texttt{-shell-escape} aufgerufen w
 
 
 \begin{verbatim}
-  showFilename=false,%  show filename in the margin
   code=false,%          show Source Code
   crop=false,%		erzeugte PDF "croppen"
   compiler=pdflatex,%	zu verwendener Compiler
@@ -157,7 +160,6 @@ Das Hauptdocument \emph{muss} mit der Option \texttt{-shell-escape} aufgerufen w
   grfOptions={width=0.48\linewidth},
   pages={1,3},
   frame,compiler=pdflatex,
-  showFilename,
 %  crop,
   force,runs=2,code,docType=latex,
   frame,
