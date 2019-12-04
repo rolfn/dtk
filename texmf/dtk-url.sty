@@ -14,22 +14,12 @@
 %% version 2005/12/01 or later.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{dtk-url}[2019/10/28 v1.4 Urls (qrcode) for DTK (HO,hv,rn)]
+\ProvidesPackage{dtk-url}[2019/12/04 v1.5 Urls (qrcode) for DTK (HO,hv,rn)]
 
 \RequirePackage{url}[2006/04/12]
 \RequirePackage{xcolor}
 \RequirePackage{xkeyval}
-
-\newlength\dtk@url@qrheight
-\newlength\dtk@url@qradjust
-\providecommand*\dtk@url@qrlevel{}
-\define@key{dtk}{qrheight}[1cm]{\setlength\dtk@url@qrheight{#1}}
-\define@key{dtk}{qradjust}[-1.5\normalbaselineskip]{\setlength\dtk@url@qradjust{#1}}
-\define@key{dtk}{qrcolor}[black]{\colorlet{dtk@url@qrcolor}{#1}}
-\define@key{dtk}{qrlevel}[M]{\renewcommand*\dtk@url@qrlevel{#1}}
-
-\setkeys{dtk}{qrheight,qrcolor,qradjust,qrlevel}% the default setting
-
+\RequirePackage{hvqrurl}
 
 % Konfiguration:
 \newcommand*{\DTK@UrlSetup}{\urlstyle{tt}}
@@ -191,24 +181,6 @@
     \fi
     {\@percentchar#1}%
   }%
-}
-
-\RequirePackage{qrcode}
-
-\newcommand*\qrurl{%
-    \providecommand*\qr@blank{0}
-    \@ifstar{\@tempswafalse}{\@tempswatrue}%
-    \qr@url
-}
-\newcommand*\qr@url[2][]{%
-  \begingroup
-  \if$#1$\else\setkeys{dtk}{#1}\fi
-  \qrset{height=\dtk@url@qrheight,level=\dtk@url@qrlevel}%
-  \if@tempswa\url{#2}\fi
-  \edef\reserved@a{\noexpand\marginnote{\noexpand\color{dtk@url@qrcolor}\noexpand\qrcode{%
-     \detokenize\expandafter{#2}}}[\dtk@url@qradjust]}%
-  \reserved@a
-  \endgroup
 }
 
 \endinput
