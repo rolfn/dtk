@@ -2,7 +2,7 @@
 %%
 %% LaTeX package for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2016-19
+%% Copyright (C) 2016-20
 %% Rolf Niepraschk, Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -14,11 +14,13 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-extern}%
-  [2019/10/11 v0.15: dtk package for running external documents (HV)]
+  [2020/02/07 v0.16: dtk package for running external documents (HV)]
 
 \RequirePackage{shellesc,xkeyval,graphicx,marginnote,fancyvrb}
 
 \newcounter{dtk@extern@runs}
+\newlength\LineWidth
+\AtBeginDocument{\setlength\LineWidth{\dimexpr\linewidth-2\fboxsep-2\fboxrule}}
 \newlength\dtk@extern@mpwidth \setlength\dtk@extern@mpwidth{\z@}
 
 \define@key{dtk}{compiler}[pdflatex]{\def\dtk@extern@compiler{#1}}
