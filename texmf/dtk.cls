@@ -127,7 +127,7 @@
 \RequirePackage{dtk-extern}
 
 % http://www.komascript.de/release3.18
-\ifstr{\KOMAScriptVersion}{2015/07/02 v3.18 KOMA-Script}{%
+\Ifstr{\KOMAScriptVersion}{2015/07/02 v3.18 KOMA-Script}{%
   \ifx\par@update\default@par@update\else
     \AtBeginDocument{\par@updaterelative}%
   \fi
@@ -316,8 +316,8 @@
 \pagestyle{scrheadings}
 \clearpairofpagestyles
 % https://komascript.de/node/2177
-\ihead{\ifstr{\righttopmark}{\rightbotmark}{\leftmark}{}}
-\ohead{\ifstr{\righttopmark}{\rightbotmark}{\pagemark}{}}
+\ihead{\Ifstr{\righttopmark}{\rightbotmark}{\leftmark}{}}
+\ohead{\Ifstr{\righttopmark}{\rightbotmark}{\pagemark}{}}
 \ofoot*{\normalsize\DTKcorrVersion}
 \ifoot*{\journalname~~\DTKdate}
 \automark[chapter]{chapter}
