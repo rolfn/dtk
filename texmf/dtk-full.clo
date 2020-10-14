@@ -304,7 +304,7 @@
     \setlength{\parfillskip}{\z@ \@plus 1fil}%
     \raggedright
     \def\item##1\@nil{\DTK@scan@item##1\@nil
-      \par\parbox{\columnwidth}{%
+      \par\parbox{\columnwidth}{\raggedright
         \textbf{\DTK@tempa}\hfill[\DTK@tempc]\par\DTK@tempb
       }%
       \par\bigskip
