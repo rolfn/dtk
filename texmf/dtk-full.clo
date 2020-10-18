@@ -269,11 +269,11 @@
             \@percentchar\space \DTK@local@inputname
           }%
         }%
-        \endgroup\expandafter\endinput
+        \endgroup\expandafter
       \fi
       \DTK@embedded@begindocumenthook\ignorespaces
     }{%
-      \DTK@embedded@enddocumenthook\endinput
+      \DTK@embedded@enddocumenthook
     }%
     \@ifundefined{BIBS:\the\c@artcounter}{%
       \input{\DTK@local@inputname}%
@@ -304,7 +304,7 @@
     \setlength{\parfillskip}{\z@ \@plus 1fil}%
     \raggedright
     \def\item##1\@nil{\DTK@scan@item##1\@nil
-      \par\parbox{\columnwidth}{\raggedright
+      \par\parbox{\columnwidth}{\raggedright%
         \textbf{\DTK@tempa}\hfill[\DTK@tempc]\par\DTK@tempb
       }%
       \par\bigskip
@@ -334,10 +334,12 @@
 \RequirePackage{picture}
 
 \DeclareNewLayer[page,background,mode=picture,contents={%
-  \put(24mm,0.5\dimexpr\layerheight\relax){%
-    \makebox(0,0)[c]{\rotatebox[origin=c]{90}{%
-      \resizebox{14cm}{!}{\Huge\DTK@fancyJournalname}}}%
-    \put(8mm,0){\makebox(0,0)[c]{\rule{0.85mm}{\textheight}}}%
+%  \put(24mm,0.5\dimexpr\layerheight\relax){%
+  \put(-10mm,-2pt){%
+     \includegraphics[angle=90]{dtk0}%
+%    \makebox(0,0)[c]{\rotatebox[origin=c]{90}{%
+%      \resizebox{14cm}{!}{\Huge\DTK@fancyJournalname}}}%
+%    \put(8mm,0){\makebox(0,0)[c]{\rule{0.85mm}{\textheight}}}%
   }%
   \put(52mm,145mm){%
     \parbox[t]{78mm}{%

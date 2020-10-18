@@ -17,21 +17,31 @@
 %
 %
 % -------------------------------------
-\ProvidesPackage{dtk-logos}[2019/10/15 v. 1.09 Dante Edition: Logos (hv)]
+\ProvidesPackage{dtk-logos}[2020/02/02 v. 1.10 Dante Edition: Logos (hv)]
 %
 \newif\if@dtk@newengine \@dtk@newenginetrue 
-\RequirePackage{ifluatex,ifxetex}
+\RequirePackage{iftex}
 %
 \ifluatex\else\ifxetex\else\@dtk@newenginefalse\fi\fi
 %
-\RequirePackage{fetamont}
-\RequirePackage{hologo,dantelogo,xspace}
+\RequirePackage{fetamont,hologo,dantelogo,xspace}
 \if@dtk@newengine
   \RequirePackage{unicode-math}
   \setmathfont{LatinModernMath-Regular}
   \setmathfont[version=XITS]{XITSMath-Regular.otf}
 \fi  
 %
+\iffalse
+\DeclareRobustCommand\ffmfamily{\not@math@alphabet\ffmfamily\relax
+  \fontencoding{T1}\fontfamily{ffm}\selectfont}
+\DeclareTextFontCommand{\textffm}{\ffmfamily}
+\def\MF{\textffm{META}\@dischyph\textffm{FONT}\@}
+\def\MP{\textffm{META}\@dischyph\textffm{POST}\@}
+\def\MT{\textffm{META}\@dischyph\textffm{TYPE1}\@}
+\fi
+\def\mpShort{\textffm{MP}\@}
+\def\mfShort{\textffm{MF}\@}
+
 \def\HoLogo@La#1{%
   L%
   \ifx\f@family\sfdefault\kern-.15em\else\kern-.23em\fi
@@ -89,6 +99,7 @@
 \def\METAFONT{\hologo{METAFONT}}
 \let\MF\METAFONT
 \def\MetaFun{\textffm{METAFUN}}
+\let\MFun\MetaFun
 \def\METAPOST{\hologo{METAPOST}}
 \def\MetaPost{\hologo{MetaPost}}
 \let\MP\METAPOST

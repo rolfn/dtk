@@ -40,7 +40,6 @@
      datezeros   = false,
 }
 
-
 \newbool{bbx@inset}
 \providebibmacro*{date+extrayear}{}
 
@@ -51,6 +50,10 @@
 \DeclareFieldFormat{removecomma}{\mkbibnocomma{#1}}
 \DeclareFieldFormat{title}{#1\isdot}
 \DeclareFieldFormat[ctan]{url}{\url{CTAN: #1}}
+
+\DeclareFieldFormat{isbn}{ISBN\addcolon\space #1}
+\DeclareFieldFormat{isrn}{ISRN\addcolon\space #1}
+\DeclareFieldFormat{issn}{ISSN\addcolon\space #1}
 
 \newbibmacro*{ctanurl+urldate}{%
   \printfield{url}
