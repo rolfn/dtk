@@ -28,8 +28,8 @@
 \HyphSubstIfExists{german-x-latest}{%
   \HyphSubstLet{german}{german-x-latest}}{}
 
-\def\DTKversion{2.08h}
-\def\DTKversiondate{2019/12/04}
+\def\DTKversion{2.08i}
+\def\DTKversiondate{2021/06/04}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \@ifpackagelater{iftex}{2019/10/24}{% 
@@ -165,7 +165,7 @@
 \setlength\intextsep{6.0pt plus .5pt minus .5pt} 
 
 \setcounter{secnumdepth}{\numexpr\partnumdepth-1\relax}
-\setcounter{tocdepth}{\chapternumdepth}
+\ifDTK@Author@\else\setcounter{tocdepth}{\chapternumdepth}\fi
 
 \@fptop=\z@
 \renewcommand\topfraction{.9}
