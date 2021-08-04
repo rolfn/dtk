@@ -270,7 +270,8 @@
 \g@addto@macro\bibsetup{\RaggedRight}
 
 %\RequirePackage{etex} % ???
-\RequirePackage{ragged2e,dtk-logos}
+\RequirePackage{ragged2e}
+\RequirePackage{hvlogos}
 
 \renewcommand\title[2][]{%
   \gdef\@title{#2}%
