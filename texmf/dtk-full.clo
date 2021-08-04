@@ -336,10 +336,10 @@
 \DeclareNewLayer[page,background,mode=picture,contents={%
 %  \put(24mm,0.5\dimexpr\layerheight\relax){%
   \put(-10mm,-2pt){%
-     \includegraphics[angle=90]{dtk0}%
-%    \makebox(0,0)[c]{\rotatebox[origin=c]{90}{%
-%      \resizebox{14cm}{!}{\Huge\DTK@fancyJournalname}}}%
-%    \put(8mm,0){\makebox(0,0)[c]{\rule{0.85mm}{\textheight}}}%
+%     \includegraphics[angle=90]{dtk0}%
+    \makebox(0,0)[c]{\rotatebox[origin=c]{90}{%
+      \resizebox{14cm}{!}{\Huge\DTK@fancyJournalname}}}%
+    \put(8mm,0){\makebox(0,0)[c]{\rule{0.85mm}{\textheight}}}%
   }%
   \put(52mm,145mm){%
     \parbox[t]{78mm}{%
