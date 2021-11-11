@@ -28,8 +28,8 @@
 \HyphSubstIfExists{german-x-latest}{%
   \HyphSubstLet{german}{german-x-latest}}{}
 
-\def\DTKversion{2.08j}
-\def\DTKversiondate{2021/07/04}
+\def\DTKversion{2.08k}
+\def\DTKversiondate{2021/11/11}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \@ifpackagelater{iftex}{2019/10/24}{% 

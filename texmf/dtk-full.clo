@@ -101,7 +101,7 @@
   % Testlauf zum Aufsammeln von Paket- und bib-Dateinamen
   \@ifdefinable\user@usepackages{%
     \newwrite\user@usepackages
-    \immediate\openout\user@usepackages dtk-userpackages.tex\relax
+    \immediate\openout\user@usepackages dtk-userdefinitions.tex\relax
     \immediate\write\user@usepackages{%
       \@percentchar\space *** \DTMnow\space ***}%
     \AtEndDocument{\immediate\closeout\user@usepackages\relax}%
@@ -161,11 +161,23 @@
   \newcommand*\AutorenListe{}%
   \let\tableofcontents=\relax
   \renewcommand\maketitle[1][]{}%
+  \RequirePackage{verbatim}%
+  \def\dtkGLOBAL{% Record-Modus; Inhalt in Datei schreiben; siehe: moreverb.sty
+    \immediate\write\user@usepackages{\@percentchar\space >>> %
+      globale Definitionen (\DTK@local@inputname)}%
+    \let\do\@makeother\dospecials
+    \catcode`\^^M\active \catcode`\^^I=12 %
+    \def\verbatim@processline{%
+      \immediate\write\user@usepackages{\the\verbatim@line}}%
+    \verbatim@start}
+  \def\enddtkGLOBAL{%
+    \immediate\write\user@usepackages{\@percentchar\space <<< %
+      globale Definitionen (\DTK@local@inputname)}}
 \else
   \AtEndOfClass{%
-    \InputIfFileExists{dtk-userpackages.tex}{%
+    \InputIfFileExists{dtk-userdefinitions.tex}{%
       \typeout{*************************************^^J%
-               * File `dtk-userpackages.tex' used.^^J%
+               * File `dtk-userdefinitions.tex' used.^^J%
                *************************************}%
     }{}%
     \InputIfFileExists{dtk-userbibs.tex}{%
@@ -230,6 +242,8 @@
     \global\let\maketitle=\DTK@maketitle
     \null\newpage
   }%
+  \RequirePackage{environ}
+  \NewEnviron{dtkGLOBAL}{}% Full-Modus; Inhalt ignorieren
 \fi
 
 %%% Laden eines Einzeldokuments

@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-author.clo}%
-  [2016/02/15 v0.1b dtk class options for author mode (RN)]
+  [2021/011/11 v0.2a dtk class options for author mode (RN)]
 
 \newcommand*\keywords[1]{}
 \newcommand*\AutorenListe{}
@@ -31,5 +31,9 @@
     \printbibliography[heading=dtk]
   }%
 }%
+
+\newenvironment{dtkGLOBAL}% Autor-Modus; Inhalt sofort ausführen
+{\endgroup}% Gruppe neutralisieren
+{\begingroup\def\@currenvir{dtkGLOBAL}}
 
 \endinput

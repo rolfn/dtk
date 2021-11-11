@@ -1,4 +1,4 @@
-# Rolf Niepraschk, 2017/04/02, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2021/11/11, Rolf.Niepraschk@gmx.de
 #
 # Hilfsdefinitionen zum make-Prozess für "Die TeXnische Komödie"
 #
@@ -58,16 +58,16 @@ all : $(MAIN).pdf $(MAIN)-autoren.ind count.colorpages
 
 x : $(XTARGET)
 
-userpackages : $(MAIN)-userpackages.tex $(MAIN)-requirepackages
+userdefinitions : $(MAIN)-userdefinitions.tex $(MAIN)-requirepackages
 
-$(MAIN)-userpackages.tex $(MAIN)-requirepackages :
+$(MAIN)-userdefinitions.tex $(MAIN)-requirepackages :
 	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode \
 	  $(MAIN)0.tex ; :
 
 $(MAIN)-autoren.ind : $(MAIN)-autoren.idx
 	$(XINDY) $< -o $@
 
-$(MAIN).pdf : $(MAIN).tex userpackages $(ARTICLES) $(ADDINPUTS)
+$(MAIN).pdf : $(MAIN).tex userdefinitions $(ARTICLES) $(ADDINPUTS)
 	if test -f $(basename $<)-autoren.idx; \
 	  then cp $(basename $<)-autoren.idx $(basename $<)-autoren.idx.old; \
 	  else touch $(basename $<)-autoren.idx.old; fi;
@@ -108,8 +108,8 @@ clean :
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), $(TEMP_EXT)))
 	$(RM) $(MAIN)-autoren.idx $(MAIN)-autoren.idx.old $(MAIN)-autoren.ind \
 	  $(MAIN)-ruecken.dat $(MAIN)-ruecken.dat.old $(MAIN)-ruecken.log \
-	  $(MAIN)-ruecken.aux $(MAIN)-userpackages.tex $(MAIN)-requirepackages \
-	  $(MAIN)0.log $(MAIN)0.run.xml engine.txt
+	  $(MAIN)-ruecken.aux $(MAIN)-userdefinitions.tex $(MAIN)-userbibs.tex \
+	  $(MAIN)-requirepackages.tex $(MAIN)0.log $(MAIN)0.run.xml engine.txt
 
 veryclean : clean
 	$(RM) $(foreach i, $(wildcard *.tex), $(addprefix $(basename $i), .pdf)) \
