@@ -283,7 +283,7 @@
             \@percentchar\space \DTK@local@inputname
           }%
         }%
-        \endgroup\expandafter
+        %%%\endgroup\expandafter
       \fi
       \DTK@embedded@begindocumenthook\ignorespaces
     }{%

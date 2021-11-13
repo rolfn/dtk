@@ -29,7 +29,7 @@
   \HyphSubstLet{german}{german-x-latest}}{}
 
 \def\DTKversion{2.08k}
-\def\DTKversiondate{2021/11/11}
+\def\DTKversiondate{2021/11/13}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \@ifpackagelater{iftex}{2019/10/24}{% 
@@ -576,9 +576,12 @@
 
 % noHilit, latex ???
 
+\ifDTKrecord\else% wegen Problem mit verbatim-Paket/dtkGLOBAL
 \let\verbatim=\relax
+\let\verbatim@=\relax
 \lstnewenvironment{verbatim}
 {\lstset{style=DTKlstVerbatim,language={}}}{}
+\fi
 
 \newlength\fullwidth
 \setlength\fullwidth{\dimexpr\textwidth+\marginparwidth+\marginparsep\relax}

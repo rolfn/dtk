@@ -119,6 +119,7 @@ debug :
 	@echo »$(VERSION)«
 	@echo »$(ARCHNAME)« 
 	@echo »$(DIST_FILES_0)« 
+	@echo »$(DIST_FILES_1)« 
 
 dist :
 	$(LATEX) beispiel
