@@ -15,7 +15,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-old-engines.clo}%
-  [2016/05/11 v0.1e dtk class options for pdfTeX/TeX+dvips (RN)]
+  [2021/11/12 v0.1f dtk class options for pdfTeX/TeX+dvips (RN)]
 
 \typeout{OLD-ENGINE}
 
@@ -39,5 +39,7 @@
     %
     \def\DTKmathFontName{Computer Modern Math}% ???
 }
+
+\babelprovide[hyphenrules=ngerman-x-latest]{ngerman}
 
 \endinput

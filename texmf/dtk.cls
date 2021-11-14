@@ -22,11 +22,6 @@
 }{}%
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
-\RequirePackage{hyphsubst}% Trennregeln austauschen
-\HyphSubstIfExists{ngerman-x-latest}{%
-  \HyphSubstLet{ngerman}{ngerman-x-latest}}{}
-\HyphSubstIfExists{german-x-latest}{%
-  \HyphSubstLet{german}{german-x-latest}}{}
 
 \def\DTKversion{2.08k}
 \def\DTKversiondate{2021/11/13}
