@@ -1,13 +1,6 @@
 \documentclass[ngerman]{dtk}
-\ifluatex\else
-  \usepackage[utf8]{inputenc}
-  %\usepackage[latin9]{inputenc}
-\fi
 
-\addbibresource{beispiel.bib}
-
-\let\File\texttt
-\let\Package\texttt
+\addbibresource{beispiel.bib}% besser: \jobname.bib, wenn möglich 
 
 \begin{document}
 \title{Die \texttt{dtk}-Klasse, Version \DTKversion -- \DTKversiondate}
