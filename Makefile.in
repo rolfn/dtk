@@ -1,4 +1,4 @@
-# Rolf Niepraschk, 2021/11/11, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2022/01/29, Rolf.Niepraschk@gmx.de
 #
 # Hilfsdefinitionen zum make-Prozess für "Die TeXnische Komödie"
 #
@@ -133,24 +133,18 @@ dist :
 	zip $(ARCHNAME) -r $(DIST_DIR)
 	rm -rf $(DIST_DIR)
 
+# TODO: Datei 'dtk.csv' notwendig? RN
 count.colorpages:
 	$(echoPROJECT) "* listing and counting colored pages * $(NC)"
 	@echo "Meta information about colors in dtk"
 	@gs -o - -sDEVICE=inkcov dtk.pdf \
-	 | tail -n +5 \
-	 | sed '/^Page*/N;s/\n//' \
+	 | sed '/^Page/N;/^Page/!d;s/\n//' \
 	 | tee dtk.csv
-	@echo -n "List of pages with colors: "
-	@cat dtk.csv \
-	 | awk '$$3!="0.00000" ||  $$4!="0.00000" || $$5!="0.00000"{if(length(colored))colored=colored","$$2;else colored=$$2} END{print colored}' \
-	 | tee  -a dtk.csv
-	@echo -n "Total amount of pages with color: "
-	@gs -o - -sDEVICE=inkcov dtk.pdf \
-	 | grep -v "^ 0.00000  0.00000  0.00000" \
-	 | grep "^ " \
-	 | wc -l \
-	 | sed 's/[[:space:]]//g' \
-	 | tee  -a dtk.csv
+	@cat dtk.csv | awk '$$3!=$$4 || $$4!=$$5 || $$5!=$$3 \
+	 {CNB++; if(colored) colored=colored","$$2; else colored=$$2} \
+	 END{print "List of pages with colors: "colored \
+	 "\nTotal amount of pages with colors: "CNB}' \
+	 | tee -a dtk.csv
 	$(echoPROJECT) "* colored pages listed and counted * $(NC)"
 
 
