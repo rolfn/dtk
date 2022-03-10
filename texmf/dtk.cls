@@ -23,8 +23,8 @@
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 
-\def\DTKversion{2.08k}
-\def\DTKversiondate{2021/11/13}
+\def\DTKversion{2.08l}
+\def\DTKversiondate{2022/03/10}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \@ifpackagelater{iftex}{2019/10/24}{% 
