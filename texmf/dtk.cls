@@ -2,7 +2,7 @@
 %%
 %% LaTeX Class for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2015-2021
+%% Copyright (C) 2015-2022
 %% Rolf Niepraschk, Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -23,8 +23,8 @@
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 
-\def\DTKversion{2.08l}
-\def\DTKversiondate{2022/03/10}
+\def\DTKversion{2.08m}
+\def\DTKversiondate{2022/04/29}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \@ifpackagelater{iftex}{2019/10/24}{% 
@@ -119,7 +119,7 @@
 
 \RequirePackage{scrhack}% Andere Pakete KOMA-Script-freundlich machen
 
-\RequirePackage{dtk-extern}
+\RequirePackage{hvextern}
 
 % http://www.komascript.de/release3.18
 \Ifstr{\KOMAScriptVersion}{2015/07/02 v3.18 KOMA-Script}{%
@@ -367,7 +367,7 @@
 \colorlet{DTKlstNumbers}{black}
 \newcommand*\DTKlstKeywordfont{\bfseries}
 
-\RequirePackage[final]{listings}
+%\RequirePackage[final]{listings}
 \RequirePackage{lstautogobble}
 
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}

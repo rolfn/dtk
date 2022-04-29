@@ -1,22 +1,15 @@
 \documentclass[ngerman]{dtk}
-\ifluatex\else
-  \usepackage[utf8]{inputenc}
-\fi
-
-\usepackage{dtk-extern}
-\makeatletter
-\edef\dtkFileversion{\@nameuse{ver@dtk-extern}}
-\makeatother
+\usepackage{hvextern}
 
 \begin{document}
-\title[Externe Dokumente erzeugen]{\dtkFileversion~-- Externe Dokumente aus \LaTeX\ heraus definieren und das Ergebnis einbinden, }
+\title[Externe Dokumente erzeugen]{Externe Dokumente aus \LaTeX\ heraus definieren und das Ergebnis einbinden, }
 \Author{Herbert}{Voß}{\Email{herbert@dante.de}}
 \maketitle
 
 \section{Syntax}
 
 \begin{verbatim}
-\usepackage{dtk-extern}
+\usepackage{hvextern}
 \end{verbatim}
 
 Das Paket wird standardmäßig bei Verwendung der Klasse \texttt{dtk} geladen.
@@ -42,7 +35,6 @@ Das Hauptdocument \emph{muss} mit der Option \texttt{-shell-escape} aufgerufen w
 \begin{externalDocument}[grfOptions={width=0.5\linewidth},compiler=pdflatex,force,cleanup]{Roemer1}
 \documentclass{standalone}
 \usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
 \usepackage{libertine}
 \usepackage[linguistics]{forest}
 \forestapplylibrarydefaults{linguistics, edges}

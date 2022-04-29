@@ -48,7 +48,7 @@ VERSION = $(shell awk -F"[{}]" '/\\def\\DTKversion\{/{print$$2}' \
   $(LOCAL_PATH)/dtk.cls)#
 ARCHNAME = dtk-$(VERSION).zip
 DIST_FILES_0 = dtk0.tex dtk.cbx dtk.nolig dtk-url.sty dtk-author.clo dtk.cls \
-  dtk-extern.sty dtk-old-engines.clo dtk.xdy dtk-full.clo \
+  dtk-old-engines.clo dtk.xdy dtk-full.clo \
   dtk.bbx dtk.dbx dtk-new-engines.clo dtk-ruecken.tex  
 DIST_FILES_0 := README.md $(addprefix $(LOCAL_PATH),$(DIST_FILES_0))
 DIST_FILES_1 = beispiel.tex beispiel.bib beispiel.pdf dtk-extern-test.tex

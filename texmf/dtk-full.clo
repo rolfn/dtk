@@ -30,6 +30,8 @@
 % standardmäßig ungünstige Defionition in luatex85
 \RequirePackage[showzone=false]{datetime2}
 
+\newcounter{dtk@example@counter}
+
 \newcommand*\AutorenListenName{Autoren/Organisatoren} % auch »Stichwortverzeichnis«?
 \newcommand*\DTK@fancyJournalname{%
   \color{DTK@fancy}Die \color{black}\TeX\color{DTK@fancy}nische Kom\"odie}
