@@ -368,6 +368,7 @@
 \newcommand*\DTKlstKeywordfont{\bfseries}
 
 %\RequirePackage[final]{listings}
+\PassOptionsToPackage{final}{listings}
 \RequirePackage{lstautogobble}
 
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
