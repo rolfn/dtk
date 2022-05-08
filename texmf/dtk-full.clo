@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2022/03/10 v0.1o dtk class options for full mode (RN)]
+  [2022/05/08 v0.1p dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk}{%
@@ -275,22 +275,16 @@
     \c@figure=\z@
     \c@table=\z@
     \c@equation=\z@
-    \renewenvironment{document}{%
-      \ifDTKrecord
-        % Write the definition of the complete bib filename list
-        \@ifundefined{BIBS:\the\c@artcounter}{}{%
-          \immediate\write\user@bibs{%
-            \string\@namedef{BIBS:\the\c@artcounter}%
-              {\csname BIBS:\the\c@artcounter\endcsname}%
-            \@percentchar\space \DTK@local@inputname
-          }%
-        }%
-        %%%\endgroup\expandafter
-      \fi
-      \DTK@embedded@begindocumenthook\ignorespaces
-    }{%
-      \DTK@embedded@enddocumenthook\mbox{}\endinput
-    }%
+    \ifDTKrecord
+      \gdef\document{\endgroup\endinput}%
+      \global\let\blx@warn@auxlist=\relax
+    \else
+      \renewenvironment{document}{%
+        \DTK@embedded@begindocumenthook\ignorespaces
+      }{%
+        \DTK@embedded@enddocumenthook\mbox{}\endinput
+      }%
+    \fi
     \@ifundefined{BIBS:\the\c@artcounter}{%
       \input{\DTK@local@inputname}%
     }{%
@@ -350,9 +344,7 @@
 \RequirePackage{picture}
 
 \DeclareNewLayer[page,background,mode=picture,contents={%
-%  \put(24mm,0.5\dimexpr\layerheight\relax){%
-  \put(-10mm,-2pt){%
-%     \includegraphics[angle=90]{dtk0}%
+  \put(24mm,0.5\dimexpr\layerheight\relax){%
     \makebox(0,0)[c]{\rotatebox[origin=c]{90}{%
       \resizebox{14cm}{!}{\Huge\DTK@fancyJournalname}}}%
     \put(8mm,0){\makebox(0,0)[c]{\rule{0.85mm}{\textheight}}}%

@@ -1,4 +1,4 @@
-# Rolf Niepraschk, 2022/01/29, Rolf.Niepraschk@gmx.de
+# Rolf Niepraschk, 2022/05/08, Rolf.Niepraschk@gmx.de
 #
 # Hilfsdefinitionen zum make-Prozess für "Die TeXnische Komödie"
 #
@@ -60,9 +60,9 @@ x : $(XTARGET)
 
 userdefinitions : $(MAIN)-userdefinitions.tex $(MAIN)-requirepackages
 
-$(MAIN)-userdefinitions.tex $(MAIN)-requirepackages :
-	TEXINPUTS=$(LOCAL_PATH): pdflatex -draftmode -interaction=nonstopmode \
-	  $(MAIN)0.tex ; :
+$(MAIN)-userdefinitions.tex $(MAIN)-requirepackages $(MAIN)-userbibs.tex :
+	TEXINPUTS=$(LOCAL_PATH): $(LATEX) -draftmode -interaction=nonstopmode \
+	  $(MAIN)0.tex 
 
 $(MAIN)-autoren.ind : $(MAIN)-autoren.idx
 	$(XINDY) $< -o $@
