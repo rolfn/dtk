@@ -123,18 +123,24 @@
     \AtEndDocument{\immediate\closeout\user@bibs\relax}%
   }
   \renewcommand*\printbibliography[1][]{}%
-  \newcommand*\DTK@addbibresource[2][]{%
+  \newcommand*\DTK@addbibresource[2][]{% Variant for recording run
     \@ifundefined{BIBS:\the\c@artcounter}{%
-      \def\DTK@tempa{}%
+      \def\DTK@tempa{}% no comma
       \expandafter\let\csname BIBS:\the\c@artcounter\endcsname\@empty
-    }{\def\DTK@tempa{,}}%
-    % Collect all bib filenames as comma list for \newrefsection
+    }{\def\DTK@tempa{,}}% comma
+    % Collect all bib filenames in macro \BIBS:? as comma list for \newrefsection
     \expandafter\g@addto@macro\csname BIBS:\the\c@artcounter
       \expandafter\endcsname\expandafter{\DTK@tempa #2}%
+    % Write current (local) \addbibresource command to file `dtk-userbibs.tex'
     \immediate\write\user@bibs{%
       \string\addbibresource\ifx\relax#1\relax\else[#1]\fi{#2}%
         \@percentchar\space \DTK@local@inputname
     }%
+    % Write current macro definition of \BIBS:? to file `dtk-userbibs.tex'
+    \immediate\write\user@bibs{%
+      \string\@namedef{BIBS:\the\c@artcounter}{%
+        \@nameuse{BIBS:\the\c@artcounter}}%
+    }%    
   }%
   \def\DTK@@usepackage#1#2[#3]{%
     \edef\@tempb{\zap@space#2 \@empty}%
@@ -192,7 +198,7 @@
   \AtBeginDocument{\DTK@backside}%
   \def\DTK@@usepackage#1#2[#3]{}%
   \def\DTK@@RequirePackage#1#2[#3]{}%
-  \newcommand*\DTK@addbibresource[2][]{}%
+  \newcommand*\DTK@addbibresource[2][]{}% Variant for the document run
   \newcommand*\ORIG@printbibliography{}
   \let\ORIG@printbibliography=\printbibliography
   \renewcommand*\printbibliography[1][]{\ORIG@printbibliography[heading=dtk]%
@@ -285,6 +291,7 @@
         \DTK@embedded@enddocumenthook\mbox{}\endinput
       }%
     \fi
+    % Macro \BIBS:? may have been defined by `dtk-userbibs.tex'
     \@ifundefined{BIBS:\the\c@artcounter}{%
       \input{\DTK@local@inputname}%
     }{%
