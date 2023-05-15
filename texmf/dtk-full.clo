@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2023/05/10 v0.1q dtk class options for full mode (RN)]
+  [2023/05/15 v0.1q dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk}{%
@@ -135,11 +135,6 @@
     \immediate\write\user@bibs{%
       \string\addbibresource\ifx\relax#1\relax\else[#1]\fi{#2}%
         \@percentchar\space \DTK@local@inputname
-    }%
-    % Write current macro definition of \BIBS:? to file `dtk-userbibs.tex'
-    \immediate\write\user@bibs{%
-      \string\@namedef{BIBS:\the\c@artcounter}{%
-        \@nameuse{BIBS:\the\c@artcounter}}%
     }%    
   }%
   \def\DTK@@usepackage#1#2[#3]{%
@@ -282,7 +277,18 @@
     \c@table=\z@
     \c@equation=\z@
     \ifDTKrecord
-      \gdef\document{\endgroup\endinput}%
+      \gdef\document{%
+        % Write current macro definition of \BIBS:? (complete bibfile list)
+        % to file `dtk-userbibs.tex'
+        \@ifundefined{BIBS:\the\c@artcounter}{}{%
+          \immediate\write\user@bibs{%
+            \string\@namedef{BIBS:\the\c@artcounter}%
+              {\@nameuse{BIBS:\the\c@artcounter}}%
+            \@percentchar\space\DTK@local@inputname
+          }%
+        }%      
+        \endgroup\endinput
+      }%
       \global\let\blx@warn@auxlist=\relax
     \else
       \renewenvironment{document}{%
