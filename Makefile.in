@@ -16,7 +16,7 @@ ifeq ($(filter x,$(MAKECMDGOALS)),)
   LATEX = TEXINPUTS=$(LOCAL_PATH): lualatex
   COMPILER_INFO = $(shell $(LATEX) -v | head -n1 | cut -d' ' -f3-)
 else
-  LATEX = TEXINPUTS=$(LOCAL_PATH): pdflatex
+  LATEX = TEXINPUTS=$(LOCAL_PATH): lualatex
   COMPILER_INFO = $(shell $(LATEX) -v | head -n1)
   XTARGET = $(filter-out x,$(MAKECMDGOALS))
   ifeq ($(XTARGET),)
