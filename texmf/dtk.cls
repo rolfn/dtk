@@ -23,35 +23,19 @@
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 
-\def\DTKversion{2.08n}
-\def\DTKversiondate{2022/12/14}
+\def\DTKversion{2.10a}
+\def\DTKversiondate{2023/07/25}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
-\@ifpackagelater{iftex}{2019/10/24}{% 
-  \RequirePackage{ifxetex,ifluatex,ifpdf,ifvtex}
-}{%
-  \RequirePackage{iftex}
-}
-\RequirePackage{luatex85}
+\RequirePackage{iftex}
 
-\newcommand*\DTK@engine{}
-
-\ifluatex
-  \def\DTK@engine{4}% LuaTeX
-\else
-  \ifxetex
-    \def\DTK@engine{3}% XeTeX
-  \else
-    \ifpdf
-      \def\DTK@engine{2}% pdfTeX
-    \else
-      \ifvtex
-        \def\DTK@engine{1}% VTeX
-      \else
-        \def\DTK@engine{0}% TeX+dvips
-      \fi
-    \fi
-  \fi
+\ifluatex\else
+  \ClassError{dtk}{%
+    LuaLaTeX ist erforderlich.
+  }{%
+    Kompiliere mit LuaLaTeX.
+  }
+  \expandafter\stop
 \fi
 
 \RequirePackage{xkeyval}
@@ -189,11 +173,7 @@
 \newcommand*\DTKttFontName{}   \let\DTKttFontName=\DTK@FontNameMissing
 \newcommand*\DTKmathFontName{} \let\DTKmathFontName=\DTK@FontNameMissing
 
-\ifnum\DTK@engine < 3 %
-  \input{dtk-old-engines.clo}% pdfTeX oder TeX+dvips oder VTeX
-\else
-  \input{dtk-new-engines.clo}% LuaTeX oder XeTeX
-\fi
+\input{dtk-fonts.clo}
 
 \@ifpackagelater{csquotes}{2018/02/11}{}{%
   \def\@inpenc@undefined{}
