@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \ProvidesFile{dtk-full.clo}%
-  [2023/05/15 v0.1q dtk class options for full mode (RN)]
+  [2023/07/25 v0.1r dtk class options for full mode (RN)]
 
 \@ifclasslater{scrbook}{2015/09/29}{}{%
   \ClassError{dtk}{%
@@ -25,9 +25,6 @@
 }
 
 \RequirePackage{xcolor,multicol,graphicx,tabularx}
-%%%\edef\pdfcreationdate{\pdfcreationdate}
-% weil datetime2 inkompatible zu LuaTeX 0.95/luatex85,
-% standardmäßig ungünstige Defionition in luatex85
 \RequirePackage[showzone=false]{datetime2}
 
 \newcounter{dtk@example@counter}
