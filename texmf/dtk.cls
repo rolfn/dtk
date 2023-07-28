@@ -24,7 +24,7 @@
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 
 \def\DTKversion{2.10a}
-\def\DTKversiondate{2023/07/25}
+\def\DTKversiondate{2023/07/28}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \RequirePackage{iftex}
@@ -102,6 +102,8 @@
 ]{scrbook}
 
 \RequirePackage{scrhack}% Andere Pakete KOMA-Script-freundlich machen
+
+\RequirePackage[final]{listings}
 
 \RequirePackage{hvextern}
 
@@ -347,10 +349,6 @@
 \colorlet{DTKlstNumbers}{black}
 \newcommand*\DTKlstKeywordfont{\bfseries}
 
-%\RequirePackage[final]{listings}
-\PassOptionsToPackage{final}{listings}
-\RequirePackage{lstautogobble}
-
 \@ifundefined{ifDTKrecord}{\newif\ifDTKrecord \DTKrecordfalse}{}
 
 \newcommand*\address[3]{%
@@ -495,7 +493,6 @@
 ,commentstyle=\DTKlstfont
 ,basewidth=0.55em
 ,keepspaces
-,autogobble=false
 ,backgroundcolor=\color{DTKlstBackground}
 ,numbers=none
 ,frame=single
@@ -531,7 +528,6 @@
 ,emphstyle=\DTK@lst@colorbox{DTKlstBackground!70!-DTKlstBackground}%
 %,prebreak=
 ,postbreak=\mbox{$\hookrightarrow$}
-,autogobble=true
 }
 
 \lstdefinestyle{number}{%  TODO: Evtl. doch besser Zeilennummern ganz ausrücken?
