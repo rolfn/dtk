@@ -2,7 +2,7 @@
 %%
 %% LaTeX Class for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2015-2022
+%% Copyright (C) 2015-2023
 %% Rolf Niepraschk, Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -23,8 +23,8 @@
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 
-\def\DTKversion{2.10b}
-\def\DTKversiondate{2023/11/14}
+\def\DTKversion{2.10c}
+\def\DTKversiondate{2023/12/01}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \RequirePackage{iftex}
@@ -560,6 +560,11 @@
   ^^f0^^f1^^f2^^f3^^f4^^f5^^f6^^f7^^f8^^f9^^fa^^fb^^fc^^fd^^fe^^ff%
   ^^^^20ac^^^^0153^^^^0152%
   ^^^^0131% small letter dotless i
+  ^^^^017f% latin small letter long s
+  ^^^^03b1% greek small letter alpha
+  ^^^^03b2% greek small letter beta
+  ^^^^03b3% greek small letter gamma
+  ^^^^2013% en dash
   ^^00%
 }
 \lst@RestoreCatcodes
