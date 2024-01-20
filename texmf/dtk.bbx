@@ -50,10 +50,12 @@
 \DeclareFieldFormat{removecomma}{\mkbibnocomma{#1}}
 \DeclareFieldFormat{title}{#1\isdot}
 \DeclareFieldFormat[ctan]{url}{\url{CTAN: #1}}
+\DeclareFieldFormat[article]{number}{\mkbibemph{#1}}
 
 \DeclareFieldFormat{isbn}{ISBN\addcolon\space #1}
 \DeclareFieldFormat{isrn}{ISRN\addcolon\space #1}
 \DeclareFieldFormat{issn}{ISSN\addcolon\space #1}
+
 
 \newbibmacro*{ctanurl+urldate}{%
   \printfield{url}
@@ -223,9 +225,6 @@
     {}%
   \usebibmacro{finentry}%
 }
-
-
-
 
 
 %\setlength\labelnumberwidth{1.5em}
