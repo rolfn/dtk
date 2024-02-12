@@ -2,7 +2,7 @@
 %%
 %% LaTeX Class for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2015-2023
+%% Copyright (C) 2015-2024
 %% Rolf Niepraschk, Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -23,8 +23,8 @@
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 
-\def\DTKversion{2.10c}
-\def\DTKversiondate{2023/12/01}
+\def\DTKversion{2.10d}
+\def\DTKversiondate{2024/02/12}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \RequirePackage{iftex}
@@ -87,9 +87,6 @@
 \newcommand*\DTK@tempc{}
 
 \newsavebox\DTK@tempbox
-
-\PassOptionsToPackage{hyphens}{url}
-\RequirePackage{dtk-url}
 
 \LoadClass[%
 ,twoside
@@ -456,6 +453,10 @@
 \setlist[itemize,3]{label=\raisebox{-.7ex}{\large\textasteriskcentered}}
 \setlist[itemize,4]{label=\raisebox{.4ex}{\tiny$\m@th\triangleright$}}
 \fi
+
+\PassOptionsToPackage{hyphens}{url}
+\RequirePackage{dtk-url}
+\RequirePackage{hvqrurl}%   Spät laden!
 
 % Listings
 \newcommand*\DTKlstfont{\small\ttfamily}
