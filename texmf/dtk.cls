@@ -23,8 +23,8 @@
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 
-\def\DTKversion{2.10d}
-\def\DTKversiondate{2024/02/12}
+\def\DTKversion{2.10e}
+\def\DTKversiondate{2024/02/22}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \RequirePackage{iftex}
@@ -593,18 +593,18 @@
 \newenvironment{abstract}
   {\quote\small}{\endquote\medskip\par}
 
-\providecommand*\Macro[1]{\texttt{\textbackslash#1}}
-\providecommand*\Code[1]{\texttt{#1}}
-\let\Command\texttt
-\let\Environment\texttt
-\def\biblatex{\texttt{biblatex}\xspace}
-\def\tex4ht{\hologo{TeX4ht}}
-\let\Paket\texttt
-\let\Package\texttt
-\let\Programm\texttt
-\let\Program\texttt
-\let\Env\texttt
-\let\Class\texttt
+\NewDocumentCommand\Macro{m}{\texttt{\textbackslash#1}}
+\NewDocumentCommand\Code{m}{\texttt{#1}}
+\NewDocumentCommand\Command{m}{\texttt{#1}}
+\NewDocumentCommand\Environment{m}{\texttt{#1}}
+\NewDocumentCommand\biblatex{m}{\texttt{biblatex}\xspace}
+%%%\NewDocumentCommand\tex4ht{m}{\hologo{TeX4ht}}
+\NewDocumentCommand\Paket{m}{\texttt{#1}}
+\NewDocumentCommand\Package{m}{\texttt{#1}}
+\NewDocumentCommand\Programm{m}{\texttt{#1}}
+\NewDocumentCommand\Program{m}{\texttt{#1}}
+\NewDocumentCommand\Env{m}{\texttt{#1}}
+\NewDocumentCommand\Class{m}{\texttt{#1}}
+\NewDocumentCommand\Klasse{m}{\texttt{#1}}
 
 \endinput
-
