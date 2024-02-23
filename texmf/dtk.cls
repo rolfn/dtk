@@ -597,8 +597,7 @@
 \NewDocumentCommand\Code{m}{\texttt{#1}}
 \NewDocumentCommand\Command{m}{\texttt{#1}}
 \NewDocumentCommand\Environment{m}{\texttt{#1}}
-\DeclareDocumentCommand\biblatex{m}{\texttt{biblatex}\xspace}
-%%%\NewDocumentCommand\tex4ht{m}{\hologo{TeX4ht}}
+\DeclareDocumentCommand\biblatex{m}{\texttt{\BibLaTeX}\xspace}
 \NewDocumentCommand\Paket{m}{\texttt{#1}}
 \NewDocumentCommand\Package{m}{\texttt{#1}}
 \NewDocumentCommand\Programm{m}{\texttt{#1}}
