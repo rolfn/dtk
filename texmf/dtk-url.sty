@@ -2,7 +2,7 @@
 %%
 %% LaTeX Class for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2015-2023
+%% Copyright (C) 2015-2024
 %% Rolf Niepraschk, Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -14,7 +14,7 @@
 %% version 2005/12/01 or later.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{dtk-url}[2024/02/12 v1.8 Urls (qrcode) for DTK (HO,hv,rn)]
+\ProvidesPackage{dtk-url}[2024/06/26 v1.9 Urls (qrcode) for DTK (HO,hv,rn)]
 
 \RequirePackage{url}[2006/04/12]
 \RequirePackage{xcolor}
@@ -39,6 +39,8 @@
 \DeclareRobustCommand*{\Email}{\DTK@Email}
 \let\URL\url
 \let\CTANurl\ctanurl
+
+\DeclareUrlCommand\File{\urlstyle{tt}}
 
 \DeclareUrlCommand\DTK@Url{%
   \DTK@UrlSetup
