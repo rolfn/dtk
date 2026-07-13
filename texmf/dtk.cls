@@ -2,7 +2,7 @@
 %%
 %% LaTeX Class for ``Die TeXnische Komoedie''.
 %%
-%% Copyright (C) 2015-2024
+%% Copyright (C) 2015-2026
 %% Rolf Niepraschk, Herbert Voss
 %%
 %% It may be distributed and/or modified under the
@@ -23,8 +23,8 @@
 
 \NeedsTeXFormat{LaTeX2e}[1999/12/01]
 
-\def\DTKversion{2.10f}
-\def\DTKversiondate{2024/06/27}
+\def\DTKversion{2.10g}
+\def\DTKversiondate{2026/07/13}
 \ProvidesClass{dtk}[\DTKversiondate v\DTKversion dtk documentclass (RN)]
 
 \RequirePackage{iftex}
@@ -98,7 +98,10 @@
 ,pagesize
 ]{scrbook}
 
-\RequirePackage{scrhack}% Andere Pakete KOMA-Script-freundlich machen
+
+\AtEndOfClass{%
+  \RequirePackage{scrhack}% Andere Pakete KOMA-Script-freundlich machen
+}
 
 \RequirePackage[final]{listings}
 

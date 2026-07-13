@@ -52,7 +52,7 @@ DIST_FILES_0 = dtk0.tex dtk.cbx dtk.nolig dtk-url.sty dtk-author.clo dtk.cls \
   dtk-fonts.clo dtk.xdy dtk-full.clo \
   dtk.bbx dtk.dbx dtk-ruecken.tex  
 DIST_FILES_0 := README.md $(addprefix $(LOCAL_PATH),$(DIST_FILES_0))
-DIST_FILES_1 = beispiel.tex beispiel.bib beispiel.pdf dtk-extern-test.tex
+DIST_FILES_1 = dtk-beispiel.tex dtk-beispiel.bib dtk-beispiel.pdf dtk-extern-test.tex
 DIST_DIR = $(MAIN)
 
 all : $(MAIN).pdf $(MAIN)-autoren.ind count.colorpages
@@ -123,10 +123,10 @@ debug :
 	@echo »$(DIST_FILES_1)« 
 
 dist :
-	$(LATEX) beispiel
-	$(BIBTEX) beispiel
-	$(LATEX) beispiel
-	$(LATEX) beispiel
+	$(LATEX) dtk-beispiel
+	$(BIBTEX) dtk-beispiel
+	$(LATEX) dtk-beispiel
+	$(LATEX) dtk-beispiel
 	mkdir -p $(DIST_DIR)/doc
 	cp -p $(DIST_FILES_0) $(DIST_DIR)
 	cp -p $(DIST_FILES_1) $(DIST_DIR)/doc
